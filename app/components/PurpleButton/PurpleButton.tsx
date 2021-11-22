@@ -3,11 +3,12 @@ import { PurpleButtonBlock, PurpleButtonText } from './PurpleButton.styles';
 
 type TPurpleButton = {
   text: string;
+  onPress: VoidFunction;
 };
 
-const PurpleButton: React.FC<TPurpleButton> = ({ text }) => {
+const PurpleButton: React.FC<TPurpleButton> = ({ text, onPress }) => {
   return (
-    <PurpleButtonBlock>
+    <PurpleButtonBlock onPress={onPress}>
       <PurpleButtonText>{text}</PurpleButtonText>
     </PurpleButtonBlock>
   );
