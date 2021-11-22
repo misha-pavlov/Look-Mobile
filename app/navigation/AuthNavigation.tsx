@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text } from 'react-native';
 import { screens } from '../config/screens';
 import Start from '../screens/Start/Start';
+import SignUp from '../screens/SignUp/SignUp';
 
 const AuthStack = createStackNavigator();
 
@@ -24,7 +25,13 @@ const AuthNavigation = () => (
       }}
     />
     <AuthStack.Screen name={screens.LogIn} component={g} />
-    <AuthStack.Screen name={screens.SignUp} component={g} />
+    <AuthStack.Screen
+      name={screens.SignUp}
+      component={SignUp}
+      options={{
+        headerShown: false,
+      }}
+    />
   </AuthStack.Navigator>
 );
 

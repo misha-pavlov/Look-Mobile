@@ -5,4 +5,5 @@ export const messages = {
   signUp: 'Sign up',
   haveAnAccount: 'Have an account?',
   signIn: 'Sign in',
+  welcome: 'Welcome!',
 };
