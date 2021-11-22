@@ -8,8 +8,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import PurpleButton from '../../../../components/PurpleButton/PurpleButton';
 import { messages } from '../../../../config/messages';
-import { InputBlock, s } from './SignUpForm.styles';
+import { ErrorText, InputBlock, s } from './SignUpForm.styles';
 import { colors } from '../../../../config/colors';
+import { validation } from '../../../../common/validation';
 
 const SignUpForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -19,12 +20,13 @@ const SignUpForm = () => {
       email: '',
       password: '',
     },
+    validate: values => validation(values),
     onSubmit: values => {
       console.log(values);
     },
   });
 
-  const { handleChange, handleBlur, values } = formik;
+  const { handleChange, handleBlur, values, errors, touched } = formik;
 
   return (
     <View>
@@ -38,6 +40,7 @@ const SignUpForm = () => {
           style={s.input}
           placeholderTextColor={colors.white}
         />
+        {errors.name && touched.name ? <ErrorText>{errors.name}</ErrorText> : null}
       </InputBlock>
       <InputBlock>
         <Input
@@ -51,6 +54,7 @@ const SignUpForm = () => {
           textContentType="emailAddress"
           placeholderTextColor={colors.white}
         />
+        {errors.email && touched.email ? <ErrorText>{errors.email}</ErrorText> : null}
       </InputBlock>
       <InputBlock>
         <Input
@@ -80,6 +84,7 @@ const SignUpForm = () => {
           secureTextEntry={!showPassword}
           placeholderTextColor={colors.white}
         />
+        {errors.password && touched.password ? <ErrorText>{errors.password}</ErrorText> : null}
       </InputBlock>
 
       <PurpleButton text={messages.signUp} onPress={formik.handleSubmit} />

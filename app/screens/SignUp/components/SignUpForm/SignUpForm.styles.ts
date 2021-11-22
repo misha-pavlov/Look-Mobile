@@ -12,3 +12,8 @@ export const s = StyleSheet.create({
 export const InputBlock = styled.View`
   margin-bottom: 30px;
 `;
+
+export const ErrorText = styled.Text`
+  color: ${colors.pink};
+  font-size: 16px;
+`;
