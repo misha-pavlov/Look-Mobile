@@ -1,13 +1,16 @@
 import React from 'react';
 import { Octicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { useQuery } from 'react-apollo';
 import { BackBlock, SignUpBlock, WelcomeText } from '../SignUp/SignUp.styles';
 import { colors } from '../../config/colors';
 import { messages } from '../../config/messages';
 import LogInForm from './components/LogInForm/LogInForm';
+import { GET_USERS } from './gql/LogIn.queries';
 
 const LogIn = () => {
   const { goBack } = useNavigation();
+  const { data } = useQuery(GET_USERS);
 
   return (
     <SignUpBlock>
@@ -15,7 +18,7 @@ const LogIn = () => {
         <Octicons name="x" size={26} color={colors.white} />
       </BackBlock>
       <WelcomeText>{messages.welcomeBack}</WelcomeText>
-      <LogInForm />
+      <LogInForm users={data?.users} />
     </SignUpBlock>
   );
 };

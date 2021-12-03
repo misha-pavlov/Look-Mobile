@@ -4,7 +4,7 @@ export const messages = {
   /* Auth */
   signUp: 'Sign up',
   haveAnAccount: 'Have an account?',
-  signIn: 'Sign in',
+  logIn: 'Log in',
   welcome: 'Welcome!',
   welcomeBack: 'Welcome back!',
 };

@@ -23,7 +23,7 @@ const Start = () => {
       <TextBlock>
         <GrayText>{messages.haveAnAccount}</GrayText>
         <TouchableOpacity onPress={() => navigate(screens.LogIn)}>
-          <PurpleText>{messages.signIn}</PurpleText>
+          <PurpleText>{messages.logIn}</PurpleText>
         </TouchableOpacity>
       </TextBlock>
     </StartBlock>

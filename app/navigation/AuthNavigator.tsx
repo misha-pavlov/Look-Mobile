@@ -7,7 +7,7 @@ import LogIn from '../screens/LogIn/LogIn';
 
 const AuthStack = createStackNavigator();
 
-const AuthNavigation = () => (
+const AuthNavigator = () => (
   <AuthStack.Navigator screenOptions={{ headerShown: false }}>
     <AuthStack.Screen name={screens.Start} component={Start} />
     <AuthStack.Screen name={screens.LogIn} component={LogIn} />
@@ -15,4 +15,4 @@ const AuthNavigation = () => (
   </AuthStack.Navigator>
 );
 
-export default AuthNavigation;
+export default AuthNavigator;

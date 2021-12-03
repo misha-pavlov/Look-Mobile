@@ -1,32 +1,72 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { useFormik } from 'formik';
+import { useNavigation } from '@react-navigation/native';
 import { Input } from 'react-native-elements';
-import { FontAwesome } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-import PurpleButton from '../../../../components/PurpleButton/PurpleButton';
-import { messages } from '../../../../config/messages';
+import { Entypo, Ionicons, MaterialIcons, FontAwesome } from '@expo/vector-icons';
+import { useMutation } from 'react-apollo';
 import { ErrorText, InputBlock, s } from './SignUpForm.styles';
 import { colors } from '../../../../config/colors';
-import { validation } from '../../../../common/validation';
+import PurpleButton from '../../../../components/PurpleButton/PurpleButton';
+import { messages } from '../../../../config/messages';
+import { ADD_USER } from '../../gql/SignUp.mutations';
+import { GET_USERS } from '../../../LogIn/gql/LogIn.queries';
 
 const SignUpForm = () => {
+  const name = 'name';
+  const email = 'email';
+  const password = 'password';
   const [showPassword, setShowPassword] = useState(false);
-  const formik = useFormik({
-    initialValues: {
-      name: '',
-      email: '',
-      password: '',
-    },
-    validate: values => validation(values),
-    onSubmit: values => {
-      console.log(values);
-    },
+  const [state, setState] = useState({
+    name: '',
+    email: '',
+    password: '',
+    formErrors: { name: '', email: '', password: '' },
   });
+  const [mutate] = useMutation(ADD_USER, { onError: error => console.log('ADD_USER = ', error) });
+  const navigation = useNavigation();
 
-  const { handleChange, handleBlur, values, errors, touched } = formik;
+  const validateField = (text: string, field: string) => {
+    let fieldValidationErrors = state.formErrors;
+    let nameValid = false;
+    let emailValid: RegExpMatchArray = null;
+    let passwordValid = false;
+
+    switch (field) {
+      case name:
+        nameValid = text.length >= 4;
+        fieldValidationErrors.name = nameValid ? '' : 'Name is too short';
+        break;
+      case email:
+        emailValid = text.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+        fieldValidationErrors.email = emailValid ? '' : 'Email is invalid';
+        break;
+      case password:
+        passwordValid = text.length >= 6;
+        fieldValidationErrors.password = passwordValid ? '' : 'Password is too short';
+        break;
+      default:
+        break;
+    }
+    setState({ ...state, formErrors: fieldValidationErrors });
+  };
+
+  const handleEdit = (text: string, field: string) => {
+    validateField(text, field);
+    setState({ ...state, [field]: text });
+  };
+
+  const onSubmit = () => {
+    const { name, email, password } = state;
+    mutate({
+      variables: {
+        userName: name,
+        email,
+        password,
+      },
+      refetchQueries: [{ query: GET_USERS }],
+    });
+    navigation.goBack();
+  };
 
   return (
     <View>
@@ -34,27 +74,29 @@ const SignUpForm = () => {
         <Input
           placeholder="Name"
           leftIcon={<FontAwesome name="user-secret" size={24} color={colors.gray1} />}
-          onChangeText={handleChange('name')}
-          onBlur={handleBlur('name')}
-          value={values.name}
+          onChangeText={e => handleEdit(e, name)}
+          value={state.name}
           style={s.input}
           placeholderTextColor={colors.white}
+          autoCapitalize="none"
+          autoCorrect={false}
         />
-        {errors.name && touched.name ? <ErrorText>{errors.name}</ErrorText> : null}
+        {state.formErrors.name !== '' && <ErrorText>{state.formErrors.name}</ErrorText>}
       </InputBlock>
       <InputBlock>
         <Input
           placeholder="Email"
           leftIcon={<Entypo name="email" size={24} color={colors.gray1} />}
-          onChangeText={handleChange('email')}
-          onBlur={handleBlur('email')}
-          value={values.email}
+          onChangeText={e => handleEdit(e, email)}
+          value={state.email}
           style={s.input}
           keyboardType="email-address"
           textContentType="emailAddress"
           placeholderTextColor={colors.white}
+          autoCapitalize="none"
+          autoCorrect={false}
         />
-        {errors.email && touched.email ? <ErrorText>{errors.email}</ErrorText> : null}
+        {state.formErrors.email !== '' && <ErrorText>{state.formErrors.email}</ErrorText>}
       </InputBlock>
       <InputBlock>
         <Input
@@ -77,17 +119,16 @@ const SignUpForm = () => {
               />
             )
           }
-          onChangeText={handleChange('password')}
-          onBlur={handleBlur('password')}
-          value={values.password}
+          onChangeText={e => handleEdit(e, password)}
+          value={state.password}
           style={s.input}
           secureTextEntry={!showPassword}
           placeholderTextColor={colors.white}
         />
-        {errors.password && touched.password ? <ErrorText>{errors.password}</ErrorText> : null}
+        {state.formErrors.password !== '' && <ErrorText>{state.formErrors.password}</ErrorText>}
       </InputBlock>
 
-      <PurpleButton text={messages.signUp} onPress={formik.handleSubmit} />
+      <PurpleButton text={messages.signUp} onPress={onSubmit} />
     </View>
   );
 };

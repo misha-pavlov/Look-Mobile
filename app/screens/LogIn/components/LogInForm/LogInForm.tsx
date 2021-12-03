@@ -1,31 +1,72 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { useFormik } from 'formik';
 import { Input } from 'react-native-elements';
-import { Entypo } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
+import { Entypo, Ionicons, MaterialIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import PurpleButton from '../../../../components/PurpleButton/PurpleButton';
 import { messages } from '../../../../config/messages';
 import { ErrorText, InputBlock, s } from '../../../SignUp/components/SignUpForm/SignUpForm.styles';
 import { colors } from '../../../../config/colors';
-import { validation } from '../../../../common/validation';
+import { useNavigation } from '@react-navigation/native';
+import { screens } from '../../../../config/screens';
 
-const LogInForm = () => {
+type TLogInForm = {
+  users: Array<{ _id: string; email: string; userName: string; password: string }>;
+};
+
+const LogInForm: React.FC<TLogInForm> = ({ users }) => {
+  const email = 'email';
+  const password = 'password';
   const [showPassword, setShowPassword] = useState(false);
-  const formik = useFormik({
-    initialValues: {
-      name: '',
-      email: '',
-      password: '',
-    },
-    validate: values => validation(values),
-    onSubmit: values => {
-      console.log(values);
-    },
+  const [state, setState] = useState({
+    email: '',
+    password: '',
+    formErrors: { email: '', password: '' },
   });
+  const navigation = useNavigation();
 
-  const { handleChange, handleBlur, values, errors, touched } = formik;
+  const validateField = (text: string, field: string) => {
+    let fieldValidationErrors = state.formErrors;
+    let emailValid: RegExpMatchArray = null;
+    let passwordValid = false;
+
+    switch (field) {
+      case email:
+        emailValid = text.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+        fieldValidationErrors.email = emailValid ? '' : 'Email is invalid';
+        break;
+      case password:
+        passwordValid = text.length >= 6;
+        fieldValidationErrors.password = passwordValid ? '' : 'Password is too short';
+        break;
+      default:
+        break;
+    }
+    setState({ ...state, formErrors: fieldValidationErrors });
+  };
+
+  const handleEdit = (text: string, field: string) => {
+    validateField(text, field);
+    setState({ ...state, [field]: text });
+  };
+
+  const onSubmit = () => {
+    users.find(u => {
+      if (u.email === state.email) {
+        if (u.password === state.password) {
+          setState({ ...state, formErrors: { email: '', password: '' } });
+          AsyncStorage.setItem('isUserAuthorized', u._id).then(() =>
+            navigation.getParent().navigate(screens.AppNavigator),
+          );
+          return;
+        }
+        setState({ ...state, formErrors: { email: state.formErrors.email, password: 'Incorrect password' } });
+        return;
+      }
+      setState({ ...state, formErrors: { password: state.formErrors.password, email: 'Incorrect email' } });
+      return;
+    });
+  };
 
   return (
     <View>
@@ -33,15 +74,16 @@ const LogInForm = () => {
         <Input
           placeholder="Email"
           leftIcon={<Entypo name="email" size={24} color={colors.gray1} />}
-          onChangeText={handleChange('email')}
-          onBlur={handleBlur('email')}
-          value={values.email}
+          onChangeText={e => handleEdit(e, email)}
+          value={state.email}
           style={s.input}
           keyboardType="email-address"
           textContentType="emailAddress"
           placeholderTextColor={colors.white}
+          autoCapitalize="none"
+          autoCorrect={false}
         />
-        {errors.email && touched.email ? <ErrorText>{errors.email}</ErrorText> : null}
+        {state.formErrors.email !== '' && <ErrorText>{state.formErrors.email}</ErrorText>}
       </InputBlock>
       <InputBlock>
         <Input
@@ -64,17 +106,16 @@ const LogInForm = () => {
               />
             )
           }
-          onChangeText={handleChange('password')}
-          onBlur={handleBlur('password')}
-          value={values.password}
+          onChangeText={e => handleEdit(e, password)}
+          value={state.password}
           style={s.input}
           secureTextEntry={!showPassword}
           placeholderTextColor={colors.white}
         />
-        {errors.password && touched.password ? <ErrorText>{errors.password}</ErrorText> : null}
+        {state.formErrors.password !== '' && <ErrorText>{state.formErrors.password}</ErrorText>}
       </InputBlock>
 
-      <PurpleButton text={messages.signUp} onPress={formik.handleSubmit} />
+      <PurpleButton text={messages.logIn} onPress={onSubmit} />
     </View>
   );
 };

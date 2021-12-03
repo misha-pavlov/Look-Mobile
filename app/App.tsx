@@ -1,13 +1,17 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
-import RootNavigation from './navigation/RootNavigation';
+import { ApolloProvider } from 'react-apollo';
+import { client } from './helpers/client/client';
+import RootNavigator from './navigation/RootNavigator';
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <RootNavigation />
-      <StatusBar style="light" />
-    </NavigationContainer>
+    <ApolloProvider client={client}>
+      <NavigationContainer>
+        <RootNavigator />
+        <StatusBar style="light" />
+      </NavigationContainer>
+    </ApolloProvider>
   );
 }
