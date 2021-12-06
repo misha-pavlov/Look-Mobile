@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useUserId } from '../../hooks/useIsUserAuthorized';
+import { useUserId } from '../../hooks/useUserId';
+import HeaderWithUser from './components/HeaderWithUser/HeaderWithUser';
 
 const Posts = () => {
   const isFirstRender = useRef(true);
@@ -17,6 +18,7 @@ const Posts = () => {
 
   return (
     <View>
+      <HeaderWithUser />
       <Text>Posts</Text>
     </View>
   );

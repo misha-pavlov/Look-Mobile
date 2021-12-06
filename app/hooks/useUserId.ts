@@ -7,7 +7,6 @@ export const useUserId = () => {
   useEffect(() => {
     (async () => {
       const getUserId = await AsyncStorage.getItem('userId');
-      console.log('userId = ', getUserId);
       setUserId(getUserId);
     })();
   }, []);

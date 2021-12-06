@@ -7,10 +7,11 @@ import { colors } from '../../config/colors';
 import { messages } from '../../config/messages';
 import LogInForm from './components/LogInForm/LogInForm';
 import { GET_USERS } from './gql/LogIn.queries';
+import { ApolloFetchPolicy } from '../../common/apollo';
 
 const LogIn = () => {
   const { goBack } = useNavigation();
-  const { data } = useQuery(GET_USERS);
+  const { data } = useQuery(GET_USERS, { fetchPolicy: ApolloFetchPolicy.CacheAndNetwork });
 
   return (
     <SignUpBlock>

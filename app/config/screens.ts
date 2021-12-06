@@ -14,4 +14,7 @@ export const screens = {
   /* Post */
   /* Check and if need delete this row (16) */
   Posts: 'Posts' as keyof NAppStackParamList,
+
+  /* User */
+  UserProfile: 'UserProfile' as keyof NAppStackParamList,
 };

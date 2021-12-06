@@ -9,7 +9,7 @@ import PurpleButton from '../../components/PurpleButton/PurpleButton';
 import { CenterBlock } from '../../common/common.styles';
 import { screens } from '../../config/screens';
 import { NAuthNavigatorNavigationProp } from '../../navigation/types/AuthNavigator.types';
-import { useUserId } from '../../hooks/useIsUserAuthorized';
+import { useUserId } from '../../hooks/useUserId';
 
 const Start = () => {
   const { navigate, getParent } = useNavigation<NAuthNavigatorNavigationProp<'SignUp'>>();
