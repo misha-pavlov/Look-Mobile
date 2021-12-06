@@ -55,9 +55,7 @@ const LogInForm: React.FC<TLogInForm> = ({ users }) => {
       if (u.email === state.email) {
         if (u.password === state.password) {
           setState({ ...state, formErrors: { email: '', password: '' } });
-          AsyncStorage.setItem('isUserAuthorized', u._id).then(() =>
-            navigation.getParent().navigate(screens.AppNavigator),
-          );
+          AsyncStorage.setItem('userId', u._id).then(() => navigation.getParent().navigate(screens.AppNavigator));
           return;
         }
         setState({ ...state, formErrors: { email: state.formErrors.email, password: 'Incorrect password' } });
