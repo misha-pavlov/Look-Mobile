@@ -5,6 +5,10 @@ export const screens = {
   /* Navigators */
   AppNavigator: 'AppNavigator',
   AuthNavigator: 'AuthNavigator',
+  FeedNavigator: 'FeedNavigator',
+  ChatNavigator: 'ChatNavigator',
+  ActivityNavigator: 'ActivityNavigator',
+  SearchNavigator: 'SearchNavigator',
 
   /* Auth */
   Start: 'Start',
