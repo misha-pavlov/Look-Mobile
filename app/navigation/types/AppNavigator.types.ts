@@ -4,6 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 export type NAppStackParamList = {
   Posts: undefined;
   UserProfile: undefined;
+  CreatePost: undefined;
 };
 
 export type NAppNavigatorRouteProp<ScreenName extends keyof NAppStackParamList> = RouteProp<
