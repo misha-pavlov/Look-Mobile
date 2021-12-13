@@ -26,7 +26,4 @@ export const s = StyleSheet.create({
     borderRadius: 50,
     marginRight: 15,
   },
-  placeholder: {
-    backgroundColor: colors.black,
-  },
 });

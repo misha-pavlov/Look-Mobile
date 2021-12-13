@@ -1,11 +1,13 @@
-import React, { ComponentType } from 'react';
+import React from 'react';
 import { useQuery } from 'react-apollo';
 import { ActivityIndicator } from 'react-native';
 import { useUserId } from '../hooks/useUserId';
 import { GET_USER } from '../gql/user.queries';
 import { ApolloFetchPolicy } from '../common/apollo';
+import { User } from '../types/graphql';
+import { BlackBlock } from '../common/common.styles';
 
-export const withCurrentUser = (BaseComponent: ComponentType) => {
+export const withCurrentUser = (BaseComponent: (currentUser?: { currentUser?: User }) => JSX.Element) => {
   return (props: any) => {
     const { userId } = useUserId();
 
@@ -14,6 +16,12 @@ export const withCurrentUser = (BaseComponent: ComponentType) => {
       fetchPolicy: ApolloFetchPolicy.NetworkOnly,
     });
 
-    return data?.getUser ? <BaseComponent {...props} currentUser={data?.getUser} /> : <ActivityIndicator />;
+    return data?.getUser ? (
+      <BaseComponent {...props} currentUser={data?.getUser} />
+    ) : (
+      <BlackBlock>
+        <ActivityIndicator />
+      </BlackBlock>
+    );
   };
 };

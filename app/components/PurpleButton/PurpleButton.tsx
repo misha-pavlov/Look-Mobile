@@ -4,11 +4,12 @@ import { PurpleButtonBlock, PurpleButtonText } from './PurpleButton.styles';
 type TPurpleButton = {
   text: string;
   onPress: VoidFunction;
+  isCreatePostScreen?: boolean;
 };
 
-const PurpleButton: React.FC<TPurpleButton> = ({ text, onPress }) => {
+const PurpleButton: React.FC<TPurpleButton> = ({ text, onPress, isCreatePostScreen }) => {
   return (
-    <PurpleButtonBlock onPress={onPress}>
+    <PurpleButtonBlock onPress={onPress} isCreatePostScreen={isCreatePostScreen}>
       <PurpleButtonText>{text}</PurpleButtonText>
     </PurpleButtonBlock>
   );

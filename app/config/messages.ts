@@ -7,4 +7,9 @@ export const messages = {
   logIn: 'Log in',
   welcome: 'Welcome!',
   welcomeBack: 'Welcome back!',
+
+  /* Post */
+  addTags: '# Add Tags',
+  createPost: 'Create Post',
+  urlIsNotImage: 'Url is not image',
 };

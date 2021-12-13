@@ -7,8 +7,10 @@ import { colors } from '../../../../config/colors';
 import { withCurrentUser } from '../../../../hocs/withCurrentUser';
 import { screens } from '../../../../config/screens';
 import { NAppNavigatorNavigationProp } from '../../../../navigation/types/AppNavigator.types';
+import { User } from '../../../../types/graphql';
+import { common } from '../../../../common/common.styles';
 
-const HeaderWithUser = (currentUser?: any) => {
+const HeaderWithUser = (currentUser?: { currentUser?: User }) => {
   const { navigate } = useNavigation<NAppNavigatorNavigationProp<'UserProfile'>>();
 
   return (
@@ -20,7 +22,7 @@ const HeaderWithUser = (currentUser?: any) => {
           }}
           style={s.img}
           PlaceholderContent={<ActivityIndicator color={colors.white} />}
-          placeholderStyle={s.placeholder}
+          placeholderStyle={common.placeholder}
         />
         <UserNameText>{currentUser?.currentUser?.userName}</UserNameText>
       </HeaderWithUserTouchable>
