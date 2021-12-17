@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, TextInput } from 'react-native';
-import { BottomSheet, Image } from 'react-native-elements';
+import { ActivityIndicator, KeyboardAvoidingView, TextInput } from 'react-native';
+import { Image } from 'react-native-elements';
 import { EvilIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useMutation } from '@apollo/client';
@@ -20,6 +20,7 @@ import {
   BottomSheetHideBlock,
   TagTextBlock,
   TagDelete,
+  CustomBottomSheet,
 } from './CreatePost.styles';
 import { withCurrentUser } from '../../hocs/withCurrentUser';
 import { User } from '../../types/graphql';
@@ -31,6 +32,7 @@ import { isImageUrl } from '../../helpers/isImageUrl';
 import AddTagForm from './components/AddTagForm';
 import { TTags } from '../../types/customTypes';
 import { CREATE_POST } from './gql/CreatePosts.mutations';
+import { getKeyboardVerticalOffset, keyboardBehaviorDependsOnPlatform } from '../../config/platform';
 
 const CreatePost = (currentUser?: { currentUser?: User }) => {
   const navigation = useNavigation();
@@ -82,6 +84,8 @@ const CreatePost = (currentUser?: { currentUser?: User }) => {
       navigation.goBack();
     }
   };
+
+  const keyboardVerticalOffset = getKeyboardVerticalOffset();
 
   return (
     <CreatePostBlock>
@@ -139,16 +143,21 @@ const CreatePost = (currentUser?: { currentUser?: User }) => {
       <PurpleButton text={messages.createPost} onPress={handleSubmit} isCreatePostScreen />
 
       {/* Bottom sheet with add tag */}
-      <BottomSheet isVisible={isVisible}>
-        <BottomSheetBlock>
-          <BottomSheetHideBlock>
-            <BottomSheetHide onPress={() => setIsVisible(!isVisible)}>
-              <AddTagsText isHide>{messages.hide}</AddTagsText>
-            </BottomSheetHide>
-          </BottomSheetHideBlock>
-          <AddTagForm setTags={setTags} tags={tags?.tags} />
-        </BottomSheetBlock>
-      </BottomSheet>
+      <CustomBottomSheet isVisible={isVisible}>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={keyboardBehaviorDependsOnPlatform}
+          keyboardVerticalOffset={keyboardVerticalOffset}>
+          <BottomSheetBlock>
+            <BottomSheetHideBlock>
+              <BottomSheetHide onPress={() => setIsVisible(!isVisible)}>
+                <AddTagsText isHide>{messages.hide}</AddTagsText>
+              </BottomSheetHide>
+            </BottomSheetHideBlock>
+            <AddTagForm setTags={setTags} tags={tags?.tags} />
+          </BottomSheetBlock>
+        </KeyboardAvoidingView>
+      </CustomBottomSheet>
     </CreatePostBlock>
   );
 };

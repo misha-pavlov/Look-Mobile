@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import { colors } from '../../config/colors';
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 export const CreatePostBlock = styled.ScrollView`
   flex: 1;
@@ -67,9 +67,8 @@ export const UrlIsNotImage = styled.Text`
   margin-bottom: 35px;
 `;
 
-export const BottomSheetBlock = styled.View`
+export const BottomSheetBlock = styled.ScrollView`
   background-color: ${colors.black};
-  height: 200px;
 `;
 
 export const BottomSheetHide = styled.TouchableOpacity`
@@ -79,6 +78,12 @@ export const BottomSheetHide = styled.TouchableOpacity`
 
 export const BottomSheetHideBlock = styled.View`
   align-items: flex-end;
+`;
+
+export const CustomBottomSheet = styled.View<{ isVisible: boolean }>`
+  position: absolute;
+  bottom: ${0 - Dimensions.get('screen').height / 4}px;
+  height: ${({ isVisible }) => (isVisible ? 400 : 0)}px;
 `;
 
 export const s = StyleSheet.create({

@@ -21,7 +21,7 @@ const AddTagForm: React.FC<TAddTagForm> = ({ setTags, tags }) => {
   return (
     <AddTagBlock>
       <AddTagInput value={tagInput} onChangeText={e => setTagInput(e)} />
-      <AddTagButton onPress={handleSubmit}>
+      <AddTagButton onPress={handleSubmit} disabled={tagInput === ''}>
         <AddTagText>{messages.addTag}</AddTagText>
       </AddTagButton>
     </AddTagBlock>

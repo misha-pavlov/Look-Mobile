@@ -6,7 +6,8 @@ export const AddTagBlock = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 15px;
+  padding: 10px;
+  width: 100%;
 `;
 
 export const AddTagInput = styled.TextInput`
