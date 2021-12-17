@@ -77,7 +77,7 @@ const CreatePost = (currentUser?: { currentUser?: User }) => {
     const userId = currentUser?.currentUser?._id;
     if (userId) {
       mutate({
-        variables: { userId, img: imageUrl, title: postText, tags },
+        variables: { userId, title: postText, img: imageUrl, tags: tags.tags },
       });
       navigation.goBack();
     }
