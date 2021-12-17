@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Input } from 'react-native-elements';
 import { Entypo, Ionicons, MaterialIcons, FontAwesome } from '@expo/vector-icons';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import { ErrorText, InputBlock, s } from './SignUpForm.styles';
 import { colors } from '../../../../config/colors';
 import PurpleButton from '../../../../components/PurpleButton/PurpleButton';

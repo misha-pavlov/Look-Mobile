@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { ActivityIndicator } from 'react-native';
 import { useUserId } from '../hooks/useUserId';
 import { GET_USER } from '../gql/user.queries';

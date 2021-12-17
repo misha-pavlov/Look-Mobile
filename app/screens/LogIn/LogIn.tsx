@@ -1,7 +1,7 @@
 import React from 'react';
 import { Octicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { BackBlock, SignUpBlock, WelcomeText } from '../SignUp/SignUp.styles';
 import { colors } from '../../config/colors';
 import { messages } from '../../config/messages';

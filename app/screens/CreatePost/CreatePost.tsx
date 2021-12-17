@@ -3,7 +3,7 @@ import { ActivityIndicator, TextInput } from 'react-native';
 import { BottomSheet, Image } from 'react-native-elements';
 import { EvilIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { useMutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 import {
   AddTagsButton,
   CreatePostBlock,
