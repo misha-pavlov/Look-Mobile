@@ -34,24 +34,30 @@ export const AddTagsButton = styled.TouchableOpacity`
   background-color: ${colors.black};
 `;
 
-export const AddTagsText = styled.Text`
-  color: ${colors.gray};
+export const AddTagsText = styled.Text<{ isHide?: boolean }>`
+  color: ${({ isHide }) => (isHide ? colors.pink : colors.gray)};
   text-transform: uppercase;
 `;
 
-export const TagBlock = styled.TouchableOpacity`
+export const TagBlock = styled.View`
   background-color: ${colors.black1};
   border-radius: 50px;
   padding: 10px 15px;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 10px;
 `;
+
+export const TagTextBlock = styled.TouchableOpacity``;
 
 export const TagText = styled.Text`
   font-size: 12px;
   color: ${colors.white};
+  margin-right: 5px;
 `;
+
+export const TagDelete = styled.TouchableOpacity``;
 
 export const UrlIsNotImage = styled.Text`
   color: ${colors.white};
@@ -59,6 +65,20 @@ export const UrlIsNotImage = styled.Text`
   font-weight: 600;
   font-size: 17px;
   margin-bottom: 35px;
+`;
+
+export const BottomSheetBlock = styled.View`
+  background-color: ${colors.black};
+  height: 200px;
+`;
+
+export const BottomSheetHide = styled.TouchableOpacity`
+  width: 35px;
+  margin: 15px;
+`;
+
+export const BottomSheetHideBlock = styled.View`
+  align-items: flex-end;
 `;
 
 export const s = StyleSheet.create({

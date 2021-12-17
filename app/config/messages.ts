@@ -12,4 +12,6 @@ export const messages = {
   addTags: '# Add Tags',
   createPost: 'Create Post',
   urlIsNotImage: 'Url is not image',
+  hide: 'Hide',
+  addTag: 'Add Tag',
 };
