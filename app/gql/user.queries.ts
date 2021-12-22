@@ -6,6 +6,9 @@ export const GET_USER = gql`
       _id
       userName
       img
+      firstName
+      lastName
+      description
     }
   }
 `;

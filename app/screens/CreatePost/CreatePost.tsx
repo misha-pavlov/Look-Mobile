@@ -5,12 +5,10 @@ import { EvilIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useMutation } from '@apollo/client';
 import {
-  AddTagsButton,
   CreatePostBlock,
   GrayBlock,
   s,
   UserText,
-  AddTagsText,
   TagsBlock,
   TagBlock,
   TagText,
@@ -33,6 +31,8 @@ import AddTagForm from './components/AddTagForm';
 import { TTags } from '../../types/customTypes';
 import { CREATE_POST } from './gql/CreatePosts.mutations';
 import { getKeyboardVerticalOffset, keyboardBehaviorDependsOnPlatform } from '../../config/platform';
+import AddButtonText from '../../components/AddButtonText/AddButtonText';
+import { AddTagsText } from '../../components/AddButtonText/AddButtonText.styles';
 
 const CreatePost = (currentUser?: { currentUser?: User }) => {
   const navigation = useNavigation();
@@ -114,10 +114,7 @@ const CreatePost = (currentUser?: { currentUser?: User }) => {
 
       <TagsBlock>
         {getTags()}
-
-        <AddTagsButton onPress={() => setIsVisible(!isVisible)}>
-          <AddTagsText>{messages.addTags}</AddTagsText>
-        </AddTagsButton>
+        <AddButtonText text={messages.addTags} onPress={() => setIsVisible(!isVisible)} />
       </TagsBlock>
 
       <GrayBlock isTextInputWrapper>

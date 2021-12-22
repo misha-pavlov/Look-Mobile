@@ -14,4 +14,9 @@ export const messages = {
   urlIsNotImage: 'Url is not image',
   hide: 'Hide',
   addTag: 'Add Tag',
+
+  /* User Profile */
+  showMore: 'Show More',
+  showLess: 'Show Less',
+  addDesc: 'Add Description',
 };

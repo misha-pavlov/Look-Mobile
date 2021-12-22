@@ -30,15 +30,6 @@ export const TagsBlock = styled.View`
   align-items: center;
 `;
 
-export const AddTagsButton = styled.TouchableOpacity`
-  background-color: ${colors.black};
-`;
-
-export const AddTagsText = styled.Text<{ isHide?: boolean }>`
-  color: ${({ isHide }) => (isHide ? colors.pink : colors.gray)};
-  text-transform: uppercase;
-`;
-
 export const TagBlock = styled.View`
   background-color: ${colors.black1};
   border-radius: 50px;

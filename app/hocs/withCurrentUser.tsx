@@ -14,6 +14,7 @@ export const withCurrentUser = (BaseComponent: (currentUser?: { currentUser?: Us
     const { data } = useQuery(GET_USER, {
       variables: { userId },
       fetchPolicy: ApolloFetchPolicy.NetworkOnly,
+      pollInterval: 2000,
     });
 
     return data?.getUser ? (
