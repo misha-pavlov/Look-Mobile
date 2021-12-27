@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { View, Animated } from 'react-native';
 import { Divider, TabsBlock, TabsContainer } from './CustomProfileTabs.styles';
 import { UserProfileTabs } from './config/constants';
@@ -6,6 +6,7 @@ import { toValue } from './helpers/helpers';
 import Tab from './components/Tab/Tab';
 import { TCustomProfileTabsTypes } from './CustomProfileTabs.types';
 import Spinner from '../../../../components/Spinner/Spinner';
+import UserPosts from './components/UserPosts/UserPosts';
 
 const CustomProfileTabs: React.FC<TCustomProfileTabsTypes> = ({ currentUser, posts, loading }) => {
   const [activeTab, setActiveTab] = useState(UserProfileTabs.POSTS);
@@ -29,6 +30,14 @@ const CustomProfileTabs: React.FC<TCustomProfileTabsTypes> = ({ currentUser, pos
     setActiveTab(tabName);
     _start(tabName);
   };
+
+  const renderTabsContent = useCallback(() => {
+    if (isPostsTab) {
+      return <UserPosts posts={posts} loading={loading} />;
+    }
+
+    return null;
+  }, [posts, isPostsTab]);
 
   if (loading) {
     return <Spinner />;
@@ -66,6 +75,8 @@ const CustomProfileTabs: React.FC<TCustomProfileTabsTypes> = ({ currentUser, pos
             ],
           }}
         />
+
+        {renderTabsContent()}
       </TabsBlock>
     </View>
   );

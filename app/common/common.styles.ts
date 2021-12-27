@@ -15,4 +15,7 @@ export const common = StyleSheet.create({
   placeholder: {
     backgroundColor: colors.black,
   },
+  backImage: {
+    marginLeft: 15,
+  },
 });

@@ -23,4 +23,5 @@ export const screens = {
   /* User */
   UserProfile: 'UserProfile' as keyof NAppStackParamList,
   UserSettings: 'UserSettings' as keyof NAppStackParamList,
+  UserPostsList: 'UserPostsList' as keyof NAppStackParamList,
 };

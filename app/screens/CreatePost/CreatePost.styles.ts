@@ -5,6 +5,8 @@ import { Dimensions, StyleSheet } from 'react-native';
 export const CreatePostBlock = styled.ScrollView`
   flex: 1;
   background-color: ${colors.black};
+  padding-left: 15px;
+  padding-right: 15px;
 `;
 
 export const GrayBlock = styled.View<{ isTextInputWrapper?: boolean }>`

@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native';
 import { TUserProfile } from './UserProfile.types';
 import { NAppNavigatorNavigationProp } from '../../navigation/types/AppNavigator.types';
 // styles
-import { UserProfileContainer } from './UserProfile.styles';
+import { s, UserProfileContainer } from './UserProfile.styles';
 // components
 import UserProfileHeader from './components/UserProfileHeader/UserProfileHeader';
 import ShowMore from './components/ShowMore/ShowMore';
@@ -39,7 +39,7 @@ const UserProfile: React.FC<TUserProfile> = ({ currentUser }) => {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity onPress={() => navigation.navigate(screens.UserSettings)}>
-          <Ionicons name="settings-outline" size={25} style={{ marginRight: 10, marginTop: 10 }} color={colors.white} />
+          <Ionicons name="settings-outline" size={25} style={s.settings} color={colors.white} />
         </TouchableOpacity>
       ),
     });

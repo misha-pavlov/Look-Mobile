@@ -11,7 +11,7 @@ const withGetUserPosts = (BaseComponent: ComponentType<TCustomProfileTabsTypes>)
   WithGetUserPosts = props => {
     const { data, loading } = useQuery(GET_USER_POSTS, { variables: { userId: props.currentUser._id } });
 
-    return <BaseComponent {...props} posts={data.getUserPosts} loading={loading} />;
+    return <BaseComponent {...props} posts={data?.getUserPosts} loading={loading} />;
   };
 
   return WithGetUserPosts;

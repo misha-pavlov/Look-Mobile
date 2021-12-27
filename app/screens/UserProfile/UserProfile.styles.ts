@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { StyleSheet } from 'react-native';
 import { colors } from '../../config/colors';
 
 export const UserProfileContainer = styled.ScrollView`
@@ -14,3 +15,10 @@ export const UserProfileDesc = styled.Text`
 export const ShowMoreButtonText = styled.Text`
   color: ${colors.purple};
 `;
+
+export const s = StyleSheet.create({
+  settings: {
+    marginRight: 15,
+    marginTop: 10,
+  },
+});

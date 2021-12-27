@@ -5,8 +5,8 @@ export const toValue = (tabName: string) => {
     case UserProfileTabs.POSTS:
       return 1;
     case UserProfileTabs.FOLLOWERS:
-      return 100;
+      return 114;
     default:
-      return 237;
+      return 267;
   }
 };
