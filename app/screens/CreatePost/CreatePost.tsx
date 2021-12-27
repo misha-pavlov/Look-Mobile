@@ -4,6 +4,7 @@ import { Image } from 'react-native-elements';
 import { EvilIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useMutation } from '@apollo/client';
+// styles
 import {
   CreatePostBlock,
   GrayBlock,
@@ -20,19 +21,25 @@ import {
   TagDelete,
   CustomBottomSheet,
 } from './CreatePost.styles';
-import { withCurrentUser } from '../../hocs/withCurrentUser';
-import { User } from '../../types/graphql';
-import { colors } from '../../config/colors';
 import { common } from '../../common/common.styles';
-import { messages } from '../../config/messages';
-import PurpleButton from '../../components/PurpleButton/PurpleButton';
-import { isImageUrl } from '../../helpers/isImageUrl';
-import AddTagForm from './components/AddTagForm';
-import { TTags } from '../../types/customTypes';
-import { CREATE_POST } from './gql/CreatePosts.mutations';
-import { getKeyboardVerticalOffset, keyboardBehaviorDependsOnPlatform } from '../../config/platform';
-import AddButtonText from '../../components/AddButtonText/AddButtonText';
 import { AddTagsText } from '../../components/AddButtonText/AddButtonText.styles';
+// hocs
+import { withCurrentUser } from '../../hocs/withCurrentUser';
+// types
+import { User } from '../../types/graphql';
+import { TTags } from '../../types/customTypes';
+// constants
+import { colors } from '../../config/colors';
+import { messages } from '../../config/messages';
+// components
+import PurpleButton from '../../components/PurpleButton/PurpleButton';
+import AddTagForm from './components/AddTagForm';
+import AddButtonText from '../../components/AddButtonText/AddButtonText';
+// helpers
+import { isImageUrl } from '../../helpers/isImageUrl';
+import { getKeyboardVerticalOffset, keyboardBehaviorDependsOnPlatform } from '../../config/platform';
+// graphql
+import { CREATE_POST } from './gql/CreatePosts.mutations';
 
 const CreatePost = (currentUser?: { currentUser?: User }) => {
   const navigation = useNavigation();

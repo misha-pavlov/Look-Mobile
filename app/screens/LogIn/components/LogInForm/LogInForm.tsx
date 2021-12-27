@@ -3,11 +3,11 @@ import { View } from 'react-native';
 import { Input } from 'react-native-elements';
 import { Entypo, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import PurpleButton from '../../../../components/PurpleButton/PurpleButton';
 import { messages } from '../../../../config/messages';
 import { ErrorText, InputBlock, s } from '../../../SignUp/components/SignUpForm/SignUpForm.styles';
 import { colors } from '../../../../config/colors';
-import { useNavigation } from '@react-navigation/native';
 import { screens } from '../../../../config/screens';
 
 type TLogInForm = {

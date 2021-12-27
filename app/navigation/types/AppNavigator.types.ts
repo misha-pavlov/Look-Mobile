@@ -5,6 +5,7 @@ export type NAppStackParamList = {
   Posts: undefined;
   UserProfile: undefined;
   CreatePost: undefined;
+  UserSettings: undefined;
 };
 
 export type NAppNavigatorRouteProp<ScreenName extends keyof NAppStackParamList> = RouteProp<

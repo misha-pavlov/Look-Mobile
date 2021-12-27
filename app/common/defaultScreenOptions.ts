@@ -14,3 +14,20 @@ export const defaultScreenOptions = {
   headerBackTitleVisible: false,
   headerTitleStyle: { color: colors.black },
 };
+
+export const screenOptionsWithTitle = (title: string) => {
+  return {
+    headerStyle: {
+      backgroundColor: colors.black,
+      shadowRadius: 0,
+      shadowOffset: {
+        height: 0,
+        width: 0,
+      },
+    },
+    headerBackImage: () => HeaderBackImage,
+    headerBackTitleVisible: false,
+    headerTitleStyle: { color: colors.white },
+    title,
+  };
+};

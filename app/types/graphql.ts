@@ -99,6 +99,8 @@ export type User = {
   description?: Maybe<Scalars['String']>;
   email: Scalars['String'];
   firstName?: Maybe<Scalars['String']>;
+  followers?: Maybe<Array<Scalars['String']>>;
+  following?: Maybe<Array<Scalars['String']>>;
   img?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   password: Scalars['String'];
@@ -297,6 +299,8 @@ export type UserResolvers<
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  followers?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, ContextType>;
+  following?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, ContextType>;
   img?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   password?: Resolver<ResolversTypes['String'], ParentType, ContextType>;

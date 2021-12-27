@@ -19,4 +19,7 @@ export const messages = {
   showMore: 'Show More',
   showLess: 'Show Less',
   addDesc: 'Add Description',
+
+  /* User Settings */
+  settings: 'Settings',
 };

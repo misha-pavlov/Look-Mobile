@@ -9,6 +9,8 @@ export const GET_USER = gql`
       firstName
       lastName
       description
+      followers
+      following
     }
   }
 `;

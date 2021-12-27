@@ -16,10 +16,11 @@ export const screens = {
   SignUp: 'SignUp' as keyof NAuthStackParamList,
 
   /* Post */
-  /* Check and if need delete this row (19) */
+  /* Check and if need delete next row */
   Posts: 'Posts' as keyof NAppStackParamList,
   CreatePost: 'CreatePost' as keyof NAppStackParamList,
 
   /* User */
   UserProfile: 'UserProfile' as keyof NAppStackParamList,
+  UserSettings: 'UserSettings' as keyof NAppStackParamList,
 };
