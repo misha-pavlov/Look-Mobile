@@ -14,10 +14,12 @@ export const messages = {
   urlIsNotImage: 'Url is not image',
   hide: 'Hide',
   addTag: 'Add Tag',
+  enterComment: 'Enter Comment',
 
   /* User Profile */
   showMore: 'Show More',
   showLess: 'Show Less',
+  showAll: 'Show All',
   addDesc: 'Add Description',
 
   /* User Settings */

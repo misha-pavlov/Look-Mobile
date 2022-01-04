@@ -9,10 +9,7 @@ import { messages } from '../../../../config/messages';
 import { ErrorText, InputBlock, s } from '../../../SignUp/components/SignUpForm/SignUpForm.styles';
 import { colors } from '../../../../config/colors';
 import { screens } from '../../../../config/screens';
-
-type TLogInForm = {
-  users: Array<{ _id: string; email: string; userName: string; password: string }>;
-};
+import { TLogInForm } from '../../LogIn.types';
 
 const LogInForm: React.FC<TLogInForm> = ({ users }) => {
   const email = 'email';

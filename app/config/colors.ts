@@ -3,6 +3,7 @@ export const colors = {
 
   black: '#222',
   black1: '#1D1D20',
+  black2: '#303030',
 
   white: '#FFF',
 
@@ -12,6 +13,7 @@ export const colors = {
 
   gray: '#494949',
   gray1: '#4A4A4A',
+  gray2: '#4C4C4C',
 
   pink: '#FDA2AF',
 };

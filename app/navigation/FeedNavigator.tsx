@@ -7,7 +7,7 @@ import { defaultScreenOptions, screenOptionsWithTitle } from '../common/defaultS
 import { UserProfileContainer } from '../screens/UserProfile/UserProfileContainer';
 import UserSettings from '../screens/UserSettings/UserSettings';
 import { messages } from '../config/messages';
-import UserPostsList from '../screens/UserPostsList/UserPostsList';
+import { UserPostsListContainer } from '../screens/UserPostsList/UserPostsListContainer';
 
 const FeedStack = createStackNavigator();
 
@@ -21,7 +21,7 @@ const FeedNavigator = () => (
       name={screens.UserSettings}
       component={UserSettings}
     />
-    <FeedStack.Screen options={defaultScreenOptions} name={screens.UserPostsList} component={UserPostsList} />
+    <FeedStack.Screen options={defaultScreenOptions} name={screens.UserPostsList} component={UserPostsListContainer} />
   </FeedStack.Navigator>
 );
 

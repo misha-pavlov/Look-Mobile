@@ -3,7 +3,6 @@ import { useNavigation } from '@react-navigation/native';
 import { TUserPosts } from './UserPosts.types';
 import { UserPostsBlock } from './UserPosts.styles';
 import Spinner from '../../../../../../components/Spinner/Spinner';
-import { isImageUrl } from '../../../../../../helpers/isImageUrl';
 import Card from '../../../../../../components/Card/Card';
 import { screens } from '../../../../../../config/screens';
 import { NAppNavigatorNavigationProp } from '../../../../../../navigation/types/AppNavigator.types';
@@ -11,12 +10,10 @@ import { NAppNavigatorNavigationProp } from '../../../../../../navigation/types/
 const UserPosts: React.FC<TUserPosts> = ({ posts, loading }) => {
   const navigations = useNavigation<NAppNavigatorNavigationProp<'UserPostsList'>>();
 
-  const getPosts = posts?.map(p => {
-    if (isImageUrl(p.img)) {
-      return <Card key={p._id} post={p} onPress={() => navigations.navigate(screens.UserPostsList)} />;
-    }
-
-    return null;
+  const getPosts = posts?.map((p, index) => {
+    return (
+      <Card key={p._id} post={p} onPress={() => navigations.navigate(screens.UserPostsList, { indexItem: index })} />
+    );
   });
 
   if (loading) {

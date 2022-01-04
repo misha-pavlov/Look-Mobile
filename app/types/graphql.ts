@@ -26,10 +26,17 @@ export type Comment = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addComment: Posts;
   addPost: Posts;
   addUser: User;
   dummy?: Maybe<Scalars['Boolean']>;
   setDesc: User;
+};
+
+export type MutationAddCommentArgs = {
+  postId: Scalars['String'];
+  title: Scalars['String'];
+  userId: Scalars['String'];
 };
 
 export type MutationAddPostArgs = {
@@ -57,6 +64,7 @@ export type Posts = {
   createdByUserId: Scalars['String'];
   img: Scalars['String'];
   tags: Array<Maybe<Tag>>;
+  time?: Maybe<Scalars['String']>;
   title: Scalars['String'];
 };
 
@@ -225,6 +233,12 @@ export type MutationResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation'],
 > = {
+  addComment?: Resolver<
+    ResolversTypes['Posts'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationAddCommentArgs, 'postId' | 'title' | 'userId'>
+  >;
   addPost?: Resolver<
     ResolversTypes['Posts'],
     ParentType,
@@ -255,6 +269,7 @@ export type PostsResolvers<
   createdByUserId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   img?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   tags?: Resolver<Array<Maybe<ResolversTypes['Tag']>>, ParentType, ContextType>;
+  time?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

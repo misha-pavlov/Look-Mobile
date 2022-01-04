@@ -7,13 +7,13 @@ export const AddTagBlock = styled.View`
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  width: 100%;
+  width: 98%;
 `;
 
 export const AddTagInput = styled.TextInput`
   border-radius: 50px;
   border: 1px solid ${colors.purple};
-  width: ${Dimensions.get('screen').width - 100}px;
+  width: ${Dimensions.get('screen').width - 150}px;
   padding: 10px;
   color: ${colors.white};
 `;

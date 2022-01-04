@@ -18,4 +18,7 @@ export const common = StyleSheet.create({
   backImage: {
     marginLeft: 15,
   },
+  keyboard: {
+    flex: 1,
+  },
 });

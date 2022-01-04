@@ -88,7 +88,4 @@ export const s = StyleSheet.create({
   input: {
     color: colors.white,
   },
-  keyboard: {
-    flex: 1,
-  },
 });

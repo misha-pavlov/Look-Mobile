@@ -10,7 +10,7 @@ import { NAppNavigatorNavigationProp } from '../../../../navigation/types/AppNav
 import { User } from '../../../../types/graphql';
 import { common } from '../../../../common/common.styles';
 
-const HeaderWithUser = (currentUser?: { currentUser?: User }) => {
+const HeaderWithUser = (currentUser: { currentUser?: User }) => {
   const { navigate } = useNavigation<NAppNavigatorNavigationProp<'UserProfile'>>();
 
   return (

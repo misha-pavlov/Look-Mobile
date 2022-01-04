@@ -6,8 +6,8 @@ import { ApolloFetchPolicy } from '../common/apollo';
 import { User } from '../types/graphql';
 import Spinner from '../components/Spinner/Spinner';
 
-export const withCurrentUser = (BaseComponent: (currentUser?: { currentUser?: User }) => JSX.Element) => {
-  return (props: { props: { currentUser?: User } }) => {
+export const withCurrentUser = (BaseComponent: (currentUser: { currentUser?: User }) => JSX.Element) => {
+  return (props: { props?: { currentUser?: User } }) => {
     const { userId } = useUserId();
 
     const { data } = useQuery(GET_USER, {

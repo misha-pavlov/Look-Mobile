@@ -6,6 +6,7 @@ export const GET_USER_POSTS = gql`
       _id
       title
       img
+      time
       tags {
         _id
         title
@@ -15,9 +16,9 @@ export const GET_USER_POSTS = gql`
         title
         user {
           img
-          userName
         }
       }
+      time
       createdByUserId
     }
   }

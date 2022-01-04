@@ -149,7 +149,7 @@ const CreatePost = (currentUser?: { currentUser?: User }) => {
       {/* Bottom sheet with add tag */}
       <CustomBottomSheet isVisible={isVisible}>
         <KeyboardAvoidingView
-          style={s.keyboard}
+          style={common.keyboard}
           behavior={keyboardBehaviorDependsOnPlatform}
           keyboardVerticalOffset={keyboardVerticalOffset}>
           <BottomSheetBlock>

@@ -7,6 +7,8 @@ import Tab from './components/Tab/Tab';
 import { TCustomProfileTabsTypes } from './CustomProfileTabs.types';
 import Spinner from '../../../../components/Spinner/Spinner';
 import UserPosts from './components/UserPosts/UserPosts';
+import { isImageUrl } from '../../../../helpers/isImageUrl';
+import { Posts } from '../../../../types/graphql';
 
 const CustomProfileTabs: React.FC<TCustomProfileTabsTypes> = ({ currentUser, posts, loading }) => {
   const [activeTab, setActiveTab] = useState(UserProfileTabs.POSTS);
@@ -31,13 +33,15 @@ const CustomProfileTabs: React.FC<TCustomProfileTabsTypes> = ({ currentUser, pos
     _start(tabName);
   };
 
+  const realPosts = posts?.filter(p => isImageUrl(p.img)) as [Posts];
+
   const renderTabsContent = useCallback(() => {
     if (isPostsTab) {
-      return <UserPosts posts={posts} loading={loading} />;
+      return <UserPosts posts={realPosts} loading={loading} />;
     }
 
     return null;
-  }, [posts, isPostsTab]);
+  }, [realPosts, isPostsTab]);
 
   if (loading) {
     return <Spinner />;
@@ -49,7 +53,7 @@ const CustomProfileTabs: React.FC<TCustomProfileTabsTypes> = ({ currentUser, pos
         <TabsContainer>
           <Tab
             name={UserProfileTabs.POSTS}
-            count={posts.length.toString()}
+            count={realPosts.length.toString()}
             isActive={isPostsTab}
             onPress={() => onPressTab(UserProfileTabs.POSTS)}
           />
