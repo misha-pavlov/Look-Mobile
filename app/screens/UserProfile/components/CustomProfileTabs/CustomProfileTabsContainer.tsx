@@ -3,24 +3,37 @@ import { compose } from 'recompose';
 import { useQuery } from '@apollo/client';
 import CustomProfileTabs from './CustomProfileTabs';
 import { withGetUserPosts } from '../../../../hocs/withGetUserPosts';
-import { TCustomProfileTabsTypes } from './CustomProfileTabs.types';
-import { GET_FOLLOWERS } from './gql/CustomProfileTabs.queries';
-import { TUserProfile } from '../../UserProfile.types';
+import { TCustomProfileTabsContainer, TCustomProfileTabs } from './CustomProfileTabs.types';
+import { GET_FOLLOWERS, GET_FOLLOWING } from './gql/CustomProfileTabs.queries';
 
-const withFollowers = (BaseComponent: React.FC<TCustomProfileTabsTypes>) => {
-  return (props: TCustomProfileTabsTypes) => {
-    const { currentUser } = props;
+const withFollowers = (BaseComponent: React.FC<TCustomProfileTabs>) => {
+  return (props: TCustomProfileTabs) => {
+    const { user } = props;
 
     const { data, loading } = useQuery(GET_FOLLOWERS, {
-      variables: { userId: currentUser._id },
-      skip: currentUser._id === undefined,
+      variables: { userId: user._id },
+      skip: user._id === undefined,
     });
 
     return <BaseComponent {...props} followers={data?.getFollowers} loading={loading} />;
   };
 };
 
+const withFollowing = (BaseComponent: React.FC<TCustomProfileTabs>) => {
+  return (props: TCustomProfileTabs) => {
+    const { user } = props;
+
+    const { data, loading } = useQuery(GET_FOLLOWING, {
+      variables: { userId: user._id },
+      skip: user._id === undefined,
+    });
+
+    return <BaseComponent {...props} following={data?.getFollowing} loading={loading} />;
+  };
+};
+
 export const CustomProfileTabsContainer = compose(
   withGetUserPosts,
   withFollowers,
-)(CustomProfileTabs) as React.ComponentClass<TUserProfile>;
+  withFollowing,
+)(CustomProfileTabs) as React.ComponentClass<TCustomProfileTabsContainer>;

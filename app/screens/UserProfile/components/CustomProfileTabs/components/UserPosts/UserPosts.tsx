@@ -13,7 +13,13 @@ const UserPosts: React.FC<TUserPosts> = ({ posts, loading }) => {
 
   const getPosts = posts?.map((p, index) => {
     return (
-      <Card key={p._id} post={p} onPress={() => navigations.navigate(screens.UserPostsList, { indexItem: index })} />
+      <Card
+        key={p._id}
+        post={p}
+        onPress={() =>
+          navigations.navigate(screens.UserPostsList, { indexItem: index, createdByUserId: p.createdByUserId })
+        }
+      />
     );
   });
 

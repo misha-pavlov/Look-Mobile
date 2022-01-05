@@ -13,10 +13,17 @@ import Spinner from '../../../../components/Spinner/Spinner';
 import UserPosts from './components/UserPosts/UserPosts';
 import UsersList from './components/UsersList/UsersList';
 // types
-import { TCustomProfileTabsTypes } from './CustomProfileTabs.types';
+import { TCustomProfileTabs } from './CustomProfileTabs.types';
 import { Posts } from '../../../../types/graphql';
 
-const CustomProfileTabs: React.FC<TCustomProfileTabsTypes> = ({ currentUser, posts, loading, followers }) => {
+const CustomProfileTabs: React.FC<TCustomProfileTabs> = ({
+  currentUser,
+  user,
+  posts,
+  loading,
+  followers,
+  following,
+}) => {
   const [activeTab, setActiveTab] = useState(UserProfileTabs.POSTS);
   const slideInLeft = useRef(new Animated.Value(0)).current;
 
@@ -45,11 +52,10 @@ const CustomProfileTabs: React.FC<TCustomProfileTabsTypes> = ({ currentUser, pos
     if (isPostsTab) {
       return <UserPosts posts={realPosts} loading={loading} />;
     } else if (isFollowersTab) {
-      return <UsersList data={followers} loading={loading} />;
+      return <UsersList data={followers} loading={loading} currentUser={currentUser} />;
     }
-
-    return null;
-  }, [realPosts, isPostsTab]);
+    return <UsersList data={following} loading={loading} currentUser={currentUser} />;
+  }, [realPosts, isPostsTab, isFollowersTab]);
 
   if (loading) {
     return <Spinner />;
@@ -61,19 +67,19 @@ const CustomProfileTabs: React.FC<TCustomProfileTabsTypes> = ({ currentUser, pos
         <TabsContainer>
           <Tab
             name={UserProfileTabs.POSTS}
-            count={realPosts.length.toString()}
+            count={realPosts?.length.toString()}
             isActive={isPostsTab}
             onPress={() => onPressTab(UserProfileTabs.POSTS)}
           />
           <Tab
             name={UserProfileTabs.FOLLOWERS}
-            count={currentUser.followers.length.toString()}
+            count={user.followers.length.toString()}
             isActive={isFollowersTab}
             onPress={() => onPressTab(UserProfileTabs.FOLLOWERS)}
           />
           <Tab
             name={UserProfileTabs.FOLLOWING}
-            count={currentUser.following.length.toString()}
+            count={user.following.length.toString()}
             isActive={isFollowingTab}
             onPress={() => onPressTab(UserProfileTabs.FOLLOWING)}
           />

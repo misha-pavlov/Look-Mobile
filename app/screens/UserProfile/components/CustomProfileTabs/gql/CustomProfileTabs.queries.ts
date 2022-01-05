@@ -38,3 +38,18 @@ export const GET_FOLLOWERS = gql`
     }
   }
 `;
+
+export const GET_FOLLOWING = gql`
+  query getFollowing($userId: String!) {
+    getFollowing(userId: $userId) {
+      _id
+      userName
+      img
+      firstName
+      lastName
+      description
+      followers
+      following
+    }
+  }
+`;

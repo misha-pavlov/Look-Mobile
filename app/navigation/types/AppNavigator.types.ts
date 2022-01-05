@@ -11,6 +11,7 @@ export type NAppStackParamList = {
   UserSettings: undefined;
   UserPostsList: {
     indexItem: number;
+    createdByUserId: string;
   };
 };
 

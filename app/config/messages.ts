@@ -24,4 +24,8 @@ export const messages = {
 
   /* User Settings */
   settings: 'Settings',
+
+  /* Users */
+  follow: 'Follow',
+  following: 'Following',
 };

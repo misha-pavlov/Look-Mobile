@@ -60,7 +60,7 @@ const UserProfile: React.FC<TUserProfile> = ({ currentUser }) => {
     <UserProfileContainer>
       <UserProfileHeader currentUser={user} />
       {description()}
-      <CustomProfileTabsContainer currentUser={user} />
+      <CustomProfileTabsContainer user={user} currentUser={currentUser} />
     </UserProfileContainer>
   );
 };

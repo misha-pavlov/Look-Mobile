@@ -9,6 +9,7 @@ import { UserPostsListContainer } from './UserPostsList.styles';
 import { NAppNavigatorRouteProp } from '../../navigation/types/AppNavigator.types';
 import { getKeyboardVerticalOffset, keyboardBehaviorDependsOnPlatform } from '../../config/platform';
 import { common } from '../../common/common.styles';
+import { screens } from '../../config/screens';
 
 const UserPostsList: React.FC<TUserPostsList> = ({ currentUser, posts }) => {
   const navigation = useNavigation();
@@ -16,7 +17,7 @@ const UserPostsList: React.FC<TUserPostsList> = ({ currentUser, posts }) => {
   const flatListRef = useRef(null);
 
   useEffect(() => {
-    navigation.setOptions({ headerTitle: `${currentUser.userName} posts`, headerTitleStyle: { color: colors.white } });
+    navigation.setOptions({ headerTitle: screens.Posts, headerTitleStyle: { color: colors.white } });
     flatListRef.current.scrollToIndex({ animated: true, index: params.indexItem });
   }, []);
 
