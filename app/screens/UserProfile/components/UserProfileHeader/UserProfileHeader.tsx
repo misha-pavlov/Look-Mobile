@@ -10,6 +10,7 @@ import {
 } from './UserProfileHeader.styles';
 import { colors } from '../../../../config/colors';
 import { common } from '../../../../common/common.styles';
+import { constants } from '../../../../config/constants';
 
 const UserProfileHeader: React.FC<TUserProfile> = ({ currentUser }) => {
   const showRealName = useCallback(() => {
@@ -20,13 +21,13 @@ const UserProfileHeader: React.FC<TUserProfile> = ({ currentUser }) => {
     }
 
     return null;
-  }, []);
+  }, [currentUser]);
 
   return (
     <UserProfileHeaderContainer>
       <Image
         source={{
-          uri: currentUser?.img,
+          uri: currentUser?.img ? currentUser?.img : constants.userMock,
         }}
         style={s.img}
         PlaceholderContent={<ActivityIndicator color={colors.white} />}

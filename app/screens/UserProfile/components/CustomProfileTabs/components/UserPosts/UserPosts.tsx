@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { ScrollView } from 'react-native';
 import { TUserPosts } from './UserPosts.types';
 import { UserPostsBlock } from './UserPosts.styles';
 import Spinner from '../../../../../../components/Spinner/Spinner';
@@ -20,7 +21,11 @@ const UserPosts: React.FC<TUserPosts> = ({ posts, loading }) => {
     return <Spinner />;
   }
 
-  return <UserPostsBlock>{getPosts}</UserPostsBlock>;
+  return (
+    <ScrollView>
+      <UserPostsBlock>{getPosts}</UserPostsBlock>
+    </ScrollView>
+  );
 };
 
 export default UserPosts;

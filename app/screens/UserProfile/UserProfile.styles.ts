@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import { StyleSheet } from 'react-native';
 import { colors } from '../../config/colors';
 
-export const UserProfileContainer = styled.ScrollView`
+export const UserProfileContainer = styled.View`
   flex: 1;
   background-color: ${colors.black};
   padding: 0 20px;

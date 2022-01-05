@@ -1,9 +1,12 @@
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { User } from '../../types/graphql';
 
 export type NAppStackParamList = {
   Posts: undefined;
-  UserProfile: undefined;
+  UserProfile: {
+    user: User;
+  };
   CreatePost: undefined;
   UserSettings: undefined;
   UserPostsList: {

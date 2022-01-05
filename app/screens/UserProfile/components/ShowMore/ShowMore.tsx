@@ -3,12 +3,12 @@ import { TouchableOpacity, View } from 'react-native';
 import { UserProfileDesc, ShowMoreButtonText } from '../../UserProfile.styles';
 import { messages } from '../../../../config/messages';
 
-const ShowMore = ({ value, onPress }: { value: string; onPress: VoidFunction }) => {
+const ShowMore = ({ value, onPress, disabled }: { value: string; onPress: VoidFunction; disabled?: boolean }) => {
   const [showMore, setShowMore] = useState(false);
 
-  if (value.length < 50) {
+  if (value?.length < 50 || !value) {
     return (
-      <TouchableOpacity onPress={onPress}>
+      <TouchableOpacity onPress={onPress} disabled={disabled}>
         <UserProfileDesc>{value}</UserProfileDesc>
       </TouchableOpacity>
     );
@@ -16,11 +16,11 @@ const ShowMore = ({ value, onPress }: { value: string; onPress: VoidFunction }) 
 
   return (
     <View>
-      <TouchableOpacity onPress={onPress}>
-        <UserProfileDesc>{showMore ? value.trim() : `${value.slice(0, 50).trim()}...`}</UserProfileDesc>
+      <TouchableOpacity onPress={onPress} disabled={disabled}>
+        <UserProfileDesc>{showMore ? value.trim() : `${value.slice(0, 50)?.trim()}...`}</UserProfileDesc>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => setShowMore(!showMore)}>
+      <TouchableOpacity onPress={() => setShowMore(!showMore)} disabled={disabled}>
         <ShowMoreButtonText>{showMore ? messages.showLess : messages.showMore}</ShowMoreButtonText>
       </TouchableOpacity>
     </View>

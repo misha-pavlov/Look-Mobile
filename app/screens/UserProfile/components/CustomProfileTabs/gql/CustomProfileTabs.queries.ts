@@ -23,3 +23,18 @@ export const GET_USER_POSTS = gql`
     }
   }
 `;
+
+export const GET_FOLLOWERS = gql`
+  query getFollowers($userId: String!) {
+    getFollowers(userId: $userId) {
+      _id
+      userName
+      img
+      firstName
+      lastName
+      description
+      followers
+      following
+    }
+  }
+`;
