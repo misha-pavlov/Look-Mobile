@@ -5,6 +5,7 @@ export const GET_USER = gql`
     getUser(userId: $userId) {
       _id
       userName
+      email
       img
       firstName
       lastName

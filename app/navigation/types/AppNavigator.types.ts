@@ -13,6 +13,7 @@ export type NAppStackParamList = {
     indexItem: number;
     createdByUserId: string;
   };
+  EditProfile: undefined;
 };
 
 export type NAppNavigatorRouteProp<ScreenName extends keyof NAppStackParamList> = RouteProp<

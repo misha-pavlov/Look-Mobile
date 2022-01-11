@@ -11,8 +11,9 @@ export const isIphoneX = (): boolean => isIOS() && SCREEN_HEIGHT >= IPHONEX_HEIG
 
 export const getKeyboardVerticalOffset = (): number =>
   Platform.select({
-    ios: isIphoneX() ? 105 : 80,
+    ios: isIphoneX() ? 100 : 80,
     default: 0,
   });
 
-export const keyboardBehaviorDependsOnPlatform = isIOS() ? 'padding' : undefined;
+export const keyboardBehaviorDependsOnPlatform = isIOS() ? 'position' : undefined;
+export const keyboardBehaviorDependsOnPlatformForAddTag = isIOS() ? 'padding' : undefined;

@@ -7,6 +7,7 @@ export const messages = {
   logIn: 'Log in',
   welcome: 'Welcome!',
   welcomeBack: 'Welcome back!',
+  signOut: 'Sign Out',
 
   /* Post */
   addTags: '# Add Tags',
@@ -24,6 +25,10 @@ export const messages = {
 
   /* User Settings */
   settings: 'Settings',
+  editProfile: 'Edit Profile',
+  changePassword: 'Change Password',
+  pushNotifications: 'Push Notifications',
+  blockedUsers: 'Blocked Users',
 
   /* Users */
   follow: 'Follow',

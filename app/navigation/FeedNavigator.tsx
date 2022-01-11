@@ -8,6 +8,7 @@ import { UserProfileContainer } from '../screens/UserProfile/UserProfileContaine
 import UserSettings from '../screens/UserSettings/UserSettings';
 import { messages } from '../config/messages';
 import { UserPostsListContainer } from '../screens/UserPostsList/UserPostsListContainer';
+import { EditProfileContainer } from '../screens/EditProfile/EditProfileContainer';
 
 const FeedStack = createStackNavigator();
 
@@ -22,6 +23,11 @@ const FeedNavigator = () => (
       component={UserSettings}
     />
     <FeedStack.Screen options={defaultScreenOptions} name={screens.UserPostsList} component={UserPostsListContainer} />
+    <FeedStack.Screen
+      options={screenOptionsWithTitle(messages.editProfile)}
+      name={screens.EditProfile}
+      component={EditProfileContainer}
+    />
   </FeedStack.Navigator>
 );
 

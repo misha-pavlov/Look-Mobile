@@ -37,7 +37,7 @@ import AddTagForm from './components/AddTagForm';
 import AddButtonText from '../../components/AddButtonText/AddButtonText';
 // helpers
 import { isImageUrl } from '../../helpers/isImageUrl';
-import { getKeyboardVerticalOffset, keyboardBehaviorDependsOnPlatform } from '../../config/platform';
+import { getKeyboardVerticalOffset, keyboardBehaviorDependsOnPlatformForAddTag } from '../../config/platform';
 // graphql
 import { CREATE_POST } from './gql/CreatePosts.mutations';
 
@@ -150,7 +150,7 @@ const CreatePost = (currentUser?: { currentUser?: User }) => {
       <CustomBottomSheet isVisible={isVisible}>
         <KeyboardAvoidingView
           style={common.keyboard}
-          behavior={keyboardBehaviorDependsOnPlatform}
+          behavior={keyboardBehaviorDependsOnPlatformForAddTag}
           keyboardVerticalOffset={keyboardVerticalOffset}>
           <BottomSheetBlock>
             <BottomSheetHideBlock>
