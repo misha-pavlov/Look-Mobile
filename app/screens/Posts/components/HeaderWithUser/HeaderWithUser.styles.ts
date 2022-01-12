@@ -5,7 +5,6 @@ import { colors } from '../../../../config/colors';
 export const HeaderWithUserBlock = styled.View`
   background-color: ${colors.black};
   height: 100px;
-  padding-left: 25px;
   padding-top: 40px;
 `;
 

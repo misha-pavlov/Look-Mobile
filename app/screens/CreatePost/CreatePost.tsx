@@ -6,7 +6,6 @@ import { useNavigation } from '@react-navigation/native';
 import { useMutation } from '@apollo/client';
 // styles
 import {
-  CreatePostBlock,
   GrayBlock,
   s,
   UserText,
@@ -21,7 +20,7 @@ import {
   TagDelete,
   CustomBottomSheet,
 } from './CreatePost.styles';
-import { common } from '../../common/common.styles';
+import { common, DefaultContainer } from '../../common/common.styles';
 import { AddTagsText } from '../../components/AddButtonText/AddButtonText.styles';
 // hocs
 import { withCurrentUser } from '../../hocs/withCurrentUser';
@@ -95,7 +94,7 @@ const CreatePost = (currentUser?: { currentUser?: User }) => {
   const keyboardVerticalOffset = getKeyboardVerticalOffset();
 
   return (
-    <CreatePostBlock>
+    <DefaultContainer>
       <GrayBlock>
         <Image
           source={{
@@ -162,7 +161,7 @@ const CreatePost = (currentUser?: { currentUser?: User }) => {
           </BottomSheetBlock>
         </KeyboardAvoidingView>
       </CustomBottomSheet>
-    </CreatePostBlock>
+    </DefaultContainer>
   );
 };
 

@@ -29,6 +29,7 @@ export const messages = {
   changePassword: 'Change Password',
   pushNotifications: 'Push Notifications',
   blockedUsers: 'Blocked Users',
+  wrongOldPassword: 'Old password is wrong!',
 
   /* Users */
   follow: 'Follow',

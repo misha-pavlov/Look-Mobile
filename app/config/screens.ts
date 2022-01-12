@@ -24,4 +24,5 @@ export const screens = {
   UserSettings: 'UserSettings' as keyof NAppStackParamList,
   UserPostsList: 'UserPostsList' as keyof NAppStackParamList,
   EditProfile: 'EditProfile' as keyof NAppStackParamList,
+  ChangePassword: 'ChangePassword' as keyof NAppStackParamList,
 };

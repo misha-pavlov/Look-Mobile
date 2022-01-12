@@ -1,13 +1,6 @@
 import styled from 'styled-components/native';
 import { colors } from '../../config/colors';
 
-export const SettingsBlock = styled.View`
-  flex: 1;
-  background-color: ${colors.black};
-  padding-left: 15px;
-  padding-right: 15px;
-`;
-
 export const SettingItemTouchable = styled.TouchableOpacity<{ isOffMarginTop?: boolean; isBigMargin?: boolean }>`
   ${({ isOffMarginTop }) => !isOffMarginTop && 'margin-top: 25px'};
   ${({ isBigMargin }) => isBigMargin && 'margin-top: 45px'};

@@ -5,10 +5,9 @@ import { TUserPostsList } from './UserPostsList.types';
 import { colors } from '../../config/colors';
 import PostItem from './components/PostItem/PostItem';
 import { Posts } from '../../types/graphql';
-import { UserPostsListContainer } from './UserPostsList.styles';
 import { NAppNavigatorRouteProp } from '../../navigation/types/AppNavigator.types';
 import { getKeyboardVerticalOffset, keyboardBehaviorDependsOnPlatform } from '../../config/platform';
-import { common } from '../../common/common.styles';
+import { common, DefaultContainer } from '../../common/common.styles';
 import { screens } from '../../config/screens';
 
 const UserPostsList: React.FC<TUserPostsList> = ({ currentUser, posts }) => {
@@ -30,7 +29,7 @@ const UserPostsList: React.FC<TUserPostsList> = ({ currentUser, posts }) => {
   const keyboardVerticalOffset = getKeyboardVerticalOffset();
 
   return (
-    <UserPostsListContainer>
+    <DefaultContainer>
       <KeyboardAvoidingView
         style={common.keyboard}
         behavior={keyboardBehaviorDependsOnPlatform}
@@ -43,7 +42,7 @@ const UserPostsList: React.FC<TUserPostsList> = ({ currentUser, posts }) => {
           getItemLayout={getItemLayout}
         />
       </KeyboardAvoidingView>
-    </UserPostsListContainer>
+    </DefaultContainer>
   );
 };
 

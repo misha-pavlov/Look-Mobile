@@ -106,6 +106,8 @@ const LogInForm: React.FC<TLogInForm> = ({ users }) => {
           style={s.input}
           secureTextEntry={!showPassword}
           placeholderTextColor={colors.white}
+          autoCapitalize="none"
+          autoCorrect={false}
         />
         {state.formErrors.password !== '' && <ErrorText>{state.formErrors.password}</ErrorText>}
       </InputBlock>

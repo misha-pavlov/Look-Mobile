@@ -2,11 +2,6 @@ import { StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
 import { colors } from '../../config/colors';
 
-export const PostsBlock = styled.View`
-  flex: 1;
-  background-color: ${colors.black};
-`;
-
 export const PlusButton = styled.TouchableOpacity`
   position: absolute;
   bottom: 40px;

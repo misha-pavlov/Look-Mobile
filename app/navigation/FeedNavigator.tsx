@@ -1,14 +1,18 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+// constants
 import { screens } from '../config/screens';
+import { messages } from '../config/messages';
+// helpers
+import { defaultScreenOptions, screenOptionsWithTitle } from '../common/defaultScreenOptions';
+// screens
 import Posts from '../screens/Posts/Posts';
 import CreatePost from '../screens/CreatePost/CreatePost';
-import { defaultScreenOptions, screenOptionsWithTitle } from '../common/defaultScreenOptions';
 import { UserProfileContainer } from '../screens/UserProfile/UserProfileContainer';
 import UserSettings from '../screens/UserSettings/UserSettings';
-import { messages } from '../config/messages';
 import { UserPostsListContainer } from '../screens/UserPostsList/UserPostsListContainer';
 import { EditProfileContainer } from '../screens/EditProfile/EditProfileContainer';
+import { ChangePasswordContainer } from '../screens/ChangePassword/ChangePasswordContainer';
 
 const FeedStack = createStackNavigator();
 
@@ -27,6 +31,11 @@ const FeedNavigator = () => (
       options={screenOptionsWithTitle(messages.editProfile)}
       name={screens.EditProfile}
       component={EditProfileContainer}
+    />
+    <FeedStack.Screen
+      options={screenOptionsWithTitle(messages.changePassword)}
+      name={screens.ChangePassword}
+      component={ChangePasswordContainer}
     />
   </FeedStack.Navigator>
 );

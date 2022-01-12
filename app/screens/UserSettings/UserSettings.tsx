@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Switch } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { PushNotificationBlock, SettingItemText, SettingItemTouchable, SettingsBlock } from './UserSettings.styles';
+import { PushNotificationBlock, SettingItemText, SettingItemTouchable } from './UserSettings.styles';
 import { messages } from '../../config/messages';
 import { colors } from '../../config/colors';
 import { screens } from '../../config/screens';
 import { NAppNavigatorNavigationProp } from '../../navigation/types/AppNavigator.types';
+import { DefaultContainer } from '../../common/common.styles';
 
 const UserSettings = () => {
   const { navigate } = useNavigation<NAppNavigatorNavigationProp<'EditProfile'>>();
@@ -13,12 +14,12 @@ const UserSettings = () => {
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   return (
-    <SettingsBlock>
+    <DefaultContainer>
       <SettingItemTouchable onPress={() => navigate(screens.EditProfile)}>
         <SettingItemText>{messages.editProfile}</SettingItemText>
       </SettingItemTouchable>
 
-      <SettingItemTouchable>
+      <SettingItemTouchable onPress={() => navigate(screens.ChangePassword)}>
         <SettingItemText>{messages.changePassword}</SettingItemText>
       </SettingItemTouchable>
 
@@ -44,7 +45,7 @@ const UserSettings = () => {
       <SettingItemTouchable isBigMargin>
         <SettingItemText>{messages.signOut}</SettingItemText>
       </SettingItemTouchable>
-    </SettingsBlock>
+    </DefaultContainer>
   );
 };
 
