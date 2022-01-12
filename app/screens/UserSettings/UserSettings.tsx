@@ -23,7 +23,7 @@ const UserSettings = () => {
         <SettingItemText>{messages.changePassword}</SettingItemText>
       </SettingItemTouchable>
 
-      <SettingItemTouchable>
+      <SettingItemTouchable onPress={() => navigate(screens.BlockedUsers)}>
         <SettingItemText>{messages.blockedUsers}</SettingItemText>
       </SettingItemTouchable>
 

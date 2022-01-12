@@ -15,6 +15,7 @@ export type NAppStackParamList = {
   };
   EditProfile: undefined;
   ChangePassword: undefined;
+  BlockedUsers: undefined;
 };
 
 export type NAppNavigatorRouteProp<ScreenName extends keyof NAppStackParamList> = RouteProp<

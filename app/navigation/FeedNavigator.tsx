@@ -13,6 +13,7 @@ import UserSettings from '../screens/UserSettings/UserSettings';
 import { UserPostsListContainer } from '../screens/UserPostsList/UserPostsListContainer';
 import { EditProfileContainer } from '../screens/EditProfile/EditProfileContainer';
 import { ChangePasswordContainer } from '../screens/ChangePassword/ChangePasswordContainer';
+import { BlockedUsersContainer } from '../screens/BlockedUsers/BlockedUsersContainer';
 
 const FeedStack = createStackNavigator();
 
@@ -36,6 +37,11 @@ const FeedNavigator = () => (
       options={screenOptionsWithTitle(messages.changePassword)}
       name={screens.ChangePassword}
       component={ChangePasswordContainer}
+    />
+    <FeedStack.Screen
+      options={screenOptionsWithTitle(messages.blockedUsers)}
+      name={screens.BlockedUsers}
+      component={BlockedUsersContainer}
     />
   </FeedStack.Navigator>
 );

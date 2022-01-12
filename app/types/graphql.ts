@@ -29,6 +29,9 @@ export type Mutation = {
   addComment: Posts;
   addPost: Posts;
   addUser: User;
+  changePassword: User;
+  changeUserMainFields: User;
+  doFollow: User;
   dummy?: Maybe<Scalars['Boolean']>;
   setDesc: User;
 };
@@ -52,6 +55,26 @@ export type MutationAddUserArgs = {
   userName: Scalars['String'];
 };
 
+export type MutationChangePasswordArgs = {
+  newPassword: Scalars['String'];
+  userId: Scalars['String'];
+};
+
+export type MutationChangeUserMainFieldsArgs = {
+  email: Scalars['String'];
+  firstName?: InputMaybe<Scalars['String']>;
+  img?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']>;
+  userId: Scalars['String'];
+  userName: Scalars['String'];
+};
+
+export type MutationDoFollowArgs = {
+  followUserId: Scalars['String'];
+  isFollow: Scalars['Boolean'];
+  userId: Scalars['String'];
+};
+
 export type MutationSetDescArgs = {
   newDesc: Scalars['String'];
   userId: Scalars['String'];
@@ -71,10 +94,25 @@ export type Posts = {
 export type Query = {
   __typename?: 'Query';
   dummy?: Maybe<Scalars['Boolean']>;
+  getBlocked: Array<User>;
+  getFollowers: Array<User>;
+  getFollowing: Array<User>;
   getUser: User;
   getUserPosts: Array<Posts>;
   posts: Array<Posts>;
   users: Array<User>;
+};
+
+export type QueryGetBlockedArgs = {
+  userId: Scalars['String'];
+};
+
+export type QueryGetFollowersArgs = {
+  userId: Scalars['String'];
+};
+
+export type QueryGetFollowingArgs = {
+  userId: Scalars['String'];
 };
 
 export type QueryGetUserArgs = {
@@ -104,6 +142,7 @@ export type TagInput = {
 export type User = {
   __typename?: 'User';
   _id: Scalars['String'];
+  blocked?: Maybe<Array<Scalars['String']>>;
   description?: Maybe<Scalars['String']>;
   email: Scalars['String'];
   firstName?: Maybe<Scalars['String']>;
@@ -251,6 +290,24 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationAddUserArgs, 'email' | 'password' | 'userName'>
   >;
+  changePassword?: Resolver<
+    ResolversTypes['User'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationChangePasswordArgs, 'newPassword' | 'userId'>
+  >;
+  changeUserMainFields?: Resolver<
+    ResolversTypes['User'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationChangeUserMainFieldsArgs, 'email' | 'userId' | 'userName'>
+  >;
+  doFollow?: Resolver<
+    ResolversTypes['User'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationDoFollowArgs, 'followUserId' | 'isFollow' | 'userId'>
+  >;
   dummy?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   setDesc?: Resolver<
     ResolversTypes['User'],
@@ -279,6 +336,24 @@ export type QueryResolvers<
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
 > = {
   dummy?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  getBlocked?: Resolver<
+    Array<ResolversTypes['User']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryGetBlockedArgs, 'userId'>
+  >;
+  getFollowers?: Resolver<
+    Array<ResolversTypes['User']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryGetFollowersArgs, 'userId'>
+  >;
+  getFollowing?: Resolver<
+    Array<ResolversTypes['User']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryGetFollowingArgs, 'userId'>
+  >;
   getUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetUserArgs, 'userId'>>;
   getUserPosts?: Resolver<
     Array<ResolversTypes['Posts']>,
@@ -311,6 +386,7 @@ export type UserResolvers<
   ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User'],
 > = {
   _id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  blocked?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
