@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Switch } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PushNotificationBlock, SettingItemText, SettingItemTouchable } from './UserSettings.styles';
 import { messages } from '../../config/messages';
 import { colors } from '../../config/colors';
@@ -9,9 +10,13 @@ import { NAppNavigatorNavigationProp } from '../../navigation/types/AppNavigator
 import { DefaultContainer } from '../../common/common.styles';
 
 const UserSettings = () => {
-  const { navigate } = useNavigation<NAppNavigatorNavigationProp<'EditProfile'>>();
+  const { navigate, getParent } = useNavigation<NAppNavigatorNavigationProp<'EditProfile'>>();
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+  const signOut = useCallback(() => {
+    AsyncStorage.removeItem('userId').then(() => getParent().navigate(screens.Start));
+  }, []);
 
   return (
     <DefaultContainer>
@@ -42,7 +47,7 @@ const UserSettings = () => {
         />
       </PushNotificationBlock>
 
-      <SettingItemTouchable isBigMargin>
+      <SettingItemTouchable isBigMargin onPress={signOut}>
         <SettingItemText>{messages.signOut}</SettingItemText>
       </SettingItemTouchable>
     </DefaultContainer>
