@@ -29,12 +29,15 @@ export const GET_FOLLOWERS = gql`
     getFollowers(userId: $userId) {
       _id
       userName
+      email
       img
       firstName
       lastName
       description
       followers
       following
+      password
+      blocked
     }
   }
 `;
@@ -44,12 +47,15 @@ export const GET_FOLLOWING = gql`
     getFollowing(userId: $userId) {
       _id
       userName
+      email
       img
       firstName
       lastName
       description
       followers
       following
+      password
+      blocked
     }
   }
 `;

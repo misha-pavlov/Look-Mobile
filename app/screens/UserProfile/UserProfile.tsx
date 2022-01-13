@@ -58,7 +58,7 @@ const UserProfile: React.FC<TUserProfile> = ({ currentUser }) => {
 
   return (
     <UserProfileContainer>
-      <UserProfileHeader currentUser={user} />
+      <UserProfileHeader user={!isEqualObjects(user, currentUser) && user} currentUser={currentUser} />
       {description()}
       <CustomProfileTabsContainer user={user} currentUser={currentUser} />
     </UserProfileContainer>

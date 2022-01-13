@@ -1,6 +1,5 @@
 import { User } from '../../types/graphql';
 
-export type TUserProfile = {
+export type TRecentMessages = {
   currentUser: User;
-  user?: User;
 };

@@ -35,4 +35,8 @@ export const messages = {
   follow: 'Follow',
   following: 'Following',
   unblock: 'Unblock',
+
+  /* Messages */
+  message: 'Message',
+  recentMessages: 'Recent Messages',
 };

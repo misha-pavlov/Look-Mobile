@@ -16,14 +16,7 @@ import UsersList from './components/UsersList/UsersList';
 import { TCustomProfileTabs } from './CustomProfileTabs.types';
 import { Posts } from '../../../../types/graphql';
 
-const CustomProfileTabs: React.FC<TCustomProfileTabs> = ({
-  currentUser,
-  user,
-  posts,
-  loading,
-  followers,
-  following,
-}) => {
+const CustomProfileTabs: React.FC<TCustomProfileTabs> = ({ currentUser, posts, loading, followers, following }) => {
   const [activeTab, setActiveTab] = useState(UserProfileTabs.POSTS);
   const slideInLeft = useRef(new Animated.Value(0)).current;
 
@@ -73,13 +66,13 @@ const CustomProfileTabs: React.FC<TCustomProfileTabs> = ({
           />
           <Tab
             name={UserProfileTabs.FOLLOWERS}
-            count={user.followers.length.toString()}
+            count={followers?.length.toString()}
             isActive={isFollowersTab}
             onPress={() => onPressTab(UserProfileTabs.FOLLOWERS)}
           />
           <Tab
             name={UserProfileTabs.FOLLOWING}
-            count={user.following.length.toString()}
+            count={following?.length.toString()}
             isActive={isFollowingTab}
             onPress={() => onPressTab(UserProfileTabs.FOLLOWING)}
           />

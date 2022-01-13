@@ -17,12 +17,12 @@ import { colors } from '../../../../../../config/colors';
 import { constants } from '../../../../../../config/constants';
 import { screens } from '../../../../../../config/screens';
 // graphql
-import { DO_FOLLOW } from '../../gql/CustomProfileTabs.mutations';
+import { DO_FOLLOW } from '../../../../../../gql/user.mutations';
 import { GET_FOLLOWERS, GET_FOLLOWING } from '../../gql/CustomProfileTabs.queries';
 
 const UsersList = ({ data, loading, currentUser }: { data?: [User]; loading: boolean; currentUser: User }) => {
   const navigation = useNavigation<NAppNavigatorNavigationProp<'UserProfile'>>();
-  const [mutate] = useMutation(DO_FOLLOW, { onError: error => console.log('DO_FOLLOW = ', error) });
+  const [mutate] = useMutation(DO_FOLLOW, { onError: error => console.log('DO_FOLLOW UserList = ', error) });
 
   const onPress = useCallback(async (isFollow, followUserId) => {
     await mutate({

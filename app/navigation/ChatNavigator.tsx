@@ -1,12 +1,17 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Posts from '../screens/Posts/Posts';
+import { RecentMessagesContainer } from '../screens/RecentMessages/RecentMessagesContainer';
+import { screens } from '../config/screens';
 
 const ChatStack = createStackNavigator();
 
 const ChatNavigator = () => (
   <ChatStack.Navigator>
-    <ChatStack.Screen name={'ChatNavigatorHeader'} component={Posts} />
+    <ChatStack.Screen
+      options={{ headerShown: false }}
+      name={screens.RecentMessages}
+      component={RecentMessagesContainer}
+    />
   </ChatStack.Navigator>
 );
 

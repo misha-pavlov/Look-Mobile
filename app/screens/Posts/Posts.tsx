@@ -3,7 +3,7 @@ import { Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import { useUserId } from '../../hooks/useUserId';
-import HeaderWithUser from './components/HeaderWithUser/HeaderWithUser';
+import HeaderWithUser from '../../components/HeaderWithUser/HeaderWithUser';
 import { PlusButton, s } from './Posts.styles';
 import { colors } from '../../config/colors';
 import { screens } from '../../config/screens';

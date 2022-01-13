@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import { StyleSheet } from 'react-native';
-import { colors } from '../../../../config/colors';
+import { colors } from '../../config/colors';
 
 export const HeaderWithUserBlock = styled.View`
   background-color: ${colors.black};
