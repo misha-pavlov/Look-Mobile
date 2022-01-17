@@ -14,6 +14,12 @@ export const PlusButton = styled.TouchableOpacity`
   justify-content: center;
 `;
 
+export const EmptyText = styled.Text`
+  color: ${colors.gray};
+  font-size: 16px;
+  text-align: center;
+`;
+
 export const s = StyleSheet.create({
   shadow: {
     shadowColor: colors.purple2,

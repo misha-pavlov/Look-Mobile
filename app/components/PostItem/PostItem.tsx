@@ -4,25 +4,26 @@ import { Image } from 'react-native-elements';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useMutation } from '@apollo/client';
 // helpers
-import { isImageUrl } from '../../../../helpers/isImageUrl';
-import { formatAMPM } from '../../../../helpers/formatAMPM';
+import { isImageUrl } from '../../helpers/isImageUrl';
+import { formatAMPM } from '../../helpers/formatAMPM';
 // types
-import { Posts, User } from '../../../../types/graphql';
+import { Posts, User } from '../../types/graphql';
 // styles
 import { ItemAvatarBlock, ItemContainer, ItemDescBlock, ItemText, ItemTime, s, ShowAllText } from './PostItem.styles';
-import { common } from '../../../../common/common.styles';
+import { common } from '../../common/common.styles';
 // hooks
-import { useGetUser } from '../../../../hooks/useGetUser';
+import { useGetUser } from '../../hooks/useGetUser';
 // constants
-import { colors } from '../../../../config/colors';
-import { messages } from '../../../../config/messages';
+import { colors } from '../../config/colors';
+import { messages } from '../../config/messages';
+import { constants } from '../../config/constants';
 // components
-import Tags from '../Tags/Tags';
-import CommentsList from '../CommentsList/CommentsList';
-import GrayInput from '../../../../components/GrayInput/GrayInput';
+import Tags from '../../screens/UserPostsList/components/Tags/Tags';
+import CommentsList from '../../screens/UserPostsList/components/CommentsList/CommentsList';
+import GrayInput from '../GrayInput/GrayInput';
 // graphql
 import { ADD_COMMENT } from './gql/PostItem.mutations';
-import { GET_USER_POSTS } from '../../../UserProfile/components/CustomProfileTabs/gql/CustomProfileTabs.queries';
+import { GET_USER_POSTS } from '../../screens/UserProfile/components/CustomProfileTabs/gql/CustomProfileTabs.queries';
 
 const PostItem = ({ post, currentUser }: { post: Posts; currentUser: User }) => {
   const [showAllComment, setShowAllComment] = useState(false);
@@ -73,7 +74,7 @@ const PostItem = ({ post, currentUser }: { post: Posts; currentUser: User }) => 
       <ItemAvatarBlock>
         <Image
           source={{
-            uri: user?.img,
+            uri: user?.img ? user?.img : constants.userMock,
           }}
           style={s.img}
           PlaceholderContent={<ActivityIndicator color={colors.white} />}

@@ -3,7 +3,7 @@ import { FlatList, KeyboardAvoidingView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { TUserPostsList } from './UserPostsList.types';
 import { colors } from '../../config/colors';
-import PostItem from './components/PostItem/PostItem';
+import PostItem from '../../components/PostItem/PostItem';
 import { Posts } from '../../types/graphql';
 import { NAppNavigatorRouteProp } from '../../navigation/types/AppNavigator.types';
 import { getKeyboardVerticalOffset, keyboardBehaviorDependsOnPlatform } from '../../config/platform';

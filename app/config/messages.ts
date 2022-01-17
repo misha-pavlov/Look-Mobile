@@ -16,6 +16,7 @@ export const messages = {
   hide: 'Hide',
   addTag: 'Add Tag',
   enterComment: 'Enter Comment',
+  emptyPosts: 'You don`t have any following user',
 
   /* User Profile */
   showMore: 'Show More',
