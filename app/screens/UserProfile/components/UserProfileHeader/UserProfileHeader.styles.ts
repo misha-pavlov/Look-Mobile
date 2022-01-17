@@ -49,6 +49,17 @@ export const FollowText = styled.Text<{ followStatus?: boolean }>`
   font-weight: 600;
 `;
 
+export const UnblockButton = styled.TouchableOpacity`
+  border: 1px solid ${colors.pink};
+  border-radius: 8px;
+  padding: 10px;
+`;
+
+export const UnblockText = styled.Text`
+  color: ${colors.pink};
+  font-weight: 600;
+`;
+
 export const s = StyleSheet.create({
   img: {
     width: 80,

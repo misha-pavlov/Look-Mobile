@@ -19,14 +19,14 @@ import { colors } from '../../config/colors';
 import { messages } from '../../config/messages';
 // graphql
 import { GET_BLOCKED_USERS } from './gql/BlockedUsers.queries';
-import { UNBLOCK_USER } from './gql/BlockedUsers.mutations';
+import { UNBLOCK_USER } from '../../gql/user.mutations';
 // components
 import Spinner from '../../components/Spinner/Spinner';
 import FollowButton from '../../components/FollowButton/FollowButton';
 
 const BlockedUsers: React.FC<TUserProfile> = ({ currentUser }) => {
   const { data, loading } = useQuery(GET_BLOCKED_USERS, { variables: { userId: currentUser._id } });
-  const [mutate] = useMutation(UNBLOCK_USER, { onError: error => console.log('UNBLOCK_USER = ', error) });
+  const [mutate] = useMutation(UNBLOCK_USER, { onError: error => console.log('UNBLOCK_USER BlockedUsers = ', error) });
 
   const doUnblock = useCallback(
     async targetUserId => {

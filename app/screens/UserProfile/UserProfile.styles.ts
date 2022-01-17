@@ -16,6 +16,23 @@ export const ShowMoreButtonText = styled.Text`
   color: ${colors.purple};
 `;
 
+export const Popup = styled.View`
+  background-color: ${colors.gray4};
+  width: 125px;
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  border-radius: 8px;
+`;
+
+export const RedText = styled.Text`
+  color: ${colors.red};
+  text-align: center;
+  font-weight: 600;
+  margin-top: 5px;
+  margin-bottom: 5px;
+`;
+
 export const s = StyleSheet.create({
   settings: {
     marginRight: 15,

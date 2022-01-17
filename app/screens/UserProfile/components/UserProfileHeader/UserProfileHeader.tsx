@@ -18,6 +18,8 @@ import {
   ButtonText,
   FollowButton,
   FollowText,
+  UnblockButton,
+  UnblockText,
 } from './UserProfileHeader.styles';
 import { common } from '../../../../common/common.styles';
 // constant
@@ -26,7 +28,7 @@ import { constants } from '../../../../config/constants';
 import { messages } from '../../../../config/messages';
 import { screens } from '../../../../config/screens';
 // graphql
-import { DO_FOLLOW } from '../../../../gql/user.mutations';
+import { DO_FOLLOW, UNBLOCK_USER } from '../../../../gql/user.mutations';
 import { GET_FOLLOWERS, GET_FOLLOWING } from '../CustomProfileTabs/gql/CustomProfileTabs.queries';
 // helpers
 import { isEqualObjects } from '../../../../helpers/isEqualObjects';
@@ -34,6 +36,9 @@ import { isEqualObjects } from '../../../../helpers/isEqualObjects';
 const UserProfileHeader: React.FC<TUserProfile> = ({ currentUser, user }) => {
   const { getParent } = useNavigation<NAppNavigatorNavigationProp<'RecentMessages'>>();
   const [mutate] = useMutation(DO_FOLLOW, { onError: error => console.log('DO_FOLLOW UserProfileHeader = ', error) });
+  const [unblock] = useMutation(UNBLOCK_USER, {
+    onError: error => console.log('UNBLOCK_USER UserProfileHeader = ', error),
+  });
 
   const useUser = user ? user : currentUser;
 
@@ -43,6 +48,18 @@ const UserProfileHeader: React.FC<TUserProfile> = ({ currentUser, user }) => {
       refetchQueries: [
         { query: GET_FOLLOWERS, variables: { userId: followUserId } },
         { query: GET_FOLLOWING, variables: { userId: followUserId } },
+        { query: GET_FOLLOWERS, variables: { userId: currentUser._id } },
+        { query: GET_FOLLOWING, variables: { userId: currentUser._id } },
+      ],
+    });
+  }, []);
+
+  const unblockPress = useCallback(async targetUserId => {
+    await unblock({
+      variables: { userId: currentUser._id, targetUserId },
+      refetchQueries: [
+        { query: GET_FOLLOWERS, variables: { userId: targetUserId } },
+        { query: GET_FOLLOWING, variables: { userId: targetUserId } },
         { query: GET_FOLLOWERS, variables: { userId: currentUser._id } },
         { query: GET_FOLLOWING, variables: { userId: currentUser._id } },
       ],
@@ -59,6 +76,38 @@ const UserProfileHeader: React.FC<TUserProfile> = ({ currentUser, user }) => {
     return null;
   }, [useUser]);
 
+  const showButtons = useCallback(() => {
+    if (currentUser.blocked.includes(useUser._id)) {
+      return (
+        <ButtonsBlock>
+          <UnblockButton onPress={() => unblockPress(user._id)}>
+            <UnblockText>{messages.unblock}</UnblockText>
+          </UnblockButton>
+        </ButtonsBlock>
+      );
+    }
+
+    if (!isEqualObjects(useUser, currentUser)) {
+      return (
+        <ButtonsBlock>
+          {/* navigate to chat */}
+          <Button
+            isWithMarginRight
+            onPress={() => getParent().navigate(screens.ChatNavigator, { screen: screens.RecentMessages })}>
+            <Ionicons name="chatbubble-outline" size={16} color={colors.white} />
+            <ButtonText isWithMarginLeft>{messages.message}</ButtonText>
+          </Button>
+
+          <FollowButton followStatus={followStatus} onPress={() => onPressFollow(!followStatus, user._id)}>
+            <FollowText followStatus={followStatus}>{followStatus ? messages.following : messages.follow}</FollowText>
+          </FollowButton>
+        </ButtonsBlock>
+      );
+    }
+
+    return null;
+  }, [currentUser, useUser]);
+
   return (
     <UserProfileHeaderContainer>
       <Image
@@ -73,21 +122,7 @@ const UserProfileHeader: React.FC<TUserProfile> = ({ currentUser, user }) => {
       <View>
         <UserProfileHeaderUserName>{useUser.userName}</UserProfileHeaderUserName>
         {showRealName()}
-        {!isEqualObjects(useUser, currentUser) && (
-          <ButtonsBlock>
-            {/* navigate to chat */}
-            <Button
-              isWithMarginRight
-              onPress={() => getParent().navigate(screens.ChatNavigator, { screen: screens.RecentMessages })}>
-              <Ionicons name="chatbubble-outline" size={16} color={colors.white} />
-              <ButtonText isWithMarginLeft>{messages.message}</ButtonText>
-            </Button>
-
-            <FollowButton followStatus={followStatus} onPress={() => onPressFollow(!followStatus, user._id)}>
-              <FollowText followStatus={followStatus}>{followStatus ? messages.following : messages.follow}</FollowText>
-            </FollowButton>
-          </ButtonsBlock>
-        )}
+        {showButtons()}
       </View>
     </UserProfileHeaderContainer>
   );

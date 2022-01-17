@@ -7,3 +7,11 @@ export const DO_FOLLOW = gql`
     }
   }
 `;
+
+export const UNBLOCK_USER = gql`
+  mutation doUnblocked($userId: String!, $targetUserId: String!) {
+    doUnblocked(userId: $userId, targetUserId: $targetUserId) {
+      blocked
+    }
+  }
+`;

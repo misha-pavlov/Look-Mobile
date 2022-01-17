@@ -35,6 +35,7 @@ export const messages = {
   follow: 'Follow',
   following: 'Following',
   unblock: 'Unblock',
+  block: 'Block',
 
   /* Messages */
   message: 'Message',
