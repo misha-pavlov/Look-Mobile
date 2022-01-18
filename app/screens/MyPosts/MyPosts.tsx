@@ -20,7 +20,7 @@ import { NAppNavigatorNavigationProp } from '../../navigation/types/AppNavigator
 import { TMyPosts } from './MyPosts.types';
 import { Posts } from '../../types/graphql';
 
-const MyPosts: React.FC<TMyPosts> = ({ getPostsForUser, currentUser, loading, refetch }) => {
+const MyPosts: React.FC<TMyPosts> = ({ getPostsForUser, currentUser, loading, refetch, fetchMore }) => {
   const isFirstRender = useRef(true);
   const { userId } = useUserId();
   const navigation = useNavigation<NAppNavigatorNavigationProp<'CreatePost'>>();
@@ -46,8 +46,13 @@ const MyPosts: React.FC<TMyPosts> = ({ getPostsForUser, currentUser, loading, re
         renderItem={p => <PostItem post={p.item} currentUser={currentUser} />}
         keyExtractor={keyExtractor}
         showsVerticalScrollIndicator={false}
-        ListEmptyComponent={<EmptyText>{messages.emptyPosts}</EmptyText>}
         refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
+        onEndReached={() =>
+          fetchMore({
+            variables: { limit: getPostsForUser.length * 2 },
+          })
+        }
+        ListEmptyComponent={<EmptyText>{messages.emptyPosts}</EmptyText>}
       />
       <PlusButton style={s.shadow} onPress={() => navigation.navigate(screens.CreatePost)}>
         <Feather name="plus" size={25} color={colors.white} />

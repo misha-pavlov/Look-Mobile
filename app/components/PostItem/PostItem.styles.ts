@@ -6,7 +6,7 @@ export const ItemContainer = styled.View`
   margin-bottom: 55px;
 `;
 
-export const ItemAvatarBlock = styled.View`
+export const ItemAvatarBlock = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
 `;

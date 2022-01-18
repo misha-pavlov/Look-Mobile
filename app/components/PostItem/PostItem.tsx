@@ -3,11 +3,13 @@ import { ActivityIndicator, TouchableOpacity, View } from 'react-native';
 import { Image } from 'react-native-elements';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useMutation } from '@apollo/client';
+import { useNavigation } from '@react-navigation/native';
 // helpers
 import { isImageUrl } from '../../helpers/isImageUrl';
 import { formatAMPM } from '../../helpers/formatAMPM';
 // types
 import { Posts, User } from '../../types/graphql';
+import { NAppNavigatorNavigationProp } from '../../navigation/types/AppNavigator.types';
 // styles
 import { ItemAvatarBlock, ItemContainer, ItemDescBlock, ItemText, ItemTime, s, ShowAllText } from './PostItem.styles';
 import { common } from '../../common/common.styles';
@@ -17,6 +19,7 @@ import { useGetUser } from '../../hooks/useGetUser';
 import { colors } from '../../config/colors';
 import { messages } from '../../config/messages';
 import { constants } from '../../config/constants';
+import { screens } from '../../config/screens';
 // components
 import Tags from '../../screens/UserPostsList/components/Tags/Tags';
 import CommentsList from '../../screens/UserPostsList/components/CommentsList/CommentsList';
@@ -26,6 +29,7 @@ import { ADD_COMMENT } from './gql/PostItem.mutations';
 import { GET_USER_POSTS } from '../../screens/UserProfile/components/CustomProfileTabs/gql/CustomProfileTabs.queries';
 
 const PostItem = ({ post, currentUser }: { post: Posts; currentUser: User }) => {
+  const { navigate } = useNavigation<NAppNavigatorNavigationProp<'UserProfile'>>();
   const [showAllComment, setShowAllComment] = useState(false);
   const [comment, setComment] = useState('');
   const user = useGetUser(post.createdByUserId);
@@ -71,7 +75,7 @@ const PostItem = ({ post, currentUser }: { post: Posts; currentUser: User }) => 
 
   return (
     <ItemContainer>
-      <ItemAvatarBlock>
+      <ItemAvatarBlock onPress={() => navigate(screens.UserProfile, { user })}>
         <Image
           source={{
             uri: user?.img ? user?.img : constants.userMock,

@@ -5,3 +5,7 @@ export const UserPostsBlock = styled.View`
   flex-wrap: wrap;
   justify-content: space-between;
 `;
+
+export const UserPostsScrollView = styled.ScrollView`
+  margin-bottom: 350px;
+`;

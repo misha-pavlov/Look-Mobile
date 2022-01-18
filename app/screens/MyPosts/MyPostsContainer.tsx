@@ -10,8 +10,19 @@ import { TMyPosts } from './MyPosts.types';
 const withGetPostsForUser = (BaseComponent: FC<TMyPosts>) => {
   return (props: TUserProfile): JSX.Element => {
     const { currentUser } = props;
-    const { data, loading, refetch } = useQuery(GET_POSTS_FOR_USER, { variables: { userId: currentUser._id } });
-    return <BaseComponent {...props} getPostsForUser={data?.getPostsForUser} loading={loading} refetch={refetch} />;
+    const { data, loading, refetch, fetchMore } = useQuery(GET_POSTS_FOR_USER, {
+      variables: { userId: currentUser._id },
+    });
+
+    return (
+      <BaseComponent
+        {...props}
+        getPostsForUser={data?.getPostsForUser}
+        loading={loading}
+        refetch={refetch}
+        fetchMore={fetchMore}
+      />
+    );
   };
 };
 

@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export const GET_POSTS_FOR_USER = gql`
-  query getPostsForUser($userId: String!) {
-    getPostsForUser(userId: $userId) {
+  query getPostsForUser($userId: String!, $limit: Int) {
+    getPostsForUser(userId: $userId, limit: $limit) {
       _id
       title
       img

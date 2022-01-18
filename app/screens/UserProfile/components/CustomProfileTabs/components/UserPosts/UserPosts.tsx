@@ -1,8 +1,7 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { ScrollView } from 'react-native';
 import { TUserPosts } from './UserPosts.types';
-import { UserPostsBlock } from './UserPosts.styles';
+import { UserPostsBlock, UserPostsScrollView } from './UserPosts.styles';
 import Spinner from '../../../../../../components/Spinner/Spinner';
 import Card from '../../../../../../components/Card/Card';
 import { screens } from '../../../../../../config/screens';
@@ -28,9 +27,9 @@ const UserPosts: React.FC<TUserPosts> = ({ posts, loading }) => {
   }
 
   return (
-    <ScrollView>
+    <UserPostsScrollView>
       <UserPostsBlock>{getPosts}</UserPostsBlock>
-    </ScrollView>
+    </UserPostsScrollView>
   );
 };
 
