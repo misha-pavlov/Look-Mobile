@@ -10,4 +10,8 @@ export const s = StyleSheet.create({
     width: 165,
     height: 165,
   },
+  bigImg: {
+    width: 190,
+    height: 190,
+  },
 });

@@ -16,7 +16,7 @@ import { common } from '../../../../../../common/common.styles';
 import { colors } from '../../../../../../config/colors';
 import { constants } from '../../../../../../config/constants';
 import { screens } from '../../../../../../config/screens';
-// graphql
+// gql
 import { DO_FOLLOW } from '../../../../../../gql/user.mutations';
 import { GET_FOLLOWERS, GET_FOLLOWING } from '../../gql/CustomProfileTabs.queries';
 

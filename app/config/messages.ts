@@ -41,4 +41,8 @@ export const messages = {
   /* Messages */
   message: 'Message',
   recentMessages: 'Recent Messages',
+
+  /* Search */
+  tags: 'Tags',
+  users: 'Users',
 };

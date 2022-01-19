@@ -12,13 +12,13 @@ import { NAuthNavigatorNavigationProp } from '../../navigation/types/AuthNavigat
 import { useUserId } from '../../hooks/useUserId';
 
 const Start = () => {
-  const { navigate, getParent } = useNavigation<NAuthNavigatorNavigationProp<'SignUp'>>();
+  const { navigate, replace } = useNavigation<NAuthNavigatorNavigationProp<'AppNavigator'>>();
   const isFirstRender = useRef(true);
   const { userId } = useUserId();
 
   useEffect(() => {
     if (userId && !isFirstRender.current) {
-      getParent().navigate(screens.AppNavigator);
+      replace(screens.AppNavigator);
     }
     isFirstRender.current = false;
   }, [userId]);

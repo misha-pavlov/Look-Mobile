@@ -10,6 +10,7 @@ import { ErrorText, InputBlock, s } from '../../../SignUp/components/SignUpForm/
 import { colors } from '../../../../config/colors';
 import { screens } from '../../../../config/screens';
 import { TLogInForm } from '../../LogIn.types';
+import { NAuthNavigatorNavigationProp } from '../../../../navigation/types/AuthNavigator.types';
 
 const LogInForm: React.FC<TLogInForm> = ({ users }) => {
   const email = 'email';
@@ -20,7 +21,7 @@ const LogInForm: React.FC<TLogInForm> = ({ users }) => {
     password: '',
     formErrors: { email: '', password: '' },
   });
-  const navigation = useNavigation();
+  const navigation = useNavigation<NAuthNavigatorNavigationProp<'AppNavigator'>>();
 
   const validateField = (text: string, field: string) => {
     let fieldValidationErrors = state.formErrors;
@@ -52,7 +53,7 @@ const LogInForm: React.FC<TLogInForm> = ({ users }) => {
       if (u.email === state.email) {
         if (u.password === state.password) {
           setState({ ...state, formErrors: { email: '', password: '' } });
-          AsyncStorage.setItem('userId', u._id).then(() => navigation.getParent().navigate(screens.AppNavigator));
+          AsyncStorage.setItem('userId', u._id).then(() => navigation.navigate(screens.AppNavigator));
           return;
         }
         setState({ ...state, formErrors: { email: state.formErrors.email, password: 'Incorrect password' } });

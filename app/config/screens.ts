@@ -3,7 +3,7 @@ import { NAppStackParamList } from '../navigation/types/AppNavigator.types';
 
 export const screens = {
   /* Navigators */
-  AppNavigator: 'AppNavigator',
+  AppNavigator: 'AppNavigator' as keyof NAuthStackParamList,
   AuthNavigator: 'AuthNavigator',
   FeedNavigator: 'FeedNavigator',
   ChatNavigator: 'ChatNavigator',
@@ -11,7 +11,7 @@ export const screens = {
   SearchNavigator: 'SearchNavigator',
 
   /* Auth */
-  Start: 'Start',
+  Start: 'Start' as keyof NAppStackParamList,
   LogIn: 'LogIn' as keyof NAuthStackParamList,
   SignUp: 'SignUp' as keyof NAuthStackParamList,
 
@@ -29,4 +29,7 @@ export const screens = {
 
   /* Messages */
   RecentMessages: 'RecentMessages' as keyof NAppStackParamList,
+
+  /* Search */
+  Search: 'Search' as keyof NAppStackParamList,
 };

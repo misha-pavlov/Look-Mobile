@@ -3,6 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 export type NAuthStackParamList = {
   SignUp: undefined;
+  AppNavigator: undefined;
 };
 
 export type NAuthNavigatorRouteProp<ScreenName extends keyof NAuthStackParamList> = RouteProp<

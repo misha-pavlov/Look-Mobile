@@ -7,7 +7,7 @@ import { colors } from '../../config/colors';
 import { common } from '../../common/common.styles';
 import { TCard } from './Card.types';
 
-const Card: React.FC<TCard> = ({ post, onPress }) => {
+const Card: React.FC<TCard> = ({ post, onPress, isSearchScreen }) => {
   if (isImageUrl(post.img)) {
     return (
       <CardBlock onPress={onPress}>
@@ -15,7 +15,7 @@ const Card: React.FC<TCard> = ({ post, onPress }) => {
           source={{
             uri: post.img,
           }}
-          style={s.img}
+          style={isSearchScreen ? s.bigImg : s.img}
           PlaceholderContent={<ActivityIndicator color={colors.white} />}
           placeholderStyle={common.placeholder}
         />

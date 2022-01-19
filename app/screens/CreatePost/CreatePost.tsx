@@ -37,7 +37,7 @@ import AddButtonText from '../../components/AddButtonText/AddButtonText';
 // helpers
 import { isImageUrl } from '../../helpers/isImageUrl';
 import { getKeyboardVerticalOffset, keyboardBehaviorDependsOnPlatformForAddTag } from '../../config/platform';
-// graphql
+// gql
 import { CREATE_POST } from './gql/CreatePosts.mutations';
 
 const CreatePost = (currentUser?: { currentUser?: User }) => {

@@ -17,7 +17,7 @@ import { User } from '../../types/graphql';
 import { constants } from '../../config/constants';
 import { colors } from '../../config/colors';
 import { messages } from '../../config/messages';
-// graphql
+// gql
 import { GET_BLOCKED_USERS } from './gql/BlockedUsers.queries';
 import { UNBLOCK_USER } from '../../gql/user.mutations';
 // components

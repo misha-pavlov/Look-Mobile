@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/client';
 import { withCurrentUser } from '../../hocs/withCurrentUser';
 import MyPosts from './MyPosts';
 import { TUserProfile } from '../UserProfile/UserProfile.types';
-import { GET_POSTS_FOR_USER } from './graphql/MyPosts.queries';
+import { GET_POSTS_FOR_USER } from './gql/MyPosts.queries';
 import { TMyPosts } from './MyPosts.types';
 
 const withGetPostsForUser = (BaseComponent: FC<TMyPosts>) => {

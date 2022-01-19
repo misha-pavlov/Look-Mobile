@@ -10,12 +10,12 @@ import { NAppNavigatorNavigationProp } from '../../navigation/types/AppNavigator
 import { DefaultContainer } from '../../common/common.styles';
 
 const UserSettings = () => {
-  const { navigate, getParent } = useNavigation<NAppNavigatorNavigationProp<'EditProfile'>>();
+  const { navigate } = useNavigation<NAppNavigatorNavigationProp<'EditProfile'>>();
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   const signOut = useCallback(() => {
-    AsyncStorage.removeItem('userId').then(() => getParent().navigate(screens.Start));
+    AsyncStorage.removeItem('userId').then(() => navigate(screens.Start));
   }, []);
 
   return (

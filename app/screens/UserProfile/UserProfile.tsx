@@ -20,7 +20,7 @@ import { colors } from '../../config/colors';
 import { screens } from '../../config/screens';
 // helpers
 import { isEqualObjects } from '../../helpers/isEqualObjects';
-// graphql
+// gql
 import { BLOCK_USER } from './gql/UserProfile.mutations';
 import { GET_FOLLOWERS, GET_FOLLOWING } from './components/CustomProfileTabs/gql/CustomProfileTabs.queries';
 

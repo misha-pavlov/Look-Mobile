@@ -27,7 +27,7 @@ import { colors } from '../../../../config/colors';
 import { constants } from '../../../../config/constants';
 import { messages } from '../../../../config/messages';
 import { screens } from '../../../../config/screens';
-// graphql
+// gql
 import { DO_FOLLOW, UNBLOCK_USER } from '../../../../gql/user.mutations';
 import { GET_FOLLOWERS, GET_FOLLOWING } from '../CustomProfileTabs/gql/CustomProfileTabs.queries';
 // helpers

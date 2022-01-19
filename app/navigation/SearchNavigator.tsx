@@ -1,12 +1,13 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import MyPosts from '../screens/MyPosts/MyPosts';
+import { screens } from '../config/screens';
+import Search from '../screens/Search/Search';
 
 const SearchStack = createStackNavigator();
 
 const SearchNavigator = () => (
   <SearchStack.Navigator>
-    <SearchStack.Screen name={'SearchNavigatorHeader'} component={MyPosts} />
+    <SearchStack.Screen options={{ headerShown: false }} name={screens.Search} component={Search} />
   </SearchStack.Navigator>
 );
 

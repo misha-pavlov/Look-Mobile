@@ -24,7 +24,7 @@ import { screens } from '../../config/screens';
 import Tags from '../../screens/UserPostsList/components/Tags/Tags';
 import CommentsList from '../../screens/UserPostsList/components/CommentsList/CommentsList';
 import GrayInput from '../GrayInput/GrayInput';
-// graphql
+// gql
 import { ADD_COMMENT } from './gql/PostItem.mutations';
 import { GET_USER_POSTS } from '../../screens/UserProfile/components/CustomProfileTabs/gql/CustomProfileTabs.queries';
 
