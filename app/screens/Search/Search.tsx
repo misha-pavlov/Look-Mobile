@@ -61,8 +61,7 @@ const Search = () => {
         )}
       </SearchBox>
 
-      {/* @ts-ignore */}
-      <SearchTabsContainer isSearchMode={isSearchMode} />
+      <SearchTabsContainer isSearchMode={isSearchMode} loading={false} />
     </DefaultContainer>
   );
 };

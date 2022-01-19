@@ -13,4 +13,4 @@ const withGetAllPosts = (BaseComponent: FC<TSearchTabs>) => {
   };
 };
 
-export const SearchTabsContainer = compose(withGetAllPosts)(SearchTabs);
+export const SearchTabsContainer = compose(withGetAllPosts)(SearchTabs) as unknown as FC<TSearchTabs>;
