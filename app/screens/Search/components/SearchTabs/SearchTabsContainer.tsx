@@ -10,7 +10,6 @@ import { withCurrentUser } from '../../../../hocs/withCurrentUser';
 const withGetAllPosts = (BaseComponent: FC<TSearchTabs>) => {
   return (props: TSearchTabs): JSX.Element => {
     const { data, loading } = useQuery(GET_ALL_POSTS);
-
     return <BaseComponent {...props} getAllPosts={data?.getAllPosts} loading={loading} />;
   };
 };
@@ -18,7 +17,6 @@ const withGetAllPosts = (BaseComponent: FC<TSearchTabs>) => {
 const withGetUsers = (BaseComponent: FC<TSearchTabs>) => {
   return (props: TSearchTabs): JSX.Element => {
     const { data, loading } = useQuery(GET_USERS);
-
     return <BaseComponent {...props} users={data?.users} loading={loading} />;
   };
 };

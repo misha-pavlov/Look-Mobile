@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { ScrollView } from 'react-native';
 import { Tab, TabView } from 'react-native-elements';
 import { PostsBlock, s, UsersBlock } from './SearchTabs.styles';
@@ -9,15 +9,34 @@ import Card from '../../../../components/Card/Card';
 import Spinner from '../../../../components/Spinner/Spinner';
 import UsersItem from './components/UserItem/UserItem';
 
-const SearchTabs: React.FC<TSearchTabs> = ({ isSearchMode, getAllPosts, loading, users, currentUser }) => {
+const SearchTabs: React.FC<TSearchTabs> = ({
+  isSearchMode,
+  getAllPosts,
+  loading,
+  users,
+  currentUser,
+  index,
+  setIndex,
+  userSearchData,
+  postSearchByTitleData,
+  postSearchByTagData,
+  onCancelPress,
+}) => {
   const scrollRef = useRef(null);
-  const [index, setIndex] = useState(0);
 
+  /* TODO: create helpers and move map in function */
   const getPosts = getAllPosts?.map(g => (
+    <Card key={g._id} post={g} onPress={() => console.log('123')} isSearchScreen />
+  ));
+  const postSearchByTitle = postSearchByTitleData?.map(g => (
+    <Card key={g._id} post={g} onPress={() => console.log('123')} isSearchScreen />
+  ));
+  const postSearchByTag = postSearchByTagData?.map(g => (
     <Card key={g._id} post={g} onPress={() => console.log('123')} isSearchScreen />
   ));
 
   const getUsers = users?.map(u => <UsersItem key={u._id} user={u} currentUser={currentUser} />);
+  const getUsersSearch = userSearchData?.map(u => <UsersItem key={u._id} user={u} currentUser={currentUser} />);
 
   if (loading) {
     return <Spinner />;
@@ -30,6 +49,7 @@ const SearchTabs: React.FC<TSearchTabs> = ({ isSearchMode, getAllPosts, loading,
         onChange={e => {
           setIndex(e);
           scrollRef.current.scrollTo({});
+          onCancelPress();
         }}
         indicatorStyle={s.divider}>
         <Tab.Item title={screens.Posts} titleStyle={s.tab} containerStyle={s.tabView} />
@@ -41,15 +61,15 @@ const SearchTabs: React.FC<TSearchTabs> = ({ isSearchMode, getAllPosts, loading,
         <TabView value={index} onChange={setIndex} animationType="spring">
           <TabView.Item>
             {/* add empty search text */}
-            <PostsBlock>{isSearchMode ? [] : getPosts}</PostsBlock>
+            <PostsBlock>{isSearchMode && index == 0 ? postSearchByTitle : getPosts}</PostsBlock>
           </TabView.Item>
           <TabView.Item>
             {/* add empty search text */}
-            <PostsBlock>{isSearchMode ? [] : getPosts}</PostsBlock>
+            <PostsBlock>{isSearchMode && index == 1 ? postSearchByTag : getPosts}</PostsBlock>
           </TabView.Item>
           <TabView.Item>
             {/* add empty search text */}
-            <UsersBlock>{isSearchMode ? [] : getUsers}</UsersBlock>
+            <UsersBlock>{isSearchMode && index == 2 ? getUsersSearch : getUsers}</UsersBlock>
           </TabView.Item>
         </TabView>
       </ScrollView>
