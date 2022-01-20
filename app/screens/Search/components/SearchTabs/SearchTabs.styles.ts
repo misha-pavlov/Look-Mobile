@@ -9,6 +9,10 @@ export const PostsBlock = styled.View`
   justify-content: space-between;
 `;
 
+export const UsersBlock = styled.View`
+  margin-top: 10px;
+`;
+
 export const s = StyleSheet.create({
   tab: {
     backgroundColor: colors.black,

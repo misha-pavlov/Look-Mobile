@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { FlatList, ActivityIndicator } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import { Image } from 'react-native-elements';
 import { useMutation } from '@apollo/client';
 import { useNavigation } from '@react-navigation/native';
@@ -7,10 +7,14 @@ import { useNavigation } from '@react-navigation/native';
 import { User } from '../../../../../../types/graphql';
 import { NAppNavigatorNavigationProp } from '../../../../../../navigation/types/AppNavigator.types';
 // components
-import Spinner from '../../../../../../components/Spinner/Spinner';
 import FollowButton from '../../../../../../components/FollowButton/FollowButton';
 // styles
-import { s, UserBlock, UserImageAndName, UserText } from './UserList.styles';
+import {
+  s,
+  UserBlock,
+  UserImageAndName,
+  UserText,
+} from '../../../../../UserProfile/components/CustomProfileTabs/components/UsersList/UserList.styles';
 import { common } from '../../../../../../common/common.styles';
 // constants
 import { colors } from '../../../../../../config/colors';
@@ -20,7 +24,7 @@ import { screens } from '../../../../../../config/screens';
 import { DO_FOLLOW } from '../../../../../../gql/user.mutations';
 import { GET_FOLLOWERS, GET_FOLLOWING } from '../../../../../../gql/user.queries';
 
-const UsersList = ({ data, loading, currentUser }: { data?: [User]; loading: boolean; currentUser: User }) => {
+const UsersItem = ({ user, currentUser }: { user: User; currentUser: User }) => {
   const navigation = useNavigation<NAppNavigatorNavigationProp<'UserProfile'>>();
   const [mutate] = useMutation(DO_FOLLOW, { onError: error => console.log('DO_FOLLOW UserList = ', error) });
 
@@ -36,41 +40,28 @@ const UsersList = ({ data, loading, currentUser }: { data?: [User]; loading: boo
     });
   }, []);
 
-  const renderItem = useCallback(
-    c => {
-      return (
-        <UserBlock onPress={() => navigation.navigate(screens.UserProfile, { user: c.item })}>
-          <UserImageAndName>
-            <Image
-              source={{
-                uri: c.item?.img ? c.item?.img : constants.userMock,
-              }}
-              style={s.img}
-              PlaceholderContent={<ActivityIndicator color={colors.white} />}
-              placeholderStyle={common.placeholder}
-            />
-            <UserText>{c.item?.userName}</UserText>
-          </UserImageAndName>
+  return (
+    <UserBlock onPress={() => navigation.navigate(screens.UserProfile, { user })} isUserItem>
+      <UserImageAndName>
+        <Image
+          source={{
+            uri: user?.img ? user?.img : constants.userMock,
+          }}
+          style={s.img}
+          PlaceholderContent={<ActivityIndicator color={colors.white} />}
+          placeholderStyle={common.placeholder}
+        />
+        <UserText>{user?.userName}</UserText>
+      </UserImageAndName>
 
-          {c.item._id !== currentUser._id && (
-            <FollowButton
-              followStatus={currentUser.following.includes(c.item._id)}
-              onPress={() => onPress(!currentUser.following.includes(c.item._id), c.item._id)}
-            />
-          )}
-        </UserBlock>
-      );
-    },
-    [data, currentUser],
+      {user._id !== currentUser._id && (
+        <FollowButton
+          followStatus={currentUser.following.includes(user._id)}
+          onPress={() => onPress(!currentUser.following.includes(user._id), user._id)}
+        />
+      )}
+    </UserBlock>
   );
-
-  const keyExtractor = (item: User) => item._id;
-
-  if (loading) {
-    return <Spinner />;
-  }
-
-  return <FlatList data={data} renderItem={renderItem} keyExtractor={keyExtractor} />;
 };
 
-export default UsersList;
+export default UsersItem;

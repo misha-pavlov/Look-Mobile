@@ -6,8 +6,8 @@ import { BackBlock, SignUpBlock, WelcomeText } from '../SignUp/SignUp.styles';
 import { colors } from '../../config/colors';
 import { messages } from '../../config/messages';
 import LogInForm from './components/LogInForm/LogInForm';
-import { GET_USERS } from './gql/LogIn.queries';
 import { ApolloFetchPolicy } from '../../common/apollo';
+import { GET_USERS } from '../../gql/user.queries';
 
 const LogIn = () => {
   const { goBack } = useNavigation();

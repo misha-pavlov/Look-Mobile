@@ -23,39 +23,3 @@ export const GET_USER_POSTS = gql`
     }
   }
 `;
-
-export const GET_FOLLOWERS = gql`
-  query getFollowers($userId: String!) {
-    getFollowers(userId: $userId) {
-      _id
-      userName
-      email
-      img
-      firstName
-      lastName
-      description
-      followers
-      following
-      password
-      blocked
-    }
-  }
-`;
-
-export const GET_FOLLOWING = gql`
-  query getFollowing($userId: String!) {
-    getFollowing(userId: $userId) {
-      _id
-      userName
-      email
-      img
-      firstName
-      lastName
-      description
-      followers
-      following
-      password
-      blocked
-    }
-  }
-`;

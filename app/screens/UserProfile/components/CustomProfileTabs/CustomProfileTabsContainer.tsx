@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/client';
 import CustomProfileTabs from './CustomProfileTabs';
 import { withGetUserPosts } from '../../../../hocs/withGetUserPosts';
 import { TCustomProfileTabsContainer, TCustomProfileTabs } from './CustomProfileTabs.types';
-import { GET_FOLLOWERS, GET_FOLLOWING } from './gql/CustomProfileTabs.queries';
+import { GET_FOLLOWERS, GET_FOLLOWING } from '../../../../gql/user.queries';
 
 const withFollowers = (BaseComponent: React.FC<TCustomProfileTabs>) => {
   return (props: TCustomProfileTabs) => {

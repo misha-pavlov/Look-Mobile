@@ -1,12 +1,13 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
 import { colors } from '../../../../../../config/colors';
 
-export const UserBlock = styled.TouchableOpacity`
+export const UserBlock = styled.TouchableOpacity<{ isUserItem?: boolean }>`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 15px;
+  ${({ isUserItem }) => isUserItem && `width: ${Dimensions.get('screen').width - 30}px;`}
 `;
 
 export const UserImageAndName = styled.View`
