@@ -1,6 +1,6 @@
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { User } from '../../types/graphql';
+import { Posts, User } from '../../types/graphql';
 import { SearchTabsEnum } from '../../types/customTypes';
 
 export type NAppStackParamList = {
@@ -23,6 +23,10 @@ export type NAppStackParamList = {
     tag?: string;
   };
   Start: undefined;
+  SoloPost: {
+    post: Posts;
+    currentUser: User;
+  };
 };
 
 export type NAppNavigatorRouteProp<ScreenName extends keyof NAppStackParamList> = RouteProp<

@@ -32,4 +32,5 @@ export const screens = {
 
   /* Search */
   Search: 'Search' as keyof NAppStackParamList,
+  SoloPost: 'SoloPost' as keyof NAppStackParamList,
 };

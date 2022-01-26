@@ -8,7 +8,6 @@ import { useNavigation } from '@react-navigation/native';
 import { isImageUrl } from '../../helpers/isImageUrl';
 import { formatAMPM } from '../../helpers/formatAMPM';
 // types
-import { Posts, User } from '../../types/graphql';
 import { NAppNavigatorNavigationProp } from '../../navigation/types/AppNavigator.types';
 // styles
 import { ItemAvatarBlock, ItemContainer, ItemDescBlock, ItemText, ItemTime, s, ShowAllText } from './PostItem.styles';
@@ -27,10 +26,11 @@ import GrayInput from '../GrayInput/GrayInput';
 // gql
 import { ADD_COMMENT } from './gql/PostItem.mutations';
 import { GET_USER_POSTS } from '../../screens/UserProfile/components/CustomProfileTabs/gql/CustomProfileTabs.queries';
+import { TPostItem } from './PostItem.types';
 
-const PostItem = ({ post, currentUser }: { post: Posts; currentUser: User }) => {
+const PostItem: React.FC<TPostItem> = ({ post, currentUser, showAllComments }) => {
   const { navigate } = useNavigation<NAppNavigatorNavigationProp<'UserProfile'>>();
-  const [showAllComment, setShowAllComment] = useState(false);
+  const [showAllComment, setShowAllComment] = useState(showAllComments ? showAllComments : false);
   const [comment, setComment] = useState('');
   const user = useGetUser(post.createdByUserId);
   /* just for fix types */

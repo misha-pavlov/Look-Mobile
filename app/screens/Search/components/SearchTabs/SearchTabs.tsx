@@ -23,9 +23,9 @@ const SearchTabs: React.FC<TSearchTabs> = ({
 }) => {
   const scrollRef = useRef(null);
 
-  const getPosts = createPostsMap(getAllPosts);
-  const postSearchByTitle = createPostsMap(postSearchByTitleData);
-  const postSearchByTag = createPostsMap(postSearchByTagData);
+  const getPosts = createPostsMap(getAllPosts, currentUser);
+  const postSearchByTitle = createPostsMap(postSearchByTitleData, currentUser);
+  const postSearchByTag = createPostsMap(postSearchByTagData, currentUser);
 
   const getUsers = createUsersMap(users, currentUser);
   const getUsersSearch = createUsersMap(userSearchData, currentUser);
