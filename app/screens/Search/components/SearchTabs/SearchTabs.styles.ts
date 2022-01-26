@@ -13,6 +13,12 @@ export const UsersBlock = styled.View`
   margin-top: 10px;
 `;
 
+export const EmptyList = styled.Text`
+  font-size: 17px;
+  color: ${colors.gray};
+  text-align: center;
+`;
+
 export const s = StyleSheet.create({
   tab: {
     backgroundColor: colors.black,

@@ -35,7 +35,7 @@ export const TagBlock = styled.View`
   margin-bottom: 10px;
 `;
 
-export const TagTextBlock = styled.TouchableOpacity``;
+export const TagTextBlock = styled.View``;
 
 export const TagText = styled.Text`
   font-size: 12px;

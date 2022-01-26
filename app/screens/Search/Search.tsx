@@ -1,17 +1,20 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Input } from 'react-native-elements';
 import { TouchableOpacity, TextInput } from 'react-native';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useLazyQuery } from '@apollo/client';
+import { useRoute } from '@react-navigation/native';
 import { DefaultContainer } from '../../common/common.styles';
 import { CancelText, InputBox, SearchBox, s } from './Search.styles';
 import { colors } from '../../config/colors';
 import { screens } from '../../config/screens';
 import { SearchTabsContainer } from './components/SearchTabs/SearchTabsContainer';
 import { GET_POSTS_BY_TAG, GET_POSTS_BY_TITLE, SEARCH_USER } from './gql/SearchTabs.queries';
+import { NAppNavigatorRouteProp } from '../../navigation/types/AppNavigator.types';
 
 const Search = () => {
   const inputRef = useRef<TextInput>();
+  const { params } = useRoute<NAppNavigatorRouteProp<'Search'>>();
 
   const [postSearchByTitle, { data: postSearchByTitleData, loading: postSearchByTitleLoading }] =
     useLazyQuery(GET_POSTS_BY_TITLE);
@@ -22,7 +25,13 @@ const Search = () => {
   const [index, setIndex] = useState(0);
   const [isSearchMode, setIsSearchMode] = useState(false);
   const [searchText, setSearchText] = useState('');
-  const showCancel = searchText.length > 0;
+  const showCancel = searchText?.length > 0;
+
+  useEffect(() => {
+    setIndex(params?.startTab ? params.startTab : 0);
+    setSearchText(params?.tag ? params.tag : '');
+    onChange(params?.tag.trim());
+  }, [params?.startTab, params?.tag, setIndex, setSearchText]);
 
   const onCancelIconPress = useCallback(() => {
     setSearchText('');

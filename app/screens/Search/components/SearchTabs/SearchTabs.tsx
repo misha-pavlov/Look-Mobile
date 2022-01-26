@@ -1,13 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { ScrollView } from 'react-native';
 import { Tab, TabView } from 'react-native-elements';
-import { PostsBlock, s, UsersBlock } from './SearchTabs.styles';
+import { EmptyList, PostsBlock, s, UsersBlock } from './SearchTabs.styles';
 import { screens } from '../../../../config/screens';
 import { messages } from '../../../../config/messages';
 import { TSearchTabs } from './SearchTabs.types';
-import Card from '../../../../components/Card/Card';
 import Spinner from '../../../../components/Spinner/Spinner';
-import UsersItem from './components/UserItem/UserItem';
+import { createPostsMap, createUsersMap } from './helpers/SearchTabs.helpers';
 
 const SearchTabs: React.FC<TSearchTabs> = ({
   isSearchMode,
@@ -24,19 +23,23 @@ const SearchTabs: React.FC<TSearchTabs> = ({
 }) => {
   const scrollRef = useRef(null);
 
-  /* TODO: create helpers and move map in function */
-  const getPosts = getAllPosts?.map(g => (
-    <Card key={g._id} post={g} onPress={() => console.log('123')} isSearchScreen />
-  ));
-  const postSearchByTitle = postSearchByTitleData?.map(g => (
-    <Card key={g._id} post={g} onPress={() => console.log('123')} isSearchScreen />
-  ));
-  const postSearchByTag = postSearchByTagData?.map(g => (
-    <Card key={g._id} post={g} onPress={() => console.log('123')} isSearchScreen />
-  ));
+  const getPosts = createPostsMap(getAllPosts);
+  const postSearchByTitle = createPostsMap(postSearchByTitleData);
+  const postSearchByTag = createPostsMap(postSearchByTagData);
 
-  const getUsers = users?.map(u => <UsersItem key={u._id} user={u} currentUser={currentUser} />);
-  const getUsersSearch = userSearchData?.map(u => <UsersItem key={u._id} user={u} currentUser={currentUser} />);
+  const getUsers = createUsersMap(users, currentUser);
+  const getUsersSearch = createUsersMap(userSearchData, currentUser);
+
+  const showData = useCallback(
+    (result, mock, indexTab) => {
+      if (isSearchMode && index === indexTab) {
+        return result?.length === 0 ? <EmptyList>{messages.empty}</EmptyList> : result;
+      }
+
+      return mock?.length === 0 ? <EmptyList>{messages.empty}</EmptyList> : mock;
+    },
+    [isSearchMode, index],
+  );
 
   if (loading) {
     return <Spinner />;
@@ -60,16 +63,13 @@ const SearchTabs: React.FC<TSearchTabs> = ({
       <ScrollView ref={scrollRef}>
         <TabView value={index} onChange={setIndex} animationType="spring">
           <TabView.Item>
-            {/* add empty search text */}
-            <PostsBlock>{isSearchMode && index == 0 ? postSearchByTitle : getPosts}</PostsBlock>
+            <PostsBlock>{showData(postSearchByTitle, getPosts, 0)}</PostsBlock>
           </TabView.Item>
           <TabView.Item>
-            {/* add empty search text */}
-            <PostsBlock>{isSearchMode && index == 1 ? postSearchByTag : getPosts}</PostsBlock>
+            <PostsBlock>{showData(postSearchByTag, getPosts, 1)}</PostsBlock>
           </TabView.Item>
           <TabView.Item>
-            {/* add empty search text */}
-            <UsersBlock>{isSearchMode && index == 2 ? getUsersSearch : getUsers}</UsersBlock>
+            <UsersBlock>{showData(getUsersSearch, getUsers, 2)}</UsersBlock>
           </TabView.Item>
         </TabView>
       </ScrollView>

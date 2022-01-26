@@ -1,6 +1,7 @@
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { User } from '../../types/graphql';
+import { SearchTabsEnum } from '../../types/customTypes';
 
 export type NAppStackParamList = {
   Posts: undefined;
@@ -17,7 +18,10 @@ export type NAppStackParamList = {
   ChangePassword: undefined;
   BlockedUsers: undefined;
   RecentMessages: undefined;
-  Search: undefined;
+  Search: {
+    startTab?: SearchTabsEnum;
+    tag?: string;
+  };
   Start: undefined;
 };
 

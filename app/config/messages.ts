@@ -45,4 +45,5 @@ export const messages = {
   /* Search */
   tags: 'Tags',
   users: 'Users',
+  empty: `Oops... It's empty list`,
 };
