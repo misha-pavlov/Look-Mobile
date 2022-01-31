@@ -1,12 +1,13 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import MyPosts from '../screens/MyPosts/MyPosts';
+import { screens } from '../config/screens';
+import Activity from '../screens/Activity/Activity';
 
 const ActivityStack = createStackNavigator();
 
 const ActivityNavigator = () => (
   <ActivityStack.Navigator>
-    <ActivityStack.Screen name={'ActivityNavigatorHeader'} component={MyPosts} />
+    <ActivityStack.Screen options={{ headerShown: false }} name={screens.Activity} component={Activity} />
   </ActivityStack.Navigator>
 );
 

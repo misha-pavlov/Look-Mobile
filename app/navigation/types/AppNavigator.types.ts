@@ -27,6 +27,7 @@ export type NAppStackParamList = {
     post: Posts;
     currentUser: User;
   };
+  Activity: undefined;
 };
 
 export type NAppNavigatorRouteProp<ScreenName extends keyof NAppStackParamList> = RouteProp<

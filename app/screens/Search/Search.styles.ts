@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native';
 import { colors } from '../../config/colors';
 
 export const SearchBox = styled.View`
-  margin-top: 30px;
   flex-direction: row;
   align-items: center;
   margin-bottom: -15px;
@@ -11,7 +10,6 @@ export const SearchBox = styled.View`
 
 export const InputBox = styled.View<{ showCancel: boolean }>`
   width: ${({ showCancel }) => (showCancel ? 80 : 100)}%;
-  padding-top: 25px;
 `;
 
 export const CancelText = styled.Text`

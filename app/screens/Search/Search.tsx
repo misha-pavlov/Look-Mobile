@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Input } from 'react-native-elements';
-import { TouchableOpacity, TextInput } from 'react-native';
+import { TouchableOpacity, TextInput, View } from 'react-native';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useLazyQuery } from '@apollo/client';
 import { useRoute } from '@react-navigation/native';
@@ -11,6 +11,7 @@ import { screens } from '../../config/screens';
 import { SearchTabsContainer } from './components/SearchTabs/SearchTabsContainer';
 import { GET_POSTS_BY_TAG, GET_POSTS_BY_TITLE, SEARCH_USER } from './gql/SearchTabs.queries';
 import { NAppNavigatorRouteProp } from '../../navigation/types/AppNavigator.types';
+import ScreenHeader from '../../components/ScreenHeader/ScreenHeader';
 
 const Search = () => {
   const inputRef = useRef<TextInput>();
@@ -82,31 +83,34 @@ const Search = () => {
 
   return (
     <DefaultContainer>
-      <SearchBox>
-        <InputBox showCancel={showCancel}>
-          <Input
-            ref={inputRef}
-            value={searchText}
-            onChangeText={e => onChange(e)}
-            inputContainerStyle={s.inputContainer}
-            inputStyle={s.input}
-            placeholderTextColor={colors.white}
-            placeholder={screens.Search}
-            leftIcon={<Feather name="search" size={20} color={colors.gray} />}
-            rightIcon={
-              <TouchableOpacity onPress={onCancelIconPress}>
-                <MaterialIcons name="cancel" size={20} color={showCancel ? colors.black1 : colors.black2} />
-              </TouchableOpacity>
-            }
-          />
-        </InputBox>
+      <View>
+        <ScreenHeader text={screens.Search} />
+        <SearchBox>
+          <InputBox showCancel={showCancel}>
+            <Input
+              ref={inputRef}
+              value={searchText}
+              onChangeText={e => onChange(e)}
+              inputContainerStyle={s.inputContainer}
+              inputStyle={s.input}
+              placeholderTextColor={colors.gray}
+              placeholder={screens.Search}
+              leftIcon={<Feather name="search" size={20} color={colors.gray} />}
+              rightIcon={
+                <TouchableOpacity onPress={onCancelIconPress}>
+                  <MaterialIcons name="cancel" size={20} color={showCancel ? colors.black1 : colors.black2} />
+                </TouchableOpacity>
+              }
+            />
+          </InputBox>
 
-        {showCancel && (
-          <TouchableOpacity onPress={onCancelPress}>
-            <CancelText>Cancel</CancelText>
-          </TouchableOpacity>
-        )}
-      </SearchBox>
+          {showCancel && (
+            <TouchableOpacity onPress={onCancelPress}>
+              <CancelText>Cancel</CancelText>
+            </TouchableOpacity>
+          )}
+        </SearchBox>
+      </View>
 
       <SearchTabsContainer
         isSearchMode={isSearchMode}
