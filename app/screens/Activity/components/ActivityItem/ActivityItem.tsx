@@ -55,7 +55,7 @@ const ActivityItem: React.FC<{ activity: Activity; currentUser: User }> = ({ act
           {isCommentActivity && (
             <TouchableOpacity onPress={() => navigate(screens.SoloPost, { post, currentUser })}>
               <UserNameCommentText>{`"${activity.commentText}"`}</UserNameCommentText>
-              <UserImage uri={post.img} styles={s.postImg} />
+              <UserImage uri={post?.img} styles={s.postImg} />
             </TouchableOpacity>
           )}
         </View>

@@ -77,7 +77,7 @@ const PostItem: React.FC<TPostItem> = ({ post, currentUser, showAllComments }) =
         actionUserId: currentUser._id,
         targetUserId: post.createdByUserId,
         commentText: comment,
-        postImage: post.img,
+        postId: post._id,
       },
     });
   }, [mutate, setComment, comment]);
