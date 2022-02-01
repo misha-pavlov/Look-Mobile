@@ -5,7 +5,7 @@ import { DefaultContainer } from '../../common/common.styles';
 import ScreenHeader from '../../components/ScreenHeader/ScreenHeader';
 import { screens } from '../../config/screens';
 import { TUserProfile } from '../UserProfile/UserProfile.types';
-import { GET_USER_ACTIVITIES } from '../../gql/activity/activity.queries';
+import { GET_USER_ACTIVITIES } from './gql/Activity.queries';
 import { Activity as TActivity } from '../../types/graphql';
 import ActivityItem from './components/ActivityItem/ActivityItem';
 

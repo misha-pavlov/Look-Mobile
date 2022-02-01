@@ -25,7 +25,7 @@ const AppTab = createBottomTabNavigator();
 
 const AppNavigator = (currentUser: { currentUser?: User }) => {
   const userId = currentUser.currentUser._id;
-  const { data } = useQuery(HAS_UNREAD_ACTIVITIES, { variables: { userId }, skip: !userId, pollInterval: 10000 });
+  const { data } = useQuery(HAS_UNREAD_ACTIVITIES, { variables: { userId }, skip: !userId, pollInterval: 5000 });
 
   return (
     <AppTab.Navigator
