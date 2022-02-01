@@ -11,6 +11,6 @@ export const Bullet = styled.View`
   width: 5px;
   border-radius: 50px;
   position: absolute;
-  right: 0;
+  right: -7px;
   top: -5px;
 `;

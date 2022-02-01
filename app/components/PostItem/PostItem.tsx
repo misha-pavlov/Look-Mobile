@@ -18,7 +18,6 @@ import { useGetUser } from '../../hooks/useGetUser';
 // constants
 import { colors } from '../../config/colors';
 import { messages } from '../../config/messages';
-import { constants } from '../../config/constants';
 import { screens } from '../../config/screens';
 // components
 import Tags from '../../screens/UserPostsList/components/Tags/Tags';
@@ -28,6 +27,7 @@ import GrayInput from '../GrayInput/GrayInput';
 import { ADD_COMMENT } from './gql/PostItem.mutations';
 import { GET_USER_POSTS } from '../../screens/UserProfile/components/CustomProfileTabs/gql/CustomProfileTabs.queries';
 import { ADD_USER_ACTIVITY } from '../../gql/activity/activity.mutations';
+import UserImage from '../UserImage/UserImage';
 
 const PostItem: React.FC<TPostItem> = ({ post, currentUser, showAllComments }) => {
   const { navigate } = useNavigation<NAppNavigatorNavigationProp<'UserProfile'>>();
@@ -89,14 +89,7 @@ const PostItem: React.FC<TPostItem> = ({ post, currentUser, showAllComments }) =
   return (
     <ItemContainer>
       <ItemAvatarBlock onPress={() => navigate(screens.UserProfile, { user })}>
-        <Image
-          source={{
-            uri: user?.img ? user?.img : constants.userMock,
-          }}
-          style={s.img}
-          PlaceholderContent={<ActivityIndicator color={colors.white} />}
-          placeholderStyle={common.placeholder}
-        />
+        <UserImage uri={user?.img} styles={s.img} />
         <View>
           <ItemText>{user?.userName}</ItemText>
           {postTime && <ItemTime>{formatAMPM(postTime)}</ItemTime>}

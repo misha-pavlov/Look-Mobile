@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
-import { ActivityIndicator, View } from 'react-native';
-import { Image } from 'react-native-elements';
+import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useMutation } from '@apollo/client';
 import { useNavigation } from '@react-navigation/native';
@@ -21,10 +20,8 @@ import {
   UnblockButton,
   UnblockText,
 } from './UserProfileHeader.styles';
-import { common } from '../../../../common/common.styles';
 // constant
 import { colors } from '../../../../config/colors';
-import { constants } from '../../../../config/constants';
 import { messages } from '../../../../config/messages';
 import { screens } from '../../../../config/screens';
 // gql
@@ -33,6 +30,7 @@ import { GET_FOLLOWERS, GET_FOLLOWING } from '../../../../gql/user/user.queries'
 import { ADD_USER_ACTIVITY } from '../../../../gql/activity/activity.mutations';
 // helpers
 import { isEqualObjects } from '../../../../helpers/isEqualObjects';
+import UserImage from '../../../../components/UserImage/UserImage';
 
 const UserProfileHeader: React.FC<TUserProfile> = ({ currentUser, user }) => {
   const { getParent } = useNavigation<NAppNavigatorNavigationProp<'RecentMessages'>>();
@@ -123,15 +121,7 @@ const UserProfileHeader: React.FC<TUserProfile> = ({ currentUser, user }) => {
 
   return (
     <UserProfileHeaderContainer>
-      <Image
-        source={{
-          uri: useUser?.img ? useUser?.img : constants.userMock,
-        }}
-        style={s.img}
-        PlaceholderContent={<ActivityIndicator color={colors.white} />}
-        placeholderStyle={common.placeholder}
-      />
-
+      <UserImage uri={useUser?.img} styles={s.img} />
       <View>
         <UserProfileHeaderUserName>{useUser.userName}</UserProfileHeaderUserName>
         {showRealName()}

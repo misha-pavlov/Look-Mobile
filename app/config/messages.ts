@@ -46,4 +46,8 @@ export const messages = {
   tags: 'Tags',
   users: 'Users',
   empty: `Oops... It's empty list`,
+
+  /* Activity */
+  startedFollowing: 'started following you',
+  commented: 'commented:',
 };

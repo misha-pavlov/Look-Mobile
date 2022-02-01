@@ -22,7 +22,7 @@ import { screens } from '../../config/screens';
 import { isEqualObjects } from '../../helpers/isEqualObjects';
 // gql
 import { BLOCK_USER } from './gql/UserProfile.mutations';
-import { GET_FOLLOWERS, GET_FOLLOWING } from './components/CustomProfileTabs/gql/CustomProfileTabs.queries';
+import { GET_FOLLOWERS, GET_FOLLOWING } from '../../gql/user/user.queries';
 
 const UserProfile: React.FC<TUserProfile> = ({ currentUser }) => {
   const navigation = useNavigation<NAppNavigatorNavigationProp<'UserSettings'>>();

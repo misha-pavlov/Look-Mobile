@@ -17,6 +17,17 @@ export type Scalars = {
   Date: any;
 };
 
+export type Activity = {
+  __typename?: 'Activity';
+  _id: Scalars['String'];
+  actionUserId: Scalars['String'];
+  commentText?: Maybe<Scalars['String']>;
+  date: Scalars['String'];
+  isRead?: Maybe<Scalars['Boolean']>;
+  postImage?: Maybe<Scalars['String']>;
+  targetUserId: Scalars['String'];
+};
+
 export type Comment = {
   __typename?: 'Comment';
   _id: Scalars['String'];
@@ -29,11 +40,15 @@ export type Mutation = {
   addComment: Posts;
   addPost: Posts;
   addUser: User;
+  addUserActivity: Activity;
+  block: User;
   changePassword: User;
   changeUserMainFields: User;
   doFollow: User;
+  doUnblocked: User;
   dummy?: Maybe<Scalars['Boolean']>;
   setDesc: User;
+  setUnreadActivity: Activity;
 };
 
 export type MutationAddCommentArgs = {
@@ -53,6 +68,18 @@ export type MutationAddUserArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
   userName: Scalars['String'];
+};
+
+export type MutationAddUserActivityArgs = {
+  actionUserId: Scalars['String'];
+  commentText?: InputMaybe<Scalars['String']>;
+  postImage?: InputMaybe<Scalars['String']>;
+  targetUserId: Scalars['String'];
+};
+
+export type MutationBlockArgs = {
+  targetUserId: Scalars['String'];
+  userId: Scalars['String'];
 };
 
 export type MutationChangePasswordArgs = {
@@ -75,9 +102,18 @@ export type MutationDoFollowArgs = {
   userId: Scalars['String'];
 };
 
+export type MutationDoUnblockedArgs = {
+  targetUserId: Scalars['String'];
+  userId: Scalars['String'];
+};
+
 export type MutationSetDescArgs = {
   newDesc: Scalars['String'];
   userId: Scalars['String'];
+};
+
+export type MutationSetUnreadActivityArgs = {
+  activityId: Scalars['String'];
 };
 
 export type Posts = {
@@ -94,12 +130,19 @@ export type Posts = {
 export type Query = {
   __typename?: 'Query';
   dummy?: Maybe<Scalars['Boolean']>;
+  getAllPosts: Array<Posts>;
   getBlocked: Array<User>;
   getFollowers: Array<User>;
   getFollowing: Array<User>;
+  getPostsByTag: Array<Posts>;
+  getPostsByTitle: Array<Posts>;
+  getPostsForUser: Array<Posts>;
   getUser: User;
+  getUserActivities: Array<Activity>;
   getUserPosts: Array<Posts>;
+  hasUnreadActivities: Scalars['Boolean'];
   posts: Array<Posts>;
+  searchUser: Array<User>;
   users: Array<User>;
 };
 
@@ -115,12 +158,38 @@ export type QueryGetFollowingArgs = {
   userId: Scalars['String'];
 };
 
+export type QueryGetPostsByTagArgs = {
+  tag: Scalars['String'];
+};
+
+export type QueryGetPostsByTitleArgs = {
+  title: Scalars['String'];
+};
+
+export type QueryGetPostsForUserArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  userId: Scalars['String'];
+};
+
 export type QueryGetUserArgs = {
+  userId: Scalars['String'];
+};
+
+export type QueryGetUserActivitiesArgs = {
   userId: Scalars['String'];
 };
 
 export type QueryGetUserPostsArgs = {
   userId: Scalars['String'];
+};
+
+export type QueryHasUnreadActivitiesArgs = {
+  userId: Scalars['String'];
+};
+
+export type QuerySearchUserArgs = {
+  userName: Scalars['String'];
 };
 
 export type Subscription = {
@@ -226,9 +295,11 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
+  Activity: ResolverTypeWrapper<Activity>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Comment: ResolverTypeWrapper<Comment>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   Mutation: ResolverTypeWrapper<{}>;
   Posts: ResolverTypeWrapper<Posts>;
   Query: ResolverTypeWrapper<{}>;
@@ -241,9 +312,11 @@ export type ResolversTypes = {
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
+  Activity: Activity;
   Boolean: Scalars['Boolean'];
   Comment: Comment;
   Date: Scalars['Date'];
+  Int: Scalars['Int'];
   Mutation: {};
   Posts: Posts;
   Query: {};
@@ -252,6 +325,20 @@ export type ResolversParentTypes = {
   Tag: Tag;
   TagInput: TagInput;
   User: User;
+};
+
+export type ActivityResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Activity'] = ResolversParentTypes['Activity'],
+> = {
+  _id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  actionUserId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  commentText?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  date?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  isRead?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  postImage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  targetUserId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type CommentResolvers<
@@ -290,6 +377,18 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationAddUserArgs, 'email' | 'password' | 'userName'>
   >;
+  addUserActivity?: Resolver<
+    ResolversTypes['Activity'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationAddUserActivityArgs, 'actionUserId' | 'targetUserId'>
+  >;
+  block?: Resolver<
+    ResolversTypes['User'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationBlockArgs, 'targetUserId' | 'userId'>
+  >;
   changePassword?: Resolver<
     ResolversTypes['User'],
     ParentType,
@@ -308,12 +407,24 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationDoFollowArgs, 'followUserId' | 'isFollow' | 'userId'>
   >;
+  doUnblocked?: Resolver<
+    ResolversTypes['User'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationDoUnblockedArgs, 'targetUserId' | 'userId'>
+  >;
   dummy?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   setDesc?: Resolver<
     ResolversTypes['User'],
     ParentType,
     ContextType,
     RequireFields<MutationSetDescArgs, 'newDesc' | 'userId'>
+  >;
+  setUnreadActivity?: Resolver<
+    ResolversTypes['Activity'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationSetUnreadActivityArgs, 'activityId'>
   >;
 };
 
@@ -336,6 +447,7 @@ export type QueryResolvers<
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
 > = {
   dummy?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  getAllPosts?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType>;
   getBlocked?: Resolver<
     Array<ResolversTypes['User']>,
     ParentType,
@@ -354,14 +466,50 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QueryGetFollowingArgs, 'userId'>
   >;
+  getPostsByTag?: Resolver<
+    Array<ResolversTypes['Posts']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryGetPostsByTagArgs, 'tag'>
+  >;
+  getPostsByTitle?: Resolver<
+    Array<ResolversTypes['Posts']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryGetPostsByTitleArgs, 'title'>
+  >;
+  getPostsForUser?: Resolver<
+    Array<ResolversTypes['Posts']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryGetPostsForUserArgs, 'limit' | 'skip' | 'userId'>
+  >;
   getUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetUserArgs, 'userId'>>;
+  getUserActivities?: Resolver<
+    Array<ResolversTypes['Activity']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryGetUserActivitiesArgs, 'userId'>
+  >;
   getUserPosts?: Resolver<
     Array<ResolversTypes['Posts']>,
     ParentType,
     ContextType,
     RequireFields<QueryGetUserPostsArgs, 'userId'>
   >;
+  hasUnreadActivities?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<QueryHasUnreadActivitiesArgs, 'userId'>
+  >;
   posts?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType>;
+  searchUser?: Resolver<
+    Array<ResolversTypes['User']>,
+    ParentType,
+    ContextType,
+    RequireFields<QuerySearchUserArgs, 'userName'>
+  >;
   users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
 };
 
@@ -400,6 +548,7 @@ export type UserResolvers<
 };
 
 export type Resolvers<ContextType = any> = {
+  Activity?: ActivityResolvers<ContextType>;
   Comment?: CommentResolvers<ContextType>;
   Date?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
