@@ -7,7 +7,7 @@ export const GET_USER_ACTIVITIES = gql`
       actionUserId
       targetUserId
       commentText
-      postImage
+      postId
       date
     }
   }

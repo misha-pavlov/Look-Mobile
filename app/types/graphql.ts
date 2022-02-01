@@ -24,7 +24,7 @@ export type Activity = {
   commentText?: Maybe<Scalars['String']>;
   date: Scalars['String'];
   isRead?: Maybe<Scalars['Boolean']>;
-  postImage?: Maybe<Scalars['String']>;
+  postId?: Maybe<Scalars['String']>;
   targetUserId: Scalars['String'];
 };
 
@@ -73,7 +73,7 @@ export type MutationAddUserArgs = {
 export type MutationAddUserActivityArgs = {
   actionUserId: Scalars['String'];
   commentText?: InputMaybe<Scalars['String']>;
-  postImage?: InputMaybe<Scalars['String']>;
+  postId?: InputMaybe<Scalars['String']>;
   targetUserId: Scalars['String'];
 };
 
@@ -134,6 +134,7 @@ export type Query = {
   getBlocked: Array<User>;
   getFollowers: Array<User>;
   getFollowing: Array<User>;
+  getPost: Posts;
   getPostsByTag: Array<Posts>;
   getPostsByTitle: Array<Posts>;
   getPostsForUser: Array<Posts>;
@@ -156,6 +157,10 @@ export type QueryGetFollowersArgs = {
 
 export type QueryGetFollowingArgs = {
   userId: Scalars['String'];
+};
+
+export type QueryGetPostArgs = {
+  postId: Scalars['String'];
 };
 
 export type QueryGetPostsByTagArgs = {
@@ -336,7 +341,7 @@ export type ActivityResolvers<
   commentText?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   date?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   isRead?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  postImage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  postId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   targetUserId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -466,6 +471,7 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QueryGetFollowingArgs, 'userId'>
   >;
+  getPost?: Resolver<ResolversTypes['Posts'], ParentType, ContextType, RequireFields<QueryGetPostArgs, 'postId'>>;
   getPostsByTag?: Resolver<
     Array<ResolversTypes['Posts']>,
     ParentType,

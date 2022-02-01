@@ -17,7 +17,7 @@ const Activity: React.FC<TUserProfile> = ({ currentUser }) => {
       <ScreenHeader text={screens.Activity} />
       <FlatList
         data={data?.getUserActivities}
-        renderItem={({ item }) => <ActivityItem activity={item} />}
+        renderItem={({ item }) => <ActivityItem activity={item} currentUser={currentUser} />}
         keyExtractor={keyExtractor}
       />
     </DefaultContainer>
