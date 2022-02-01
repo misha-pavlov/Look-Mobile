@@ -7,7 +7,7 @@ import { colors } from '../../config/colors';
 import { messages } from '../../config/messages';
 import LogInForm from './components/LogInForm/LogInForm';
 import { ApolloFetchPolicy } from '../../common/apollo';
-import { GET_USERS } from '../../gql/user.queries';
+import { GET_USERS } from '../../gql/user/user.queries';
 
 const LogIn = () => {
   const { goBack } = useNavigation();

@@ -17,7 +17,7 @@ import { withCurrentUser } from '../hocs/withCurrentUser';
 // types
 import { User } from '../types/graphql';
 // graphql
-import { HAS_UNREAD_ACTIVITIES } from '../gql/activity.queries';
+import { HAS_UNREAD_ACTIVITIES } from '../gql/activity/activity.queries';
 // components
 import ActivityIcon from './components/ActivityIcon/ActivityIcon';
 

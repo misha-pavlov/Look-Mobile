@@ -21,12 +21,16 @@ import { colors } from '../../../../../../config/colors';
 import { constants } from '../../../../../../config/constants';
 import { screens } from '../../../../../../config/screens';
 // gql
-import { DO_FOLLOW } from '../../../../../../gql/user.mutations';
-import { GET_FOLLOWERS, GET_FOLLOWING } from '../../../../../../gql/user.queries';
+import { DO_FOLLOW } from '../../../../../../gql/user/user.mutations';
+import { GET_FOLLOWERS, GET_FOLLOWING } from '../../../../../../gql/user/user.queries';
+import { ADD_USER_ACTIVITY } from '../../../../../../gql/activity/activity.mutations';
 
 const UsersItem = ({ user, currentUser }: { user: User; currentUser: User }) => {
   const navigation = useNavigation<NAppNavigatorNavigationProp<'UserProfile'>>();
   const [mutate] = useMutation(DO_FOLLOW, { onError: error => console.log('DO_FOLLOW UserList = ', error) });
+  const [activityMutate] = useMutation(ADD_USER_ACTIVITY, {
+    onError: error => console.log('ADD_USER_ACTIVITY = ', error),
+  });
 
   const onPress = useCallback(async (isFollow, followUserId) => {
     await mutate({
@@ -38,6 +42,15 @@ const UsersItem = ({ user, currentUser }: { user: User; currentUser: User }) => 
         { query: GET_FOLLOWING, variables: { userId: currentUser._id } },
       ],
     });
+
+    if (isFollow) {
+      await activityMutate({
+        variables: {
+          actionUserId: currentUser._id,
+          targetUserId: followUserId,
+        },
+      });
+    }
   }, []);
 
   return (

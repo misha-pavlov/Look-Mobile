@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import { useUserId } from '../hooks/useUserId';
-import { GET_USER } from '../gql/user.queries';
+import { GET_USER } from '../gql/user/user.queries';
 import { ApolloFetchPolicy } from '../common/apollo';
 import { User } from '../types/graphql';
 import Spinner from '../components/Spinner/Spinner';

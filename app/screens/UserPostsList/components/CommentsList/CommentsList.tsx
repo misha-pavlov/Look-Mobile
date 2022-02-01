@@ -7,6 +7,8 @@ import { colors } from '../../../../config/colors';
 import { common } from '../../../../common/common.styles';
 
 const CommentsList = ({ comments, isShortList }: { comments: Comment[]; isShortList?: boolean }) => {
+  const reversedComments = [...comments].reverse();
+
   const renderItem = useCallback(c => {
     return (
       <CommentBlock>
@@ -27,7 +29,7 @@ const CommentsList = ({ comments, isShortList }: { comments: Comment[]; isShortL
 
   return (
     <FlatList
-      data={isShortList ? [comments[comments.length - 1]] : comments}
+      data={isShortList ? [comments[comments.length - 1]] : reversedComments}
       renderItem={renderItem}
       keyExtractor={keyExtractor}
     />

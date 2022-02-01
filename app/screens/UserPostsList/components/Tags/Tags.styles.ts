@@ -6,7 +6,6 @@ export const TagBlock = styled.TouchableOpacity<{ isActive: boolean }>`
   border-radius: 15px;
   padding: 5px 10px;
   margin-right: 10px;
-  margin-top: 15px;
   border: ${({ isActive }) => (isActive ? `1px solid ${colors.purple}` : `1px solid ${colors.black1}`)};
 `;
 

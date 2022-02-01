@@ -38,5 +38,6 @@ export const s = StyleSheet.create({
   postImg: {
     width: '100%',
     height: 400,
+    marginTop: 15,
   },
 });

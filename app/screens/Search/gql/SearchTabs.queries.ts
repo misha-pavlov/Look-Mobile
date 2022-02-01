@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
-import { USER_FRAGMENT } from '../../../gql/user.queries';
-import { POST_FRAGMENT } from '../../../gql/post.queries';
+import { USER_FRAGMENT } from '../../../gql/user/user.queries';
+import { POST_FRAGMENT } from '../../../gql/post/post.queries';
 
 export const GET_POSTS_BY_TITLE = gql`
   query getPostsByTitle($title: String!) {

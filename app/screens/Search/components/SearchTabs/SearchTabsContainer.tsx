@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/client';
 import SearchTabs from './SearchTabs';
 import { GET_ALL_POSTS } from './gql/SearchTabs.queries';
 import { TSearchTabs } from './SearchTabs.types';
-import { GET_USERS } from '../../../../gql/user.queries';
+import { GET_USERS } from '../../../../gql/user/user.queries';
 import { withCurrentUser } from '../../../../hocs/withCurrentUser';
 
 const withGetAllPosts = (BaseComponent: FC<TSearchTabs>) => {

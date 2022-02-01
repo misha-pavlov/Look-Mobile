@@ -9,7 +9,7 @@ import { colors } from '../../../../config/colors';
 import PurpleButton from '../../../../components/PurpleButton/PurpleButton';
 import { messages } from '../../../../config/messages';
 import { ADD_USER } from '../../gql/SignUp.mutations';
-import { GET_USERS } from '../../../../gql/user.queries';
+import { GET_USERS } from '../../../../gql/user/user.queries';
 
 const SignUpForm = () => {
   const name = 'name';

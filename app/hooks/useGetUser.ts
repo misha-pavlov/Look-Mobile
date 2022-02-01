@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { GET_USER } from '../gql/user.queries';
+import { GET_USER } from '../gql/user/user.queries';
 import { ApolloFetchPolicy } from '../common/apollo';
 import { User } from '../types/graphql';
 

@@ -28,8 +28,9 @@ import { constants } from '../../../../config/constants';
 import { messages } from '../../../../config/messages';
 import { screens } from '../../../../config/screens';
 // gql
-import { DO_FOLLOW, UNBLOCK_USER } from '../../../../gql/user.mutations';
-import { GET_FOLLOWERS, GET_FOLLOWING } from '../CustomProfileTabs/gql/CustomProfileTabs.queries';
+import { DO_FOLLOW, UNBLOCK_USER } from '../../../../gql/user/user.mutations';
+import { GET_FOLLOWERS, GET_FOLLOWING } from '../../../../gql/user/user.queries';
+import { ADD_USER_ACTIVITY } from '../../../../gql/activity/activity.mutations';
 // helpers
 import { isEqualObjects } from '../../../../helpers/isEqualObjects';
 
@@ -38,6 +39,9 @@ const UserProfileHeader: React.FC<TUserProfile> = ({ currentUser, user }) => {
   const [mutate] = useMutation(DO_FOLLOW, { onError: error => console.log('DO_FOLLOW UserProfileHeader = ', error) });
   const [unblock] = useMutation(UNBLOCK_USER, {
     onError: error => console.log('UNBLOCK_USER UserProfileHeader = ', error),
+  });
+  const [activityMutate] = useMutation(ADD_USER_ACTIVITY, {
+    onError: error => console.log('ADD_USER_ACTIVITY = ', error),
   });
 
   const useUser = user ? user : currentUser;
@@ -52,6 +56,15 @@ const UserProfileHeader: React.FC<TUserProfile> = ({ currentUser, user }) => {
         { query: GET_FOLLOWING, variables: { userId: currentUser._id } },
       ],
     });
+
+    if (isFollow) {
+      await activityMutate({
+        variables: {
+          actionUserId: currentUser._id,
+          targetUserId: followUserId,
+        },
+      });
+    }
   }, []);
 
   const unblockPress = useCallback(async targetUserId => {

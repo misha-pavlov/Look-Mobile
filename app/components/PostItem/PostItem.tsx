@@ -9,6 +9,7 @@ import { isImageUrl } from '../../helpers/isImageUrl';
 import { formatAMPM } from '../../helpers/formatAMPM';
 // types
 import { NAppNavigatorNavigationProp } from '../../navigation/types/AppNavigator.types';
+import { TPostItem } from './PostItem.types';
 // styles
 import { ItemAvatarBlock, ItemContainer, ItemDescBlock, ItemText, ItemTime, s, ShowAllText } from './PostItem.styles';
 import { common } from '../../common/common.styles';
@@ -26,7 +27,7 @@ import GrayInput from '../GrayInput/GrayInput';
 // gql
 import { ADD_COMMENT } from './gql/PostItem.mutations';
 import { GET_USER_POSTS } from '../../screens/UserProfile/components/CustomProfileTabs/gql/CustomProfileTabs.queries';
-import { TPostItem } from './PostItem.types';
+import { ADD_USER_ACTIVITY } from '../../gql/activity/activity.mutations';
 
 const PostItem: React.FC<TPostItem> = ({ post, currentUser, showAllComments }) => {
   const { navigate } = useNavigation<NAppNavigatorNavigationProp<'UserProfile'>>();
@@ -39,6 +40,9 @@ const PostItem: React.FC<TPostItem> = ({ post, currentUser, showAllComments }) =
 
   const [mutate] = useMutation(ADD_COMMENT, {
     onError: error => console.log('ADD_COMMENT = ', error),
+  });
+  const [activityMutate] = useMutation(ADD_USER_ACTIVITY, {
+    onError: error => console.log('ADD_USER_ACTIVITY = ', error),
   });
 
   const showComments = useCallback(() => {
@@ -67,6 +71,15 @@ const PostItem: React.FC<TPostItem> = ({ post, currentUser, showAllComments }) =
       },
       refetchQueries: [{ query: GET_USER_POSTS, variables: { userId: user._id } }],
     }).then(() => setComment(''));
+
+    await activityMutate({
+      variables: {
+        actionUserId: currentUser._id,
+        targetUserId: post.createdByUserId,
+        commentText: comment,
+        postImage: post.img,
+      },
+    });
   }, [mutate, setComment, comment]);
 
   if (!isImageUrl(post.img)) {
@@ -90,10 +103,6 @@ const PostItem: React.FC<TPostItem> = ({ post, currentUser, showAllComments }) =
         </View>
       </ItemAvatarBlock>
 
-      <ItemDescBlock>
-        <ItemText>{post.title}</ItemText>
-      </ItemDescBlock>
-
       <Image
         source={{
           uri: post.img,
@@ -102,6 +111,10 @@ const PostItem: React.FC<TPostItem> = ({ post, currentUser, showAllComments }) =
         PlaceholderContent={<ActivityIndicator color={colors.white} />}
         placeholderStyle={common.placeholder}
       />
+
+      <ItemDescBlock>
+        <ItemText>{post.title}</ItemText>
+      </ItemDescBlock>
 
       <Tags tags={post.tags} />
 

@@ -19,7 +19,7 @@ import { colors } from '../../config/colors';
 import { messages } from '../../config/messages';
 // gql
 import { GET_BLOCKED_USERS } from './gql/BlockedUsers.queries';
-import { UNBLOCK_USER } from '../../gql/user.mutations';
+import { UNBLOCK_USER } from '../../gql/user/user.mutations';
 // components
 import Spinner from '../../components/Spinner/Spinner';
 import FollowButton from '../../components/FollowButton/FollowButton';
