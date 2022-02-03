@@ -6,9 +6,10 @@ export const CenterBlock = styled.View`
   align-items: center;
 `;
 
-export const BlackBlock = styled.View`
+export const BlackBlock = styled.View<{ withMarginTop?: boolean }>`
   flex: 1;
   background-color: ${colors.black};
+  ${({ withMarginTop }) => withMarginTop && 'padding-top: 50px'}
 `;
 
 export const DefaultContainer = styled.View<{ isWithPaddingTop?: boolean }>`

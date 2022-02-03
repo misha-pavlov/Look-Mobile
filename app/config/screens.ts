@@ -36,4 +36,7 @@ export const screens = {
 
   /* Activity */
   Activity: 'Activity' as keyof NAppStackParamList,
+
+  /* Chats */
+  Chats: 'Chats' as keyof NAppStackParamList,
 };

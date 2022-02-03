@@ -5,7 +5,6 @@ import { colors } from '../../config/colors';
 export const SearchBox = styled.View`
   flex-direction: row;
   align-items: center;
-  margin-bottom: -15px;
 `;
 
 export const InputBox = styled.View<{ showCancel: boolean }>`
@@ -27,6 +26,7 @@ export const s = StyleSheet.create({
     paddingRight: 10,
     marginLeft: -10,
     marginRight: -10,
+    marginBottom: -23,
   },
   input: {
     paddingLeft: 5,

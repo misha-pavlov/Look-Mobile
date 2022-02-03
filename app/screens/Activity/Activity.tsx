@@ -14,11 +14,11 @@ const Activity: React.FC<TUserProfile> = ({ currentUser }) => {
   const keyExtractor = (item: TActivity) => item._id;
   return (
     <DefaultContainer>
-      <ScreenHeader text={screens.Activity} />
       <FlatList
         data={data?.getUserActivities}
         renderItem={({ item }) => <ActivityItem activity={item} currentUser={currentUser} />}
         keyExtractor={keyExtractor}
+        ListHeaderComponent={<ScreenHeader text={screens.Activity} />}
       />
     </DefaultContainer>
   );

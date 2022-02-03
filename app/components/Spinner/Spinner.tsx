@@ -2,9 +2,9 @@ import React from 'react';
 import { ActivityIndicator } from 'react-native';
 import { BlackBlock } from '../../common/common.styles';
 
-const Spinner = () => {
+const Spinner = ({ withMarginTop }: { withMarginTop?: boolean }) => {
   return (
-    <BlackBlock>
+    <BlackBlock withMarginTop={withMarginTop}>
       <ActivityIndicator />
     </BlackBlock>
   );

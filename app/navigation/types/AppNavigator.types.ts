@@ -28,6 +28,7 @@ export type NAppStackParamList = {
     currentUser: User;
   };
   Activity: undefined;
+  Chats: undefined;
 };
 
 export type NAppNavigatorRouteProp<ScreenName extends keyof NAppStackParamList> = RouteProp<

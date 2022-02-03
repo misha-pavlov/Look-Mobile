@@ -4,6 +4,7 @@ export const colors = {
   black: '#222',
   black1: '#1D1D20',
   black2: '#303030',
+  black3: '#202020',
 
   white: '#FFF',
 
@@ -20,4 +21,5 @@ export const colors = {
   pink: '#FDA2AF',
 
   red: '#BA000D',
+  red1: '#F40B53',
 };
