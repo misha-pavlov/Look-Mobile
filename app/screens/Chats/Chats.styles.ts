@@ -34,7 +34,7 @@ export const ChatsDivider = styled.View`
 `;
 
 export const DeleteChat = styled.View`
-  background-color: ${colors.red};
+  background-color: ${colors.black};
   width: 80px;
   height: 70px;
   align-items: center;

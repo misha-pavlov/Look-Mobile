@@ -3,6 +3,7 @@ import { Feather } from '@expo/vector-icons';
 import { FlatList, TouchableOpacity, View, Animated } from 'react-native';
 import AnimatedInterpolation = Animated.AnimatedInterpolation;
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { useNavigation } from '@react-navigation/native';
 // styles
 import { DefaultContainer } from '../../common/common.styles';
 import {
@@ -26,8 +27,10 @@ import { colors } from '../../config/colors';
 // types
 import { TChats } from './Chats.types';
 import { Chats as ChatsType } from '../../types/graphql';
+import { NAppNavigatorNavigationProp } from '../../navigation/types/AppNavigator.types';
 
 const Chats: React.FC<TChats> = ({ loading, currentUser, chats }) => {
+  const { navigate } = useNavigation<NAppNavigatorNavigationProp<'AddChat'>>();
   const [isSearchMode, setIsSearchMode] = useState(false);
   const [searchText, setSearchText] = useState('');
   const showCancel = searchText?.length > 0;
@@ -51,7 +54,7 @@ const Chats: React.FC<TChats> = ({ loading, currentUser, chats }) => {
       <TouchableOpacity onPress={onPress}>
         <Animated.View style={[{ transform: [{ scale }], marginRight: -15 }]}>
           <DeleteChat>
-            <Feather name="trash" size={24} color={colors.white} />
+            <Feather name="trash" size={24} color={colors.red1} />
           </DeleteChat>
         </Animated.View>
       </TouchableOpacity>
@@ -112,7 +115,7 @@ const Chats: React.FC<TChats> = ({ loading, currentUser, chats }) => {
           <>
             <ChatsFlexBlock>
               <ScreenHeader text={screens.Chats} />
-              <ChatsPlusButton>
+              <ChatsPlusButton onPress={() => navigate(screens.AddChat)}>
                 <Feather name="plus" size={25} color={colors.white} />
               </ChatsPlusButton>
             </ChatsFlexBlock>

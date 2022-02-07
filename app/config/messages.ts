@@ -50,4 +50,7 @@ export const messages = {
   /* Activity */
   startedFollowing: 'started following you',
   commented: 'commented:',
+
+  /* Chats */
+  selectUserForChat: 'Select user for chat',
 };

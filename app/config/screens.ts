@@ -39,4 +39,5 @@ export const screens = {
 
   /* Chats */
   Chats: 'Chats' as keyof NAppStackParamList,
+  AddChat: 'AddChat' as keyof NAppStackParamList,
 };

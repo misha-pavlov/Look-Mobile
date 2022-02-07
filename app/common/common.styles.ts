@@ -12,12 +12,13 @@ export const BlackBlock = styled.View<{ withMarginTop?: boolean }>`
   ${({ withMarginTop }) => withMarginTop && 'padding-top: 50px'}
 `;
 
-export const DefaultContainer = styled.View<{ isWithPaddingTop?: boolean }>`
+export const DefaultContainer = styled.View<{ isWithPaddingTop?: boolean; isWithBigPaddingTop?: boolean }>`
   flex: 1;
   background-color: ${colors.black};
   padding-right: 15px;
   padding-left: 15px;
   ${({ isWithPaddingTop }) => isWithPaddingTop && 'padding-top: 35px'}
+  ${({ isWithBigPaddingTop }) => isWithBigPaddingTop && 'padding-top: 50px'}
 `;
 
 export const common = StyleSheet.create({

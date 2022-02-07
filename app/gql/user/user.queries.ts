@@ -51,3 +51,12 @@ export const GET_FOLLOWING = gql`
   }
   ${USER_FRAGMENT}
 `;
+
+export const SEARCH_USER = gql`
+  query searchUser($userName: String!) {
+    searchUser(userName: $userName) {
+      ...UserFragment
+    }
+  }
+  ${USER_FRAGMENT}
+`;

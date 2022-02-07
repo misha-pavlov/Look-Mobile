@@ -9,9 +9,10 @@ import { CancelText, InputBox, SearchBox, s } from './Search.styles';
 import { colors } from '../../config/colors';
 import { screens } from '../../config/screens';
 import { SearchTabsContainer } from './components/SearchTabs/SearchTabsContainer';
-import { GET_POSTS_BY_TAG, GET_POSTS_BY_TITLE, SEARCH_USER } from './gql/SearchTabs.queries';
+import { GET_POSTS_BY_TAG, GET_POSTS_BY_TITLE } from './gql/SearchTabs.queries';
 import { NAppNavigatorRouteProp } from '../../navigation/types/AppNavigator.types';
 import ScreenHeader from '../../components/ScreenHeader/ScreenHeader';
+import { SEARCH_USER } from '../../gql/user/user.queries';
 
 const Search = () => {
   const inputRef = useRef<TextInput>();
