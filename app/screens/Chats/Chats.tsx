@@ -1,11 +1,10 @@
-import React, { useCallback, useRef, useState } from 'react';
-import { Feather, MaterialIcons } from '@expo/vector-icons';
-import { FlatList, TextInput, TouchableOpacity, View, Animated } from 'react-native';
-import { Input } from 'react-native-elements';
+import React, { useCallback, useState } from 'react';
+import { Feather } from '@expo/vector-icons';
+import { FlatList, TouchableOpacity, View, Animated } from 'react-native';
+import AnimatedInterpolation = Animated.AnimatedInterpolation;
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+// styles
 import { DefaultContainer } from '../../common/common.styles';
-import ScreenHeader from '../../components/ScreenHeader/ScreenHeader';
-import { screens } from '../../config/screens';
 import {
   ChatsDivider,
   ChatsFlexBlock,
@@ -16,38 +15,22 @@ import {
   DeleteChat,
   sChats,
 } from './Chats.styles';
-import { colors } from '../../config/colors';
-import { CancelText, InputBox, s, SearchBox } from '../Search/Search.styles';
-import { TChats } from './Chats.types';
-import { Chats as ChatsType } from '../../types/graphql';
+// components
+import ScreenHeader from '../../components/ScreenHeader/ScreenHeader';
 import UserImage from '../../components/UserImage/UserImage';
 import Spinner from '../../components/Spinner/Spinner';
-import AnimatedInterpolation = Animated.AnimatedInterpolation;
+import GraySearchInput from '../../components/GraySearchInput/GraySearchInput';
+// constants
+import { screens } from '../../config/screens';
+import { colors } from '../../config/colors';
+// types
+import { TChats } from './Chats.types';
+import { Chats as ChatsType } from '../../types/graphql';
 
 const Chats: React.FC<TChats> = ({ loading, currentUser, chats }) => {
-  const inputRef = useRef<TextInput>();
   const [isSearchMode, setIsSearchMode] = useState(false);
   const [searchText, setSearchText] = useState('');
   const showCancel = searchText?.length > 0;
-
-  const onCancelIconPress = useCallback(() => {
-    setSearchText('');
-    inputRef.current.blur();
-  }, [setSearchText]);
-
-  const onCancelPress = useCallback(() => {
-    setIsSearchMode(false);
-    setSearchText('');
-    inputRef.current.blur();
-  }, [setIsSearchMode]);
-
-  const onChange = useCallback(
-    e => {
-      setSearchText(e);
-      setIsSearchMode(true);
-    },
-    [searchText, setSearchText],
-  );
 
   const RightActions = ({
     // @ts-ignore
@@ -133,31 +116,12 @@ const Chats: React.FC<TChats> = ({ loading, currentUser, chats }) => {
                 <Feather name="plus" size={25} color={colors.white} />
               </ChatsPlusButton>
             </ChatsFlexBlock>
-            <SearchBox>
-              <InputBox showCancel={showCancel}>
-                <Input
-                  ref={inputRef}
-                  value={searchText}
-                  onChangeText={e => onChange(e)}
-                  inputContainerStyle={s.inputContainer}
-                  inputStyle={s.input}
-                  placeholderTextColor={colors.gray}
-                  placeholder={screens.Search}
-                  leftIcon={<Feather name="search" size={20} color={colors.gray} />}
-                  rightIcon={
-                    <TouchableOpacity onPress={onCancelIconPress}>
-                      <MaterialIcons name="cancel" size={20} color={showCancel ? colors.black1 : colors.black2} />
-                    </TouchableOpacity>
-                  }
-                />
-              </InputBox>
-
-              {showCancel && (
-                <TouchableOpacity onPress={onCancelPress}>
-                  <CancelText>Cancel</CancelText>
-                </TouchableOpacity>
-              )}
-            </SearchBox>
+            <GraySearchInput
+              searchText={searchText}
+              setSearchText={setSearchText}
+              setIsSearchMode={setIsSearchMode}
+              showCancel={showCancel}
+            />
           </>
         }
       />
