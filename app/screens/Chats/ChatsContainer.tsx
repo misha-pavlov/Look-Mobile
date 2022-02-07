@@ -1,10 +1,10 @@
 import { compose } from 'recompose';
 import React from 'react';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery, useQuery } from '@apollo/client';
 import { withCurrentUser } from '../../hocs/withCurrentUser';
 import Chats from './Chats';
 import { TChats } from './Chats.types';
-import { GET_USER_CHATS } from './gql/Chats.queries';
+import { GET_USER_CHATS, SEARCH_CHAT } from './gql/Chats.queries';
 
 const withGetUserChats = (BaseComponent: React.FC<TChats>) => {
   return (props: TChats) => {
@@ -19,4 +19,11 @@ const withGetUserChats = (BaseComponent: React.FC<TChats>) => {
   };
 };
 
-export const ChatsContainer = compose(withCurrentUser, withGetUserChats)(Chats);
+const withSearchChat = (BaseComponent: React.FC<TChats>) => {
+  return (props: TChats) => {
+    const [searchChat, { data }] = useLazyQuery(SEARCH_CHAT);
+    return <BaseComponent {...props} searchChat={searchChat} searchChats={data?.searchChat} />;
+  };
+};
+
+export const ChatsContainer = compose(withCurrentUser, withGetUserChats, withSearchChat)(Chats);

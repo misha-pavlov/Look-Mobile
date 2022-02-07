@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { FlatList, TouchableOpacity, View, Animated } from 'react-native';
 import AnimatedInterpolation = Animated.AnimatedInterpolation;
@@ -29,11 +29,19 @@ import { TChats } from './Chats.types';
 import { Chats as ChatsType } from '../../types/graphql';
 import { NAppNavigatorNavigationProp } from '../../navigation/types/AppNavigator.types';
 
-const Chats: React.FC<TChats> = ({ loading, currentUser, chats }) => {
+const Chats: React.FC<TChats> = ({ loading, currentUser, chats, searchChat, searchChats }) => {
   const { navigate } = useNavigation<NAppNavigatorNavigationProp<'AddChat'>>();
   const [isSearchMode, setIsSearchMode] = useState(false);
   const [searchText, setSearchText] = useState('');
   const showCancel = searchText?.length > 0;
+
+  useEffect(() => {
+    searchChat({
+      variables: {
+        title: searchText,
+      },
+    });
+  }, [searchText, searchChat]);
 
   const RightActions = ({
     // @ts-ignore
@@ -100,6 +108,8 @@ const Chats: React.FC<TChats> = ({ loading, currentUser, chats }) => {
 
   const keyExtractor = (item: ChatsType) => item._id;
 
+  const data = useMemo(() => (isSearchMode ? searchChats : chats), [isSearchMode, chats, searchChats]);
+
   if (loading) {
     return <Spinner withMarginTop />;
   }
@@ -107,7 +117,7 @@ const Chats: React.FC<TChats> = ({ loading, currentUser, chats }) => {
   return (
     <DefaultContainer>
       <FlatList
-        data={!isSearchMode && chats}
+        data={data}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         ItemSeparatorComponent={() => <ChatsDivider />}
@@ -119,12 +129,14 @@ const Chats: React.FC<TChats> = ({ loading, currentUser, chats }) => {
                 <Feather name="plus" size={25} color={colors.white} />
               </ChatsPlusButton>
             </ChatsFlexBlock>
-            <GraySearchInput
-              searchText={searchText}
-              setSearchText={setSearchText}
-              setIsSearchMode={setIsSearchMode}
-              showCancel={showCancel}
-            />
+            {chats.length > 10 && (
+              <GraySearchInput
+                searchText={searchText}
+                setSearchText={setSearchText}
+                setIsSearchMode={setIsSearchMode}
+                showCancel={showCancel}
+              />
+            )}
           </>
         }
       />
