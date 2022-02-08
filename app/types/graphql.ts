@@ -35,6 +35,7 @@ export type Chats = {
   lastMessage?: Maybe<Scalars['String']>;
   lastMessageTime?: Maybe<Scalars['String']>;
   members: Array<Scalars['String']>;
+  readBy: Array<Scalars['String']>;
   title: Scalars['String'];
 };
 
@@ -161,6 +162,7 @@ export type Query = {
   getUserPosts: Array<Posts>;
   hasUnreadActivities: Scalars['Boolean'];
   posts: Array<Posts>;
+  searchChat: Array<Chats>;
   searchUser: Array<User>;
   users: Array<User>;
 };
@@ -213,6 +215,10 @@ export type QueryGetUserPostsArgs = {
 
 export type QueryHasUnreadActivitiesArgs = {
   userId: Scalars['String'];
+};
+
+export type QuerySearchChatArgs = {
+  title: Scalars['String'];
 };
 
 export type QuerySearchUserArgs = {
@@ -379,6 +385,7 @@ export type ChatsResolvers<
   lastMessage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   lastMessageTime?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   members?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  readBy?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -559,6 +566,12 @@ export type QueryResolvers<
     RequireFields<QueryHasUnreadActivitiesArgs, 'userId'>
   >;
   posts?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType>;
+  searchChat?: Resolver<
+    Array<ResolversTypes['Chats']>,
+    ParentType,
+    ContextType,
+    RequireFields<QuerySearchChatArgs, 'title'>
+  >;
   searchUser?: Resolver<
     Array<ResolversTypes['User']>,
     ParentType,

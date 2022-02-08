@@ -5,8 +5,9 @@ import { colors } from '../../config/colors';
 export const ChatsFlexBlock = styled.View<{ withoutSpaceBetween?: boolean; withMarginTop?: boolean }>`
   flex-direction: row;
   align-items: center;
-  ${({ withMarginTop }) => withMarginTop && 'margin-top: 15px'}
-  ${({ withoutSpaceBetween }) => !withoutSpaceBetween && 'justify-content: space-between;'}
+  ${({ withMarginTop }) => withMarginTop && 'margin-top: 15px'};
+  ${({ withoutSpaceBetween }) => !withoutSpaceBetween && 'justify-content: space-between;'};
+  position: relative;
 `;
 
 export const ChatsPlusButton = styled.TouchableOpacity`
@@ -39,6 +40,16 @@ export const DeleteChat = styled.View`
   height: 70px;
   align-items: center;
   justify-content: center;
+`;
+
+export const UnReadDot = styled.View`
+  background-color: ${colors.purple1};
+  height: 8px;
+  width: 8px;
+  position: absolute;
+  border-radius: 50px;
+  top: 0;
+  right: 0;
 `;
 
 export const sChats = StyleSheet.create({

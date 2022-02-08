@@ -9,6 +9,7 @@ export const GET_USER_CHATS = gql`
       lastMessage
       lastMessageTime
       groupImage
+      readBy
     }
   }
 `;
@@ -22,6 +23,7 @@ export const SEARCH_CHAT = gql`
       lastMessage
       lastMessageTime
       groupImage
+      readBy
     }
   }
 `;

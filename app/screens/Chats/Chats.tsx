@@ -15,6 +15,7 @@ import {
   ChatsTitle,
   DeleteChat,
   sChats,
+  UnReadDot,
 } from './Chats.styles';
 // components
 import ScreenHeader from '../../components/ScreenHeader/ScreenHeader';
@@ -100,6 +101,8 @@ const Chats: React.FC<TChats> = ({ loading, currentUser, chats, searchChat, sear
             <View>
               <ChatsLastMessageTime>{`${convertedTime.getHours()}:${convertedTime.getMinutes()}`}</ChatsLastMessageTime>
             </View>
+
+            {!item.readBy.includes(currentUser?._id) && <UnReadDot />}
           </ChatsFlexBlock>
         </TouchableOpacity>
       </Swipeable>
@@ -129,7 +132,7 @@ const Chats: React.FC<TChats> = ({ loading, currentUser, chats, searchChat, sear
                 <Feather name="plus" size={25} color={colors.white} />
               </ChatsPlusButton>
             </ChatsFlexBlock>
-            {chats.length > 10 && (
+            {chats?.length > 10 && (
               <GraySearchInput
                 searchText={searchText}
                 setSearchText={setSearchText}

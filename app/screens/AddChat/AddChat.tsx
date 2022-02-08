@@ -50,7 +50,7 @@ const AddChat = () => {
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         ListHeaderComponent={
-          data.length > 10 && (
+          data?.length > 10 && (
             <GraySearchInput
               showCancel={showCancel}
               searchText={searchText}
