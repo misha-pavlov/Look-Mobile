@@ -15,5 +15,11 @@ export const getKeyboardVerticalOffset = (): number =>
     default: 0,
   });
 
+export const getKeyboardVerticalOffsetForMessages = (): number =>
+  Platform.select({
+    ios: 0,
+    default: 0,
+  });
+
 export const keyboardBehaviorDependsOnPlatform = isIOS() ? 'position' : undefined;
 export const keyboardBehaviorDependsOnPlatformForAddTag = isIOS() ? 'padding' : undefined;

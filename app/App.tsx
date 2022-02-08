@@ -2,7 +2,7 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { ApolloProvider } from '@apollo/client';
-import { client } from './helpers/client/client';
+import { client } from './client/client';
 import RootNavigator from './navigation/RootNavigator';
 
 export default function App() {

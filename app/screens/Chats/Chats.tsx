@@ -85,6 +85,8 @@ const Chats: React.FC<TChats> = ({ loading, currentUser, chats, searchChat, sear
       const uri = splitUri.filter(s => s !== currentUser.img);
       const finalImage = uri.length === 0 ? item.groupImage : uri[0];
 
+      const userId = item.members.filter(m => m !== currentUser._id);
+
       return (
         <Swipeable
           renderRightActions={(progress, dragX) => (
@@ -105,6 +107,7 @@ const Chats: React.FC<TChats> = ({ loading, currentUser, chats, searchChat, sear
                 chatId: item._id,
                 conversationUser: title[0],
                 conversationUserImage: finalImage,
+                userId: userId[0],
               })
             }>
             <ChatsFlexBlock withMarginTop>

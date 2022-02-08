@@ -40,7 +40,7 @@ export const messages = {
 
   /* Messages */
   message: 'Message',
-  recentMessages: 'Recent Messages',
+  enterMessage: 'Message...',
 
   /* Search */
   tags: 'Tags',

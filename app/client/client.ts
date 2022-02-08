@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { offsetLimitPagination } from '@apollo/client/utilities';
-import { constants } from '../../config/constants';
+import { constants } from '../config/constants';
 
 // instantiate apollo client with apollo link instance and cache instance
 export const client = new ApolloClient({

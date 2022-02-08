@@ -6,4 +6,5 @@ export type TGrayInput = {
   setComment: Dispatch<React.SetStateAction<string>>;
   currentUser: User;
   rightElement?: React.ReactNode;
+  isMessagesInput?: boolean;
 };

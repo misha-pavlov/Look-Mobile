@@ -5,7 +5,8 @@ import { ChatsContainer } from '../screens/Chats/ChatsContainer';
 import AddChat from '../screens/AddChat/AddChat';
 import { defaultScreenOptions, screenOptionsWithTitle } from '../common/defaultScreenOptions';
 import { messages } from '../config/messages';
-import Chat from '../screens/Chat/Chat';
+import { ChatContainer } from '../screens/Chat/ChatContainer';
+import { UserProfileContainer } from '../screens/UserProfile/UserProfileContainer';
 
 const ChatStack = createStackNavigator();
 
@@ -17,7 +18,8 @@ const ChatNavigator = () => (
       name={screens.AddChat}
       component={AddChat}
     />
-    <ChatStack.Screen options={defaultScreenOptions} name={screens.Chat} component={Chat} />
+    <ChatStack.Screen options={{ headerShown: false }} name={screens.Chat} component={ChatContainer} />
+    <ChatStack.Screen options={defaultScreenOptions} name={screens.UserProfile} component={UserProfileContainer} />
   </ChatStack.Navigator>
 );
 

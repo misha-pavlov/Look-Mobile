@@ -34,6 +34,7 @@ export type NAppStackParamList = {
     chatId: string;
     conversationUser: string;
     conversationUserImage: string;
+    userId: string;
   };
 };
 
