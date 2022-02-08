@@ -14,6 +14,7 @@ const withGetUserChats = (BaseComponent: React.FC<TChats>) => {
     const { data, loading } = useQuery(GET_USER_CHATS, {
       variables: { userId: currentUser?._id },
       skip: !currentUser?._id,
+      pollInterval: 5000,
     });
 
     return <BaseComponent {...props} loading={loading} chats={data?.getUserChats} />;

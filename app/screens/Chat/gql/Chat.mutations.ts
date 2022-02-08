@@ -7,3 +7,9 @@ export const ADD_MESSAGE = gql`
     }
   }
 `;
+
+export const SET_READ_BY = gql`
+  mutation setReadBy($userId: String!, $messageId: String!) {
+    setReadBy(userId: $userId, messageId: $messageId)
+  }
+`;

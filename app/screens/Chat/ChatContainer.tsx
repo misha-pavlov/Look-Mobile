@@ -8,7 +8,7 @@ import { TChat } from './Chat.types';
 import { GET_MESSAGES_BY_GROUP_ID } from './gql/Chat.queries';
 import { NAppNavigatorRouteProp } from '../../navigation/types/AppNavigator.types';
 import { Messages } from '../../types/graphql';
-import { ADD_MESSAGE } from './gql/Chat.mutations';
+import { ADD_MESSAGE, SET_READ_BY } from './gql/Chat.mutations';
 
 const withMessagesByGroupId = (BaseComponent: React.FC<TChat>) => {
   return (props: TChat) => {
@@ -32,4 +32,11 @@ const withAddMessage = (BaseComponent: React.FC<TChat>) => {
   };
 };
 
-export const ChatContainer = compose(withCurrentUser, withMessagesByGroupId, withAddMessage)(Chat);
+const withSetReadBy = (BaseComponent: React.FC<TChat>) => {
+  return (props: TChat) => {
+    const [mutate] = useMutation(SET_READ_BY, { onError: e => console.log('SET_READ_BY = ', e) });
+    return <BaseComponent {...props} setReadBy={mutate} />;
+  };
+};
+
+export const ChatContainer = compose(withCurrentUser, withMessagesByGroupId, withAddMessage, withSetReadBy)(Chat);

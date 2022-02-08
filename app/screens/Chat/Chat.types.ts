@@ -8,4 +8,7 @@ export type TChat = {
   addMessage: (
     options?: MutationFunctionOptions<any, OperationVariables, DefaultContext, ApolloCache<any>>,
   ) => Promise<FetchResult<any, Record<string, any>, Record<string, any>>>;
+  setReadBy: (
+    options?: MutationFunctionOptions<any, OperationVariables, DefaultContext, ApolloCache<any>>,
+  ) => Promise<FetchResult<any, Record<string, any>, Record<string, any>>>;
 };

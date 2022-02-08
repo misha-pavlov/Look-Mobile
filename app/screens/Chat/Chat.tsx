@@ -17,13 +17,14 @@ import GrayInput from '../../components/GrayInput/GrayInput';
 import { colors } from '../../config/colors';
 // graphql
 import { GET_MESSAGES_BY_GROUP_ID } from './gql/Chat.queries';
+import { GET_USER_CHATS } from '../Chats/gql/Chats.queries';
 // helpers
 import {
   getKeyboardVerticalOffsetForMessages,
   keyboardBehaviorDependsOnPlatformForAddTag,
 } from '../../config/platform';
 
-const Chat: React.FC<TChat> = ({ currentUser, loading, messages, addMessage }) => {
+const Chat: React.FC<TChat> = ({ currentUser, loading, messages, addMessage, setReadBy }) => {
   const [message, setMessage] = useState('');
   const { params } = useRoute<NAppNavigatorRouteProp<'Chat'>>();
   const { setOptions } = useNavigation();
@@ -32,7 +33,21 @@ const Chat: React.FC<TChat> = ({ currentUser, loading, messages, addMessage }) =
     setOptions({
       title: params.conversationUser,
     });
-  }, []);
+
+    (async () => {
+      await setReadBy({
+        variables: {
+          userId: currentUser._id,
+          messageId: messages[0]._id,
+        },
+        refetchQueries: [
+          { query: GET_MESSAGES_BY_GROUP_ID, variables: { groupId: params.chatId } },
+          { query: GET_USER_CHATS, variables: { userId: currentUser._id } },
+          { query: GET_USER_CHATS, variables: { userId: params.userId } },
+        ],
+      });
+    })();
+  }, [params, setReadBy, currentUser, messages]);
 
   const onMessageSend = useCallback(async () => {
     await addMessage({
@@ -41,7 +56,11 @@ const Chat: React.FC<TChat> = ({ currentUser, loading, messages, addMessage }) =
         userSentId: currentUser._id,
         groupId: params.chatId,
       },
-      refetchQueries: [{ query: GET_MESSAGES_BY_GROUP_ID, variables: { groupId: params.chatId } }],
+      refetchQueries: [
+        { query: GET_MESSAGES_BY_GROUP_ID, variables: { groupId: params.chatId } },
+        { query: GET_USER_CHATS, variables: { userId: currentUser._id } },
+        { query: GET_USER_CHATS, variables: { userId: params.userId } },
+      ],
     }).then(() => setMessage(''));
   }, [message]);
 

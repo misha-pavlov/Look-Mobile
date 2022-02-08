@@ -17,6 +17,7 @@ export const ChatsPlusButton = styled.TouchableOpacity`
 export const ChatsTitle = styled.Text`
   color: ${colors.white};
   font-weight: 600;
+  margin-bottom: 3px;
 `;
 
 export const ChatsLastMessage = styled.Text`
