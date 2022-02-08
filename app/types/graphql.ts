@@ -56,6 +56,7 @@ export type Mutation = {
   block: User;
   changePassword: User;
   changeUserMainFields: User;
+  deleteChat: Scalars['Boolean'];
   doFollow: User;
   doUnblocked: User;
   dummy?: Maybe<Scalars['Boolean']>;
@@ -112,6 +113,10 @@ export type MutationChangeUserMainFieldsArgs = {
   lastName?: InputMaybe<Scalars['String']>;
   userId: Scalars['String'];
   userName: Scalars['String'];
+};
+
+export type MutationDeleteChatArgs = {
+  chatId: Scalars['String'];
 };
 
 export type MutationDoFollowArgs = {
@@ -455,6 +460,12 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<MutationChangeUserMainFieldsArgs, 'email' | 'userId' | 'userName'>
+  >;
+  deleteChat?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeleteChatArgs, 'chatId'>
   >;
   doFollow?: Resolver<
     ResolversTypes['User'],

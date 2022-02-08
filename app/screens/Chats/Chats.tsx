@@ -29,8 +29,9 @@ import { colors } from '../../config/colors';
 import { TChats } from './Chats.types';
 import { Chats as ChatsType } from '../../types/graphql';
 import { NAppNavigatorNavigationProp } from '../../navigation/types/AppNavigator.types';
+import { GET_USER_CHATS } from './gql/Chats.queries';
 
-const Chats: React.FC<TChats> = ({ loading, currentUser, chats, searchChat, searchChats }) => {
+const Chats: React.FC<TChats> = ({ loading, currentUser, chats, searchChat, searchChats, deleteChat }) => {
   const { navigate } = useNavigation<NAppNavigatorNavigationProp<'AddChat'>>();
   const [isSearchMode, setIsSearchMode] = useState(false);
   const [searchText, setSearchText] = useState('');
@@ -70,48 +71,64 @@ const Chats: React.FC<TChats> = ({ loading, currentUser, chats, searchChat, sear
     );
   };
 
-  const renderItem = useCallback(({ item }: { item: ChatsType }) => {
-    /* just for fix types */
-    const itemTime = item.lastMessageTime as unknown as number;
-    const convertedTime = new Date(itemTime * 1);
+  const renderItem = useCallback(
+    ({ item }: { item: ChatsType }) => {
+      /* just for fix types */
+      const itemTime = item.lastMessageTime as unknown as number;
+      const convertedTime = new Date(itemTime * 1);
 
-    const splitTitle = item.title.split(' ');
-    const title = splitTitle.filter(s => s !== currentUser.userName);
+      const splitTitle = item.title.split(' ');
+      const title = splitTitle.filter(s => s !== currentUser.userName);
 
-    const splitUri = item.groupImage.split(' ');
-    const uri = splitUri.filter(s => s !== currentUser.img);
-    const finalImage = uri.length === 0 ? item.groupImage : uri[0];
+      const splitUri = item.groupImage.split(' ');
+      const uri = splitUri.filter(s => s !== currentUser.img);
+      const finalImage = uri.length === 0 ? item.groupImage : uri[0];
 
-    return (
-      <Swipeable
-        renderRightActions={(progress, dragX) => (
-          <RightActions progress={progress} dragX={dragX} onPress={() => console.log('123')} />
-        )}>
-        <TouchableOpacity
-          onPress={() =>
-            navigate(screens.Chat, { chatId: item._id, conversationUser: title[0], conversationUserImage: finalImage })
-          }>
-          <ChatsFlexBlock withMarginTop>
-            <ChatsFlexBlock withoutSpaceBetween>
-              <UserImage uri={finalImage} styles={sChats.img} />
+      return (
+        <Swipeable
+          renderRightActions={(progress, dragX) => (
+            <RightActions
+              progress={progress}
+              dragX={dragX}
+              onPress={() =>
+                deleteChat({
+                  variables: { chatId: item._id },
+                  refetchQueries: [{ query: GET_USER_CHATS, variables: { userId: currentUser?._id } }],
+                })
+              }
+            />
+          )}>
+          <TouchableOpacity
+            onPress={() =>
+              navigate(screens.Chat, {
+                chatId: item._id,
+                conversationUser: title[0],
+                conversationUserImage: finalImage,
+              })
+            }>
+            <ChatsFlexBlock withMarginTop>
+              <ChatsFlexBlock withoutSpaceBetween>
+                <UserImage uri={finalImage} styles={sChats.img} />
+                <View>
+                  <ChatsTitle>{title[0]}</ChatsTitle>
+                  <ChatsLastMessage>
+                    {item.lastMessage.length > 25 ? `${item.lastMessage.slice(0, 25)}...` : item.lastMessage}
+                  </ChatsLastMessage>
+                </View>
+              </ChatsFlexBlock>
+
               <View>
-                <ChatsTitle>{title[0]}</ChatsTitle>
-                <ChatsLastMessage>
-                  {item.lastMessage.length > 25 ? `${item.lastMessage.slice(0, 25)}...` : item.lastMessage}
-                </ChatsLastMessage>
+                <ChatsLastMessageTime>{`${convertedTime.getHours()}:${convertedTime.getMinutes()}`}</ChatsLastMessageTime>
               </View>
+
+              {!item.readBy.includes(currentUser?._id) && <UnReadDot />}
             </ChatsFlexBlock>
-
-            <View>
-              <ChatsLastMessageTime>{`${convertedTime.getHours()}:${convertedTime.getMinutes()}`}</ChatsLastMessageTime>
-            </View>
-
-            {!item.readBy.includes(currentUser?._id) && <UnReadDot />}
-          </ChatsFlexBlock>
-        </TouchableOpacity>
-      </Swipeable>
-    );
-  }, []);
+          </TouchableOpacity>
+        </Swipeable>
+      );
+    },
+    [currentUser, deleteChat],
+  );
 
   const keyExtractor = (item: ChatsType) => item._id;
 

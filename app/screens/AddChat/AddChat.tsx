@@ -85,7 +85,7 @@ const AddChat = (currentUser: { currentUser?: User }) => {
 
   const data = useMemo(
     () =>
-      (isSearchMode ? dataSearchUsers?.searchUser : dataUsers?.users).filter(
+      (isSearchMode ? dataSearchUsers?.searchUser : dataUsers?.users)?.filter(
         (d: User) => d._id !== currentUser?.currentUser?._id,
       ),
     [isSearchMode, dataUsers, dataSearchUsers],
