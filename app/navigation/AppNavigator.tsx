@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons, Feather } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { useQuery } from '@apollo/client';
 // constants
 import { screens } from '../config/screens';
@@ -20,12 +20,14 @@ import { User } from '../types/graphql';
 import { HAS_UNREAD_ACTIVITIES } from '../gql/activity/activity.queries';
 // components
 import ActivityIcon from './components/ActivityIcon/ActivityIcon';
+import { HAS_UNREAD_CHATS } from '../gql/chat/chat.queries';
 
 const AppTab = createBottomTabNavigator();
 
 const AppNavigator = (currentUser: { currentUser?: User }) => {
   const userId = currentUser.currentUser._id;
   const { data } = useQuery(HAS_UNREAD_ACTIVITIES, { variables: { userId }, skip: !userId, pollInterval: 5000 });
+  const { data: dataChats } = useQuery(HAS_UNREAD_CHATS, { variables: { userId }, skip: !userId, pollInterval: 5000 });
 
   return (
     <AppTab.Navigator
@@ -46,7 +48,7 @@ const AppNavigator = (currentUser: { currentUser?: User }) => {
       <AppTab.Screen
         options={{
           tabBarIcon: ({ focused }) => (
-            <Ionicons name="chatbubble-outline" size={25} color={focused ? colors.purple1 : colors.gray1} />
+            <ActivityIcon focused={focused} showBullet={dataChats?.hasUnreadChats} isChatIcon />
           ),
         }}
         name={screens.ChatNavigator}

@@ -34,19 +34,21 @@ const Chat: React.FC<TChat> = ({ currentUser, loading, messages, addMessage, set
       title: params.conversationUser,
     });
 
-    (async () => {
-      await setReadBy({
-        variables: {
-          userId: currentUser._id,
-          messageId: messages[0]._id,
-        },
-        refetchQueries: [
-          { query: GET_MESSAGES_BY_GROUP_ID, variables: { groupId: params.chatId } },
-          { query: GET_USER_CHATS, variables: { userId: currentUser._id } },
-          { query: GET_USER_CHATS, variables: { userId: params.userId } },
-        ],
-      });
-    })();
+    if (messages[0]?._id) {
+      (async () => {
+        await setReadBy({
+          variables: {
+            userId: currentUser._id,
+            messageId: messages[0]._id,
+          },
+          refetchQueries: [
+            { query: GET_MESSAGES_BY_GROUP_ID, variables: { groupId: params.chatId } },
+            { query: GET_USER_CHATS, variables: { userId: currentUser._id } },
+            { query: GET_USER_CHATS, variables: { userId: params.userId } },
+          ],
+        });
+      })();
+    }
   }, [params, setReadBy, currentUser, messages]);
 
   const onMessageSend = useCallback(async () => {
