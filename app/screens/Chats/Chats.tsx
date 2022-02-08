@@ -29,6 +29,7 @@ import { colors } from '../../config/colors';
 import { TChats } from './Chats.types';
 import { Chats as ChatsType } from '../../types/graphql';
 import { NAppNavigatorNavigationProp } from '../../navigation/types/AppNavigator.types';
+// graphql
 import { GET_USER_CHATS } from './gql/Chats.queries';
 
 const Chats: React.FC<TChats> = ({ loading, currentUser, chats, searchChat, searchChats, deleteChat }) => {
