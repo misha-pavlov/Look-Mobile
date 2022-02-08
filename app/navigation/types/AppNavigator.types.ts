@@ -30,6 +30,11 @@ export type NAppStackParamList = {
   Activity: undefined;
   Chats: undefined;
   AddChat: undefined;
+  Chat: {
+    chatId: string;
+    conversationUser: string;
+    conversationUserImage: string;
+  };
 };
 
 export type NAppNavigatorRouteProp<ScreenName extends keyof NAppStackParamList> = RouteProp<

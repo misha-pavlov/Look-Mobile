@@ -80,16 +80,20 @@ const Chats: React.FC<TChats> = ({ loading, currentUser, chats, searchChat, sear
 
     const splitUri = item.groupImage.split(' ');
     const uri = splitUri.filter(s => s !== currentUser.img);
+    const finalImage = uri.length === 0 ? item.groupImage : uri[0];
 
     return (
       <Swipeable
         renderRightActions={(progress, dragX) => (
           <RightActions progress={progress} dragX={dragX} onPress={() => console.log('123')} />
         )}>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            navigate(screens.Chat, { chatId: item._id, conversationUser: title[0], conversationUserImage: finalImage })
+          }>
           <ChatsFlexBlock withMarginTop>
             <ChatsFlexBlock withoutSpaceBetween>
-              <UserImage uri={uri.length === 0 ? item.groupImage : uri[0]} styles={sChats.img} />
+              <UserImage uri={finalImage} styles={sChats.img} />
               <View>
                 <ChatsTitle>{title[0]}</ChatsTitle>
                 <ChatsLastMessage>
