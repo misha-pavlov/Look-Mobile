@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Animated, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Audio } from 'expo-av';
 // styles
 import { common, DefaultContainer } from '../../common/common.styles';
 import { ChatBlock, ChatBlockContainer, ChatText } from './Chat.styles';
@@ -26,8 +27,27 @@ import {
 
 const Chat: React.FC<TChat> = ({ currentUser, loading, messages, addMessage, setReadBy }) => {
   const [message, setMessage] = useState('');
+  const [sound, setSound] = useState<Audio.Sound>();
   const { params } = useRoute<NAppNavigatorRouteProp<'Chat'>>();
   const { setOptions } = useNavigation();
+
+  async function playSound() {
+    console.log('Loading Sound');
+    const { sound } = await Audio.Sound.createAsync(require('../../assets/SendSound/sendSound.wav'));
+    setSound(sound);
+
+    console.log('Playing Sound');
+    await sound.playAsync();
+  }
+
+  useEffect(() => {
+    return sound
+      ? () => {
+          console.log('Unloading Sound');
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
 
   useEffect(() => {
     setOptions({
@@ -63,7 +83,10 @@ const Chat: React.FC<TChat> = ({ currentUser, loading, messages, addMessage, set
         { query: GET_USER_CHATS, variables: { userId: currentUser._id } },
         { query: GET_USER_CHATS, variables: { userId: params.userId } },
       ],
-    }).then(() => setMessage(''));
+    }).then(() => {
+      playSound();
+      setMessage('');
+    });
   }, [message]);
 
   const renderItem = useCallback(({ item }: { item: Messages }) => {
