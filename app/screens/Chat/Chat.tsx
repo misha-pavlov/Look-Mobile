@@ -35,16 +35,13 @@ const Chat: React.FC<TChat> = ({ currentUser, loading, messages, addMessage, set
     console.log('Loading Sound');
     const { sound } = await Audio.Sound.createAsync(require('../../assets/SendSound/sendSound.wav'));
     setSound(sound);
-
-    console.log('Playing Sound');
     await sound.playAsync();
   }
 
   useEffect(() => {
     return sound
       ? () => {
-          console.log('Unloading Sound');
-          sound.unloadAsync();
+          sound.unloadAsync().then(() => console.log('Uploaded sound'));
         }
       : undefined;
   }, [sound]);
