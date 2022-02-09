@@ -53,4 +53,6 @@ export const messages = {
 
   /* Chats */
   selectUserForChat: 'Select user for chat',
+  unsent: 'Unsent',
+  closeOptions: 'Close Options',
 };

@@ -5,7 +5,15 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 // styles
 import { common, DefaultContainer } from '../../common/common.styles';
-import { ChatBlock, ChatBlockContainer, ChatText } from './Chat.styles';
+import {
+  ChatBlock,
+  ChatBlockContainer,
+  ChatText,
+  OptionsBlock,
+  OptionsButton,
+  OptionsDivider,
+  OptionsText,
+} from './Chat.styles';
 // types
 import { NAppNavigatorRouteProp } from '../../navigation/types/AppNavigator.types';
 import { TChat } from './Chat.types';
@@ -16,6 +24,7 @@ import ChatHeader from './components/ChatHeader/ChatHeader';
 import GrayInput from '../../components/GrayInput/GrayInput';
 // constants
 import { colors } from '../../config/colors';
+import { messages as messagesConstants } from '../../config/messages';
 // graphql
 import { GET_MESSAGES_BY_GROUP_ID } from './gql/Chat.queries';
 import { GET_USER_CHATS } from '../Chats/gql/Chats.queries';
@@ -26,17 +35,18 @@ import {
 } from '../../config/platform';
 
 const Chat: React.FC<TChat> = ({ currentUser, loading, messages, addMessage, setReadBy }) => {
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [selectedMessage, setSelectedMessage] = useState('');
   const [message, setMessage] = useState('');
   const [sound, setSound] = useState<Audio.Sound>();
   const { params } = useRoute<NAppNavigatorRouteProp<'Chat'>>();
   const { setOptions } = useNavigation();
 
-  async function playSound() {
-    console.log('Loading Sound');
+  const playSound = async () => {
     const { sound } = await Audio.Sound.createAsync(require('../../assets/SendSound/sendSound.wav'));
     setSound(sound);
     await sound.playAsync();
-  }
+  };
 
   useEffect(() => {
     return sound
@@ -86,15 +96,64 @@ const Chat: React.FC<TChat> = ({ currentUser, loading, messages, addMessage, set
     });
   }, [message]);
 
-  const renderItem = useCallback(({ item }: { item: Messages }) => {
+  const renderItem = useCallback(
+    ({ item }: { item: Messages }) => {
+      const isMyMessage = item.userSentId === currentUser._id;
+      return (
+        <ChatBlockContainer isMyMessage={isMyMessage}>
+          <ChatBlock
+            onLongPress={() => {
+              setIsEditMode(true);
+              setSelectedMessage(item._id);
+            }}
+            disabled={!isMyMessage}
+            activeOpacity={1}
+            isMyMessage={isMyMessage}
+            isEditMode={item._id === selectedMessage ? isEditMode : false}>
+            <ChatText>{item.body}</ChatText>
+          </ChatBlock>
+        </ChatBlockContainer>
+      );
+    },
+    [setIsEditMode, isEditMode, currentUser, selectedMessage, setSelectedMessage],
+  );
+
+  const renderInput = useCallback(() => {
     return (
-      <ChatBlockContainer isMyMessage={item.userSentId === currentUser._id}>
-        <ChatBlock isMyMessage={item.userSentId === currentUser._id}>
-          <ChatText>{item.body}</ChatText>
-        </ChatBlock>
-      </ChatBlockContainer>
+      <GrayInput
+        comment={message}
+        setComment={setMessage}
+        currentUser={currentUser}
+        isMessagesInput
+        rightElement={
+          <TouchableOpacity disabled={message === ''} onPress={onMessageSend}>
+            <MaterialCommunityIcons
+              name="send-circle"
+              size={25}
+              color={message === '' ? colors.gray1 : colors.purple}
+            />
+          </TouchableOpacity>
+        }
+      />
     );
-  }, []);
+  }, [message, setMessage, currentUser, onMessageSend]);
+
+  const renderOptions = useCallback(() => {
+    return (
+      <>
+        <OptionsDivider />
+        <OptionsBlock>
+          <OptionsButton>
+            <OptionsText>{messagesConstants.unsent}</OptionsText>
+          </OptionsButton>
+
+          <OptionsButton isCloseOptions onPress={() => setIsEditMode(false)}>
+            <OptionsText isCloseOptions>{messagesConstants.closeOptions}</OptionsText>
+          </OptionsButton>
+        </OptionsBlock>
+      </>
+    );
+  }, [isEditMode]);
 
   const keyExtractor = (item: Messages) => item._id;
   const keyboardVerticalOffset = getKeyboardVerticalOffsetForMessages();
@@ -111,21 +170,7 @@ const Chat: React.FC<TChat> = ({ currentUser, loading, messages, addMessage, set
         keyboardVerticalOffset={keyboardVerticalOffset}>
         <ChatHeader userName={params.conversationUser} img={params.conversationUserImage} userId={params.userId} />
         <Animated.FlatList data={messages} renderItem={renderItem} keyExtractor={keyExtractor} inverted />
-        <GrayInput
-          comment={message}
-          setComment={setMessage}
-          currentUser={currentUser}
-          isMessagesInput
-          rightElement={
-            <TouchableOpacity disabled={message === ''} onPress={onMessageSend}>
-              <MaterialCommunityIcons
-                name="send-circle"
-                size={25}
-                color={message === '' ? colors.gray1 : colors.purple}
-              />
-            </TouchableOpacity>
-          }
-        />
+        {isEditMode ? renderOptions() : renderInput()}
       </KeyboardAvoidingView>
     </DefaultContainer>
   );
