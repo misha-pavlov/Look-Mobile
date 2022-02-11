@@ -8,13 +8,13 @@ import { TChat } from './Chat.types';
 import { GET_MESSAGES_BY_GROUP_ID } from './gql/Chat.queries';
 import { NAppNavigatorRouteProp } from '../../navigation/types/AppNavigator.types';
 import { Messages } from '../../types/graphql';
-import { ADD_MESSAGE, SET_READ_BY } from './gql/Chat.mutations';
+import { ADD_MESSAGE, DELETE_MESSAGE, SET_READ_BY } from './gql/Chat.mutations';
 
 const withMessagesByGroupId = (BaseComponent: React.FC<TChat>) => {
   return (props: TChat) => {
     const { params } = useRoute<NAppNavigatorRouteProp<'Chat'>>();
     const { data, loading } = useQuery(GET_MESSAGES_BY_GROUP_ID, {
-      variables: { groupId: '58e1631c-087b-48db-8350-31e32b39a73a' },
+      variables: { groupId: params.chatId },
       skip: !params.chatId,
       pollInterval: 2000,
     });
@@ -39,4 +39,19 @@ const withSetReadBy = (BaseComponent: React.FC<TChat>) => {
   };
 };
 
-export const ChatContainer = compose(withCurrentUser, withMessagesByGroupId, withAddMessage, withSetReadBy)(Chat);
+const withDeleteMessage = (BaseComponent: React.FC<TChat>) => {
+  return (props: TChat) => {
+    const [mutate] = useMutation(DELETE_MESSAGE, {
+      onError: e => console.log('DELETE_MESSAGE = ', e),
+    });
+    return <BaseComponent {...props} deleteMessage={mutate} />;
+  };
+};
+
+export const ChatContainer = compose(
+  withCurrentUser,
+  withMessagesByGroupId,
+  withAddMessage,
+  withSetReadBy,
+  withDeleteMessage,
+)(Chat);

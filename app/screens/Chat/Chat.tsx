@@ -34,7 +34,7 @@ import {
   keyboardBehaviorDependsOnPlatformForAddTag,
 } from '../../config/platform';
 
-const Chat: React.FC<TChat> = ({ currentUser, loading, messages, addMessage, setReadBy }) => {
+const Chat: React.FC<TChat> = ({ currentUser, loading, messages, addMessage, setReadBy, deleteMessage }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState('');
   const [message, setMessage] = useState('');
@@ -96,6 +96,15 @@ const Chat: React.FC<TChat> = ({ currentUser, loading, messages, addMessage, set
     });
   }, [message]);
 
+  const onDeleteMessage = useCallback(async () => {
+    await deleteMessage({
+      variables: {
+        messageId: selectedMessage,
+        refetchQueries: [{ query: GET_MESSAGES_BY_GROUP_ID, variables: { groupId: params.chatId } }],
+      },
+    }).then(() => setIsEditMode(false));
+  }, [selectedMessage, deleteMessage, params, currentUser, setIsEditMode]);
+
   const renderItem = useCallback(
     ({ item }: { item: Messages }) => {
       const isMyMessage = item.userSentId === currentUser._id;
@@ -143,7 +152,7 @@ const Chat: React.FC<TChat> = ({ currentUser, loading, messages, addMessage, set
       <>
         <OptionsDivider />
         <OptionsBlock>
-          <OptionsButton>
+          <OptionsButton onPress={onDeleteMessage}>
             <OptionsText>{messagesConstants.unsent}</OptionsText>
           </OptionsButton>
 
@@ -153,7 +162,7 @@ const Chat: React.FC<TChat> = ({ currentUser, loading, messages, addMessage, set
         </OptionsBlock>
       </>
     );
-  }, [isEditMode]);
+  }, [isEditMode, onDeleteMessage]);
 
   const keyExtractor = (item: Messages) => item._id;
   const keyboardVerticalOffset = getKeyboardVerticalOffsetForMessages();
@@ -170,6 +179,11 @@ const Chat: React.FC<TChat> = ({ currentUser, loading, messages, addMessage, set
         keyboardVerticalOffset={keyboardVerticalOffset}>
         <ChatHeader userName={params.conversationUser} img={params.conversationUserImage} userId={params.userId} />
         <Animated.FlatList data={messages} renderItem={renderItem} keyExtractor={keyExtractor} inverted />
+        <ChatBlockContainer isMyMessage={false}>
+          <OptionsButton>
+            <OptionsText>{messagesConstants.unsent}</OptionsText>
+          </OptionsButton>
+        </ChatBlockContainer>
         {isEditMode ? renderOptions() : renderInput()}
       </KeyboardAvoidingView>
     </DefaultContainer>

@@ -13,3 +13,9 @@ export const SET_READ_BY = gql`
     setReadBy(userId: $userId, messageId: $messageId)
   }
 `;
+
+export const DELETE_MESSAGE = gql`
+  mutation deleteMessage($messageId: String!) {
+    deleteMessage(messageId: $messageId)
+  }
+`;

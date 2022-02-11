@@ -10,6 +10,11 @@ export const client = new ApolloClient({
       Query: {
         fields: {
           getPostsForUser: offsetLimitPagination(),
+          getMessagesByGroupId: {
+            merge(existing, incoming) {
+              return { ...existing, ...incoming };
+            },
+          },
         },
       },
     },
