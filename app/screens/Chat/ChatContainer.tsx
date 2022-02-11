@@ -5,10 +5,10 @@ import { useRoute } from '@react-navigation/native';
 import { withCurrentUser } from '../../hocs/withCurrentUser';
 import Chat from './Chat';
 import { TChat } from './Chat.types';
-import { GET_MESSAGES_BY_GROUP_ID } from './gql/Chat.queries';
+import { GET_CHAT, GET_MESSAGES_BY_GROUP_ID } from './gql/Chat.queries';
 import { NAppNavigatorRouteProp } from '../../navigation/types/AppNavigator.types';
 import { Messages } from '../../types/graphql';
-import { ADD_MESSAGE, DELETE_MESSAGE, SET_READ_BY } from './gql/Chat.mutations';
+import { ADD_MESSAGE, DELETE_MESSAGE, SET_READ_BY, UPDATE_TYPING_USERS } from './gql/Chat.mutations';
 
 const withMessagesByGroupId = (BaseComponent: React.FC<TChat>) => {
   return (props: TChat) => {
@@ -48,10 +48,29 @@ const withDeleteMessage = (BaseComponent: React.FC<TChat>) => {
   };
 };
 
+const withUpdateTypingUsers = (BaseComponent: React.FC<TChat>) => {
+  return (props: TChat) => {
+    const [mutate] = useMutation(UPDATE_TYPING_USERS, {
+      onError: e => console.log('UPDATE_TYPING_USERS = ', e),
+    });
+    return <BaseComponent {...props} updateTypingUsers={mutate} />;
+  };
+};
+
+const withGetChat = (BaseComponent: React.FC<TChat>) => {
+  return (props: TChat) => {
+    const { params } = useRoute<NAppNavigatorRouteProp<'Chat'>>();
+    const { data } = useQuery(GET_CHAT, { variables: { chatId: params.chatId }, pollInterval: 3000 });
+    return <BaseComponent {...props} typingUsers={data?.getChat.typingUsers} />;
+  };
+};
+
 export const ChatContainer = compose(
   withCurrentUser,
   withMessagesByGroupId,
   withAddMessage,
   withSetReadBy,
   withDeleteMessage,
+  withUpdateTypingUsers,
+  withGetChat,
 )(Chat);

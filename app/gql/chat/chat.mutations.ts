@@ -10,6 +10,7 @@ export const ADD_CHAT = gql`
       lastMessageTime
       groupImage
       readBy
+      typingUsers
     }
   }
 `;

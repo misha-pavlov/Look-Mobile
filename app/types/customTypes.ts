@@ -1,3 +1,5 @@
+import { FetchResult, MutationFunctionOptions } from '@apollo/client';
+
 export type TTags = Array<{ _id: string; title: string }>;
 
 export enum SearchTabsEnum {
@@ -5,3 +7,5 @@ export enum SearchTabsEnum {
   Tags,
   Users,
 }
+
+export type TMutation = (options?: MutationFunctionOptions) => Promise<FetchResult<any>>;

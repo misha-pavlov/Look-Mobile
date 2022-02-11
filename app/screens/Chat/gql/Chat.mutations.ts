@@ -19,3 +19,9 @@ export const DELETE_MESSAGE = gql`
     deleteMessage(messageId: $messageId)
   }
 `;
+
+export const UPDATE_TYPING_USERS = gql`
+  mutation updateTypingUsers($chatId: String!, $newArray: [String!]!) {
+    updateTypingUsers(chatId: $chatId, newArray: $newArray)
+  }
+`;

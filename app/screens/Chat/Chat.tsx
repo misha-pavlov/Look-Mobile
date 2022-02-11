@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Animated, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
+import { Flow } from 'react-native-animated-spinkit';
 // styles
 import { common, DefaultContainer } from '../../common/common.styles';
 import {
@@ -34,8 +35,18 @@ import {
   keyboardBehaviorDependsOnPlatformForAddTag,
 } from '../../config/platform';
 
-const Chat: React.FC<TChat> = ({ currentUser, loading, messages, addMessage, setReadBy, deleteMessage }) => {
+const Chat: React.FC<TChat> = ({
+  currentUser,
+  loading,
+  messages,
+  addMessage,
+  setReadBy,
+  deleteMessage,
+  updateTypingUsers,
+  typingUsers = [],
+}) => {
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isFocus, setIsFocus] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState('');
   const [message, setMessage] = useState('');
   const [sound, setSound] = useState<Audio.Sound>();
@@ -77,6 +88,37 @@ const Chat: React.FC<TChat> = ({ currentUser, loading, messages, addMessage, set
       })();
     }
   }, [params, setReadBy, currentUser, messages]);
+
+  useEffect(() => {
+    if (!typingUsers.includes(currentUser._id) && isFocus) {
+      (async () => {
+        await updateTypingUsers({
+          variables: {
+            chatId: params.chatId,
+            newArray: [...typingUsers, currentUser._id],
+          },
+        });
+      })();
+    } else if (typingUsers.length === 1 && typingUsers.includes(currentUser._id) && !isFocus) {
+      (async () => {
+        await updateTypingUsers({
+          variables: {
+            chatId: params.chatId,
+            newArray: [],
+          },
+        });
+      })();
+    } else if (typingUsers.length === 2 && !isFocus) {
+      (async () => {
+        await updateTypingUsers({
+          variables: {
+            chatId: params.chatId,
+            newArray: typingUsers.filter(t => t !== currentUser._id),
+          },
+        });
+      })();
+    }
+  }, [isFocus]);
 
   const onMessageSend = useCallback(async () => {
     await addMessage({
@@ -137,6 +179,7 @@ const Chat: React.FC<TChat> = ({ currentUser, loading, messages, addMessage, set
         comment={message}
         setComment={setMessage}
         currentUser={currentUser}
+        setIsFocus={setIsFocus}
         isMessagesInput
         rightElement={
           <TouchableOpacity disabled={message === ''} onPress={onMessageSend}>
@@ -171,6 +214,8 @@ const Chat: React.FC<TChat> = ({ currentUser, loading, messages, addMessage, set
   const keyExtractor = (item: Messages) => item._id;
   const keyboardVerticalOffset = getKeyboardVerticalOffsetForMessages();
 
+  const isTypingAnotherUser = useMemo(() => typingUsers.filter(t => t !== currentUser._id), [typingUsers, currentUser]);
+
   if (loading) {
     return <Spinner />;
   }
@@ -182,12 +227,23 @@ const Chat: React.FC<TChat> = ({ currentUser, loading, messages, addMessage, set
         behavior={keyboardBehaviorDependsOnPlatformForAddTag}
         keyboardVerticalOffset={keyboardVerticalOffset}>
         <ChatHeader userName={params.conversationUser} img={params.conversationUserImage} userId={params.userId} />
-        <Animated.FlatList data={messages} renderItem={renderItem} keyExtractor={keyExtractor} inverted />
-        <ChatBlockContainer isMyMessage={false}>
-          <OptionsButton>
-            <OptionsText>{messagesConstants.unsent}</OptionsText>
-          </OptionsButton>
-        </ChatBlockContainer>
+        <Animated.FlatList
+          data={messages}
+          renderItem={renderItem}
+          keyExtractor={keyExtractor}
+          inverted
+          keyboardShouldPersistTaps={'handled'}
+          onTouchEnd={() => setIsFocus(false)}
+        />
+
+        {isTypingAnotherUser[0] && (
+          <ChatBlockContainer isMyMessage={false}>
+            <ChatBlock disabled={true} activeOpacity={1} isMyMessage={false} isEditMode={false}>
+              <Flow size={32} color={colors.pink} />
+            </ChatBlock>
+          </ChatBlockContainer>
+        )}
+
         {isEditMode ? renderOptions() : renderInput()}
       </KeyboardAvoidingView>
     </DefaultContainer>

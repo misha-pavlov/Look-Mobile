@@ -37,6 +37,7 @@ export type Chats = {
   members: Array<Scalars['String']>;
   readBy: Array<Scalars['String']>;
   title: Scalars['String'];
+  typingUsers: Array<Scalars['String']>;
 };
 
 export type Comment = {
@@ -67,11 +68,14 @@ export type Mutation = {
   changePassword: User;
   changeUserMainFields: User;
   deleteChat: Scalars['Boolean'];
+  deleteMessage: Scalars['Boolean'];
   doFollow: User;
   doUnblocked: User;
   dummy?: Maybe<Scalars['Boolean']>;
   setDesc: User;
+  setReadBy: Scalars['Boolean'];
   setUnreadActivity: Activity;
+  updateTypingUsers: Scalars['Boolean'];
 };
 
 export type MutationAddChatArgs = {
@@ -135,6 +139,10 @@ export type MutationDeleteChatArgs = {
   chatId: Scalars['String'];
 };
 
+export type MutationDeleteMessageArgs = {
+  messageId: Scalars['String'];
+};
+
 export type MutationDoFollowArgs = {
   followUserId: Scalars['String'];
   isFollow: Scalars['Boolean'];
@@ -151,8 +159,18 @@ export type MutationSetDescArgs = {
   userId: Scalars['String'];
 };
 
+export type MutationSetReadByArgs = {
+  messageId: Scalars['String'];
+  userId: Scalars['String'];
+};
+
 export type MutationSetUnreadActivityArgs = {
   activityId: Scalars['String'];
+};
+
+export type MutationUpdateTypingUsersArgs = {
+  chatId: Scalars['String'];
+  newArray: Array<Scalars['String']>;
 };
 
 export type Posts = {
@@ -183,6 +201,7 @@ export type Query = {
   getUserChats: Array<Chats>;
   getUserPosts: Array<Posts>;
   hasUnreadActivities: Scalars['Boolean'];
+  hasUnreadChats: Scalars['Boolean'];
   posts: Array<Posts>;
   searchChat: Array<Chats>;
   searchUser: Array<User>;
@@ -240,6 +259,10 @@ export type QueryGetUserPostsArgs = {
 };
 
 export type QueryHasUnreadActivitiesArgs = {
+  userId: Scalars['String'];
+};
+
+export type QueryHasUnreadChatsArgs = {
   userId: Scalars['String'];
 };
 
@@ -415,6 +438,7 @@ export type ChatsResolvers<
   members?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
   readBy?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  typingUsers?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -508,6 +532,12 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationDeleteChatArgs, 'chatId'>
   >;
+  deleteMessage?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeleteMessageArgs, 'messageId'>
+  >;
   doFollow?: Resolver<
     ResolversTypes['User'],
     ParentType,
@@ -527,11 +557,23 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationSetDescArgs, 'newDesc' | 'userId'>
   >;
+  setReadBy?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationSetReadByArgs, 'messageId' | 'userId'>
+  >;
   setUnreadActivity?: Resolver<
     ResolversTypes['Activity'],
     ParentType,
     ContextType,
     RequireFields<MutationSetUnreadActivityArgs, 'activityId'>
+  >;
+  updateTypingUsers?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdateTypingUsersArgs, 'chatId' | 'newArray'>
   >;
 };
 
@@ -622,6 +664,12 @@ export type QueryResolvers<
     ParentType,
     ContextType,
     RequireFields<QueryHasUnreadActivitiesArgs, 'userId'>
+  >;
+  hasUnreadChats?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<QueryHasUnreadChatsArgs, 'userId'>
   >;
   posts?: Resolver<Array<ResolversTypes['Posts']>, ParentType, ContextType>;
   searchChat?: Resolver<

@@ -11,3 +11,18 @@ export const GET_MESSAGES_BY_GROUP_ID = gql`
     }
   }
 `;
+
+export const GET_CHAT = gql`
+  query getChat($chatId: String!) {
+    getChat(chatId: $chatId) {
+      _id
+      title
+      members
+      lastMessage
+      lastMessageTime
+      groupImage
+      readBy
+      typingUsers
+    }
+  }
+`;

@@ -4,6 +4,7 @@ import { FlatList, TouchableOpacity, View, Animated } from 'react-native';
 import AnimatedInterpolation = Animated.AnimatedInterpolation;
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { useNavigation } from '@react-navigation/native';
+import { Flow } from 'react-native-animated-spinkit';
 // styles
 import { DefaultContainer } from '../../common/common.styles';
 import {
@@ -87,6 +88,8 @@ const Chats: React.FC<TChats> = ({ loading, currentUser, chats, searchChat, sear
 
       const userId = item.members.filter(m => m !== currentUser._id);
 
+      const isTypingAnotherUser = item.typingUsers.filter(t => t !== currentUser._id);
+
       return (
         <Swipeable
           renderRightActions={(progress, dragX) => (
@@ -115,9 +118,13 @@ const Chats: React.FC<TChats> = ({ loading, currentUser, chats, searchChat, sear
                 <UserImage uri={finalImage} styles={sChats.img} />
                 <View>
                   <ChatsTitle>{title[0]}</ChatsTitle>
-                  <ChatsLastMessage>
-                    {item.lastMessage.length > 25 ? `${item.lastMessage.slice(0, 25)}...` : item.lastMessage}
-                  </ChatsLastMessage>
+                  {isTypingAnotherUser[0] ? (
+                    <Flow size={24} color={colors.pink} />
+                  ) : (
+                    <ChatsLastMessage>
+                      {item.lastMessage.length > 25 ? `${item.lastMessage.slice(0, 25)}...` : item.lastMessage}
+                    </ChatsLastMessage>
+                  )}
                 </View>
               </ChatsFlexBlock>
 

@@ -10,6 +10,7 @@ export const GET_USER_CHATS = gql`
       lastMessageTime
       groupImage
       readBy
+      typingUsers
     }
   }
 `;
@@ -24,6 +25,7 @@ export const SEARCH_CHAT = gql`
       lastMessageTime
       groupImage
       readBy
+      typingUsers
     }
   }
 `;
