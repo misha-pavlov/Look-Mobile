@@ -100,7 +100,11 @@ const Chat: React.FC<TChat> = ({ currentUser, loading, messages, addMessage, set
     await deleteMessage({
       variables: {
         messageId: selectedMessage,
-        refetchQueries: [{ query: GET_MESSAGES_BY_GROUP_ID, variables: { groupId: params.chatId } }],
+        refetchQueries: [
+          { query: GET_MESSAGES_BY_GROUP_ID, variables: { groupId: params.chatId } },
+          { query: GET_USER_CHATS, variables: { userId: currentUser._id } },
+          { query: GET_USER_CHATS, variables: { userId: params.userId } },
+        ],
       },
     }).then(() => setIsEditMode(false));
   }, [selectedMessage, deleteMessage, params, currentUser, setIsEditMode]);
