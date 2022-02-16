@@ -28,7 +28,7 @@ import { colors } from '../../config/colors';
 import { messages as messagesConstants } from '../../config/messages';
 // graphql
 import { GET_MESSAGES_BY_GROUP_ID } from './gql/Chat.queries';
-import { GET_USER_CHATS } from '../Chats/gql/Chats.queries';
+import { GET_USER_CHATS } from '../../gql/chat/chat.queries';
 // helpers
 import {
   getKeyboardVerticalOffsetForMessages,

@@ -13,7 +13,7 @@ import ErrorPopup from '../../components/ErrorPopup/ErrorPopup';
 // graphql
 import { GET_USERS, SEARCH_USER } from '../../gql/user/user.queries';
 import { ADD_CHAT } from '../../gql/chat/chat.mutations';
-import { GET_USER_CHATS } from '../Chats/gql/Chats.queries';
+import { GET_USER_CHATS } from '../../gql/chat/chat.queries';
 // types
 import { ApolloFetchPolicy } from '../../common/apollo';
 import { User } from '../../types/graphql';

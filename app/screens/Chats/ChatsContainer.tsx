@@ -1,25 +1,12 @@
 import { compose } from 'recompose';
 import React from 'react';
-import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import { withCurrentUser } from '../../hocs/withCurrentUser';
 import Chats from './Chats';
 import { TChats } from './Chats.types';
-import { GET_USER_CHATS, SEARCH_CHAT } from './gql/Chats.queries';
+import { SEARCH_CHAT } from './gql/Chats.queries';
 import { DELETE_CHAT } from './gql/Chats.mutations';
-
-const withGetUserChats = (BaseComponent: React.FC<TChats>) => {
-  return (props: TChats) => {
-    const { currentUser } = props;
-
-    const { data, loading } = useQuery(GET_USER_CHATS, {
-      variables: { userId: currentUser?._id },
-      skip: !currentUser?._id,
-      pollInterval: 5000,
-    });
-
-    return <BaseComponent {...props} loading={loading} chats={data?.getUserChats} />;
-  };
-};
+import withGetUserChats from '../../hocs/withGetUserChats';
 
 const withSearchChat = (BaseComponent: React.FC<TChats>) => {
   return (props: TChats) => {

@@ -24,7 +24,7 @@ import { isEqualObjects } from '../../helpers/isEqualObjects';
 import { BLOCK_USER } from './gql/UserProfile.mutations';
 import { GET_FOLLOWERS, GET_FOLLOWING } from '../../gql/user/user.queries';
 
-const UserProfile: React.FC<TUserProfile> = ({ currentUser }) => {
+const UserProfile: React.FC<TUserProfile> = ({ currentUser, chats }) => {
   const navigation = useNavigation<NAppNavigatorNavigationProp<'UserSettings'>>();
   const route = useRoute<NAppNavigatorRouteProp<'UserProfile'>>();
   const [mutate] = useMutation(BLOCK_USER, { onError: error => console.log('BLOCK_USER = ', error) });
@@ -104,7 +104,7 @@ const UserProfile: React.FC<TUserProfile> = ({ currentUser }) => {
 
   return (
     <UserProfileContainer>
-      <UserProfileHeader user={!isEqualObjects(user, currentUser) && user} currentUser={currentUser} />
+      <UserProfileHeader user={!isEqualObjects(user, currentUser) && user} currentUser={currentUser} chats={chats} />
       {description()}
       <CustomProfileTabsContainer user={user} currentUser={currentUser} />
     </UserProfileContainer>

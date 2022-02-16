@@ -24,16 +24,21 @@ import {
 import { colors } from '../../../../config/colors';
 import { messages } from '../../../../config/messages';
 import { screens } from '../../../../config/screens';
+import { constants } from '../../../../config/constants';
 // gql
 import { DO_FOLLOW, UNBLOCK_USER } from '../../../../gql/user/user.mutations';
 import { GET_FOLLOWERS, GET_FOLLOWING } from '../../../../gql/user/user.queries';
 import { ADD_USER_ACTIVITY } from '../../../../gql/activity/activity.mutations';
+import { ADD_CHAT } from '../../../../gql/chat/chat.mutations';
+import { GET_USER_CHATS } from '../../../../gql/chat/chat.queries';
 // helpers
 import { isEqualObjects } from '../../../../helpers/isEqualObjects';
+import { isEqualArrays } from '../../../../helpers/isEqualArrays';
+// components
 import UserImage from '../../../../components/UserImage/UserImage';
 
-const UserProfileHeader: React.FC<TUserProfile> = ({ currentUser, user }) => {
-  const { getParent } = useNavigation<NAppNavigatorNavigationProp<'RecentMessages'>>();
+const UserProfileHeader: React.FC<TUserProfile> = ({ currentUser, user, chats }) => {
+  const { getParent } = useNavigation<NAppNavigatorNavigationProp<'Chat'>>();
   const [mutate] = useMutation(DO_FOLLOW, { onError: error => console.log('DO_FOLLOW UserProfileHeader = ', error) });
   const [unblock] = useMutation(UNBLOCK_USER, {
     onError: error => console.log('UNBLOCK_USER UserProfileHeader = ', error),
@@ -41,8 +46,49 @@ const UserProfileHeader: React.FC<TUserProfile> = ({ currentUser, user }) => {
   const [activityMutate] = useMutation(ADD_USER_ACTIVITY, {
     onError: error => console.log('ADD_USER_ACTIVITY = ', error),
   });
+  const [addChatMutate] = useMutation(ADD_CHAT, {
+    onError: e => console.log('ADD_CHAT = ', e),
+    onCompleted: result => {
+      getParent().navigate(screens.ChatNavigator, {
+        screen: screens.Chat,
+        params: {
+          chatId: result.addChat._id,
+          conversationUser: user.userName,
+          conversationUserImage: user.img,
+          userId: user._id,
+        },
+      });
+    },
+  });
 
   const useUser = user ? user : currentUser;
+
+  const onPressMessage = useCallback(async () => {
+    const chat = chats?.filter(c => isEqualArrays(c.members, [user._id, currentUser._id]));
+    const userImg = user.img ? user.img : constants.userMock;
+    const cUserImg = currentUser.img ? currentUser.img : constants.userMock;
+
+    if (chat?.length > 0) {
+      return getParent().navigate(screens.ChatNavigator, {
+        screen: screens.Chat,
+        params: {
+          chatId: chat[0]?._id,
+          conversationUser: user.userName,
+          conversationUserImage: user.img,
+          userId: user._id,
+        },
+      });
+    }
+
+    await addChatMutate({
+      variables: {
+        title: `${user.userName} ${currentUser.userName}`,
+        members: [user._id, currentUser._id],
+        groupImage: `${userImg} ${cUserImg}`,
+      },
+      refetchQueries: [{ query: GET_USER_CHATS, variables: { userId: currentUser._id } }],
+    });
+  }, [chats, user, currentUser, addChatMutate]);
 
   const onPressFollow = useCallback(async (isFollow, followUserId) => {
     await mutate({
@@ -101,10 +147,7 @@ const UserProfileHeader: React.FC<TUserProfile> = ({ currentUser, user }) => {
     if (!isEqualObjects(useUser, currentUser)) {
       return (
         <ButtonsBlock>
-          {/* navigate to chat */}
-          <Button
-            isWithMarginRight
-            onPress={() => getParent().navigate(screens.ChatNavigator, { screen: screens.RecentMessages })}>
+          <Button isWithMarginRight onPress={onPressMessage}>
             <Ionicons name="chatbubble-outline" size={16} color={colors.white} />
             <ButtonText isWithMarginLeft>{messages.message}</ButtonText>
           </Button>
