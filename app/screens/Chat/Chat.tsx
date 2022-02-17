@@ -15,6 +15,8 @@ import {
   OptionsButton,
   OptionsDivider,
   OptionsText,
+  ReplyBlock,
+  ReplyText,
 } from './Chat.styles';
 // types
 import { NAppNavigatorRouteProp } from '../../navigation/types/AppNavigator.types';
@@ -48,6 +50,7 @@ const Chat: React.FC<TChat> = ({
 }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isFocus, setIsFocus] = useState(false);
+  const [isReplyMessage, setIsReplyMessage] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState('');
   const [selectedMessageBody, setSelectedMessageBody] = useState('');
   const [selectedMessageSenderId, setSelectedMessageSenderId] = useState('');
@@ -129,6 +132,7 @@ const Chat: React.FC<TChat> = ({
         body: message,
         userSentId: currentUser._id,
         groupId: params.chatId,
+        reply: selectedMessageBody,
       },
       refetchQueries: [
         { query: GET_MESSAGES_BY_GROUP_ID, variables: { groupId: params.chatId } },
@@ -138,6 +142,7 @@ const Chat: React.FC<TChat> = ({
     }).then(() => {
       playSound();
       setMessage('');
+      setIsReplyMessage(false);
     });
 
     await updateTypingUsers({
@@ -171,6 +176,11 @@ const Chat: React.FC<TChat> = ({
       const isMyMessage = item.userSentId === currentUser._id;
       return (
         <ChatBlockContainer isMyMessage={isMyMessage}>
+          {item?.reply && (
+            <ReplyBlock>
+              <ReplyText>{item.reply}</ReplyText>
+            </ReplyBlock>
+          )}
           <ChatBlock
             onLongPress={() => {
               setIsEditMode(true);
@@ -206,9 +216,11 @@ const Chat: React.FC<TChat> = ({
             />
           </TouchableOpacity>
         }
+        replyMessage={isReplyMessage && selectedMessageBody}
+        setIsReplyMessage={setIsReplyMessage}
       />
     );
-  }, [message, setMessage, currentUser, onMessageSend]);
+  }, [message, setMessage, currentUser, onMessageSend, isReplyMessage, selectedMessageBody, setIsReplyMessage]);
 
   const renderOptions = useCallback(() => {
     return (
@@ -225,13 +237,22 @@ const Chat: React.FC<TChat> = ({
             <OptionsText isOtherOptions>{messagesConstants.copy}</OptionsText>
           </OptionsButton>
 
+          <OptionsButton
+            isOtherOptions
+            onPress={() => {
+              setIsReplyMessage(true);
+              setIsEditMode(false);
+            }}>
+            <OptionsText isOtherOptions>{messagesConstants.reply}</OptionsText>
+          </OptionsButton>
+
           <OptionsButton isCloseOptions onPress={() => setIsEditMode(false)}>
             <OptionsText isCloseOptions>{messagesConstants.closeOptions}</OptionsText>
           </OptionsButton>
         </OptionsBlock>
       </>
     );
-  }, [isEditMode, onDeleteMessage, currentUser, selectedMessageSenderId, onCopy, setIsEditMode]);
+  }, [isEditMode, onDeleteMessage, currentUser, selectedMessageSenderId, onCopy, setIsEditMode, setIsReplyMessage]);
 
   const keyExtractor = (item: Messages) => item._id;
   const keyboardVerticalOffset = getKeyboardVerticalOffsetForMessages();

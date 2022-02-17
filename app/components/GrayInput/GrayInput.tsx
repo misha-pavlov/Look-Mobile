@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { TextInput } from 'react-native';
-import { GrayInputBlock, Input, s } from './GrayInput.style';
+import { MaterialIcons } from '@expo/vector-icons';
+import { GrayInputBlock, Input, ReplyBlock, ReplyText, CancelReplyBlock, s } from './GrayInput.style';
 import { TGrayInput } from './GrayInput.types';
 import { colors } from '../../config/colors';
 import { messages } from '../../config/messages';
@@ -13,6 +14,8 @@ const GrayInput: React.FC<TGrayInput> = ({
   rightElement,
   isMessagesInput,
   setIsFocus,
+  replyMessage,
+  setIsReplyMessage,
 }) => {
   const inputRef = useRef<TextInput>();
 
@@ -23,19 +26,29 @@ const GrayInput: React.FC<TGrayInput> = ({
   });
 
   return (
-    <GrayInputBlock isMessagesInput={isMessagesInput}>
-      {!isMessagesInput && <UserImage uri={currentUser.img} styles={s.img} />}
-      <Input
-        ref={inputRef}
-        value={comment}
-        onChangeText={e => setComment(e)}
-        placeholder={isMessagesInput ? messages.enterMessage : messages.enterComment}
-        placeholderTextColor={colors.gray2}
-        multiline
-        isMessagesInput={isMessagesInput}
-      />
-      {rightElement}
-    </GrayInputBlock>
+    <>
+      {replyMessage && (
+        <ReplyBlock>
+          <ReplyText>{replyMessage}</ReplyText>
+          <CancelReplyBlock onPress={() => setIsReplyMessage(false)}>
+            <MaterialIcons name="cancel" size={20} color={colors.white} />
+          </CancelReplyBlock>
+        </ReplyBlock>
+      )}
+      <GrayInputBlock isMessagesInput={isMessagesInput}>
+        {!isMessagesInput && <UserImage uri={currentUser.img} styles={s.img} />}
+        <Input
+          ref={inputRef}
+          value={comment}
+          onChangeText={e => setComment(e)}
+          placeholder={isMessagesInput ? messages.enterMessage : messages.enterComment}
+          placeholderTextColor={colors.gray2}
+          multiline
+          isMessagesInput={isMessagesInput}
+        />
+        {rightElement}
+      </GrayInputBlock>
+    </>
   );
 };
 

@@ -56,4 +56,5 @@ export const messages = {
   unsent: 'Unsent',
   closeOptions: 'Close Options',
   copy: 'Copy',
+  reply: 'Reply',
 };

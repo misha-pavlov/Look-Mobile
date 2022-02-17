@@ -3,9 +3,11 @@ import { User } from '../../types/graphql';
 
 export type TGrayInput = {
   comment: string;
-  setComment: Dispatch<React.SetStateAction<string>>;
-  setIsFocus?: Dispatch<React.SetStateAction<boolean>>;
   currentUser: User;
   rightElement?: React.ReactNode;
   isMessagesInput?: boolean;
+  replyMessage?: string;
+  setComment: Dispatch<React.SetStateAction<string>>;
+  setIsReplyMessage: Dispatch<React.SetStateAction<boolean>>;
+  setIsFocus?: Dispatch<React.SetStateAction<boolean>>;
 };

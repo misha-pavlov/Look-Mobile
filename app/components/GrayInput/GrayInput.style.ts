@@ -18,6 +18,26 @@ export const Input = styled.TextInput<{ isMessagesInput: boolean }>`
   width: ${({ isMessagesInput }) => (isMessagesInput ? 88 : 77)}%;
 `;
 
+export const ReplyBlock = styled.View`
+  background-color: ${colors.black1};
+  padding: 10px;
+  margin-bottom: -5px;
+  margin-top: 10px;
+  border-radius: 8px;
+  position: relative;
+`;
+
+export const ReplyText = styled.Text`
+  color: ${colors.white};
+  max-width: 90%;
+`;
+
+export const CancelReplyBlock = styled.TouchableOpacity`
+  position: absolute;
+  right: 10px;
+  top: 10px;
+`;
+
 export const s = StyleSheet.create({
   img: {
     width: 25,

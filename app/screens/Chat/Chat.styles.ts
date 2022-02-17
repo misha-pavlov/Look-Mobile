@@ -59,3 +59,15 @@ export const OptionsDivider = styled.View`
   width: 100px;
   align-self: center;
 `;
+
+export const ReplyBlock = styled.View`
+  background-color: ${colors.black1};
+  padding: 10px;
+  margin-bottom: -5px;
+  margin-top: 10px;
+  border-radius: 8px;
+`;
+
+export const ReplyText = styled.Text`
+  color: ${colors.white};
+`;

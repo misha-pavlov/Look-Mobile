@@ -8,6 +8,7 @@ export const GET_MESSAGES_BY_GROUP_ID = gql`
       userSentId
       groupId
       readBy
+      reply
     }
   }
 `;
