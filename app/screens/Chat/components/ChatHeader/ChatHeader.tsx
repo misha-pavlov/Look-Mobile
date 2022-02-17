@@ -1,6 +1,6 @@
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useQuery } from '@apollo/client';
 import { ChatHeaderBlock, LeftSide, s, UserNameText } from './ChatHeader.styles';
@@ -29,10 +29,6 @@ const ChatHeader = ({ userName, img, userId }: { userName: string; img: string; 
           </LeftSide>
         </TouchableOpacity>
       </LeftSide>
-
-      <View>
-        <Ionicons name="settings-outline" size={25} color={colors.white} />
-      </View>
     </ChatHeaderBlock>
   );
 };

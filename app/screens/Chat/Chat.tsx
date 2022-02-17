@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Animated, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 import { Flow } from 'react-native-animated-spinkit';
@@ -57,7 +57,6 @@ const Chat: React.FC<TChat> = ({
   const [message, setMessage] = useState('');
   const [sound, setSound] = useState<Audio.Sound>();
   const { params } = useRoute<NAppNavigatorRouteProp<'Chat'>>();
-  const { setOptions } = useNavigation();
 
   const playSound = async () => {
     const { sound } = await Audio.Sound.createAsync(require('../../assets/SendSound/sendSound.wav'));
@@ -74,10 +73,6 @@ const Chat: React.FC<TChat> = ({
   }, [sound]);
 
   useEffect(() => {
-    setOptions({
-      title: params.conversationUser,
-    });
-
     if (messages[0]?._id) {
       (async () => {
         await setReadBy({
