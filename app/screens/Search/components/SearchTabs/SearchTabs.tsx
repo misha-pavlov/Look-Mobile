@@ -33,7 +33,7 @@ const SearchTabs: React.FC<TSearchTabs> = ({
   const showData = useCallback(
     (result, mock, indexTab) => {
       if (isSearchMode && index === indexTab) {
-        return result?.length === 0 ? <EmptyList>{messages.empty}</EmptyList> : result;
+        return !result || result?.length === 0 ? <EmptyList>{messages.empty}</EmptyList> : result;
       }
 
       return mock?.length === 0 ? <EmptyList>{messages.empty}</EmptyList> : mock;

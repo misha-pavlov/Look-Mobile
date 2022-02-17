@@ -20,20 +20,16 @@ const Search = () => {
 
   const [postSearchByTitle, { data: postSearchByTitleData, loading: postSearchByTitleLoading }] =
     useLazyQuery(GET_POSTS_BY_TITLE);
-  const [postSearchByTag, { data: postSearchByTagData, loading: postSearchByTagLoading }] =
-    useLazyQuery(GET_POSTS_BY_TAG);
+  const [postSearchByTag, { data: postSearchByTagData, loading: postSearchByTagLoading }] = useLazyQuery(
+    GET_POSTS_BY_TAG,
+    { pollInterval: 3000 },
+  );
   const [userSearch, { data: userSearchData, loading: userSearchLoading }] = useLazyQuery(SEARCH_USER);
 
   const [index, setIndex] = useState(0);
   const [isSearchMode, setIsSearchMode] = useState(false);
   const [searchText, setSearchText] = useState('');
   const showCancel = searchText?.length > 0;
-
-  useEffect(() => {
-    setIndex(params?.startTab ? params.startTab : 0);
-    setSearchText(params?.tag ? params.tag : '');
-    onChange(params?.tag.trim());
-  }, [params?.startTab, params?.tag, setIndex, setSearchText]);
 
   const onCancelIconPress = useCallback(() => {
     setSearchText('');
@@ -66,7 +62,7 @@ const Search = () => {
       if (index === 1) {
         postSearchByTag({
           variables: {
-            tag: searchText,
+            tag: e,
           },
         });
       }
@@ -81,6 +77,12 @@ const Search = () => {
     },
     [searchText, setSearchText],
   );
+
+  useEffect(() => {
+    setIndex(params?.startTab ? params.startTab : 0);
+    setSearchText(params?.tag ? params.tag : '');
+    onChange(params?.tag.trim());
+  }, [params?.startTab, params?.tag, setIndex, setSearchText, onChange]);
 
   return (
     <DefaultContainer>
