@@ -29,14 +29,27 @@ export const OptionsBlock = styled.View`
   justify-content: space-between;
 `;
 
-export const OptionsButton = styled.TouchableOpacity<{ isCloseOptions?: boolean }>`
-  border: 1px solid ${({ isCloseOptions }) => (isCloseOptions ? colors.purple3 : colors.pink)};
+export const OptionsButton = styled.TouchableOpacity<{ isCloseOptions?: boolean; isOtherOptions?: boolean }>`
+  border: 1px solid
+    ${({ isCloseOptions, isOtherOptions }) => {
+      if (isOtherOptions) {
+        return colors.white;
+      }
+
+      return isCloseOptions ? colors.purple3 : colors.pink;
+    }};
   border-radius: 8px;
   padding: 8px;
 `;
 
-export const OptionsText = styled.Text<{ isCloseOptions?: boolean }>`
-  color: ${({ isCloseOptions }) => (isCloseOptions ? colors.purple3 : colors.pink)};
+export const OptionsText = styled.Text<{ isCloseOptions?: boolean; isOtherOptions?: boolean }>`
+  color: ${({ isCloseOptions, isOtherOptions }) => {
+    if (isOtherOptions) {
+      return colors.white;
+    }
+
+    return isCloseOptions ? colors.purple3 : colors.pink;
+  }};
 `;
 
 export const OptionsDivider = styled.View`

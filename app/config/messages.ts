@@ -55,4 +55,5 @@ export const messages = {
   selectUserForChat: 'Select user for chat',
   unsent: 'Unsent',
   closeOptions: 'Close Options',
+  copy: 'Copy',
 };

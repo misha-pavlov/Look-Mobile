@@ -4,6 +4,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 import { Flow } from 'react-native-animated-spinkit';
+import * as Clipboard from 'expo-clipboard';
 // styles
 import { common, DefaultContainer } from '../../common/common.styles';
 import {
@@ -48,6 +49,8 @@ const Chat: React.FC<TChat> = ({
   const [isEditMode, setIsEditMode] = useState(false);
   const [isFocus, setIsFocus] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState('');
+  const [selectedMessageBody, setSelectedMessageBody] = useState('');
+  const [selectedMessageSenderId, setSelectedMessageSenderId] = useState('');
   const [message, setMessage] = useState('');
   const [sound, setSound] = useState<Audio.Sound>();
   const { params } = useRoute<NAppNavigatorRouteProp<'Chat'>>();
@@ -151,6 +154,11 @@ const Chat: React.FC<TChat> = ({
     }).then(() => setIsEditMode(false));
   }, [selectedMessage, deleteMessage, params, currentUser, setIsEditMode]);
 
+  const onCopy = useCallback(() => {
+    Clipboard.setString(selectedMessageBody);
+    setIsEditMode(false);
+  }, [selectedMessageBody]);
+
   const renderItem = useCallback(
     ({ item }: { item: Messages }) => {
       const isMyMessage = item.userSentId === currentUser._id;
@@ -160,8 +168,9 @@ const Chat: React.FC<TChat> = ({
             onLongPress={() => {
               setIsEditMode(true);
               setSelectedMessage(item._id);
+              setSelectedMessageBody(item.body);
+              setSelectedMessageSenderId(item.userSentId);
             }}
-            disabled={!isMyMessage}
             activeOpacity={1}
             isMyMessage={isMyMessage}
             isEditMode={item._id === selectedMessage ? isEditMode : false}>
@@ -199,8 +208,14 @@ const Chat: React.FC<TChat> = ({
       <>
         <OptionsDivider />
         <OptionsBlock>
-          <OptionsButton onPress={onDeleteMessage}>
-            <OptionsText>{messagesConstants.unsent}</OptionsText>
+          {selectedMessageSenderId === currentUser._id && (
+            <OptionsButton onPress={onDeleteMessage}>
+              <OptionsText>{messagesConstants.unsent}</OptionsText>
+            </OptionsButton>
+          )}
+
+          <OptionsButton isOtherOptions onPress={onCopy}>
+            <OptionsText isOtherOptions>{messagesConstants.copy}</OptionsText>
           </OptionsButton>
 
           <OptionsButton isCloseOptions onPress={() => setIsEditMode(false)}>
@@ -209,7 +224,7 @@ const Chat: React.FC<TChat> = ({
         </OptionsBlock>
       </>
     );
-  }, [isEditMode, onDeleteMessage]);
+  }, [isEditMode, onDeleteMessage, currentUser, selectedMessageSenderId, onCopy, setIsEditMode]);
 
   const keyExtractor = (item: Messages) => item._id;
   const keyboardVerticalOffset = getKeyboardVerticalOffsetForMessages();
