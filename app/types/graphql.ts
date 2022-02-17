@@ -53,6 +53,7 @@ export type Messages = {
   body: Scalars['String'];
   groupId: Scalars['String'];
   readBy: Array<Scalars['String']>;
+  reply?: Maybe<Scalars['String']>;
   userSentId: Scalars['String'];
 };
 
@@ -93,6 +94,7 @@ export type MutationAddCommentArgs = {
 export type MutationAddMessageArgs = {
   body: Scalars['String'];
   groupId: Scalars['String'];
+  reply?: InputMaybe<Scalars['String']>;
   userSentId: Scalars['String'];
 };
 
@@ -189,6 +191,7 @@ export type Query = {
   dummy?: Maybe<Scalars['Boolean']>;
   getAllPosts: Array<Posts>;
   getBlocked: Array<User>;
+  getChat?: Maybe<Chats>;
   getFollowers: Array<User>;
   getFollowing: Array<User>;
   getMessagesByGroupId: Array<Messages>;
@@ -210,6 +213,10 @@ export type Query = {
 
 export type QueryGetBlockedArgs = {
   userId: Scalars['String'];
+};
+
+export type QueryGetChatArgs = {
+  chatId: Scalars['String'];
 };
 
 export type QueryGetFollowersArgs = {
@@ -464,6 +471,7 @@ export type MessagesResolvers<
   body?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   groupId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   readBy?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  reply?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   userSentId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -602,6 +610,12 @@ export type QueryResolvers<
     ParentType,
     ContextType,
     RequireFields<QueryGetBlockedArgs, 'userId'>
+  >;
+  getChat?: Resolver<
+    Maybe<ResolversTypes['Chats']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryGetChatArgs, 'chatId'>
   >;
   getFollowers?: Resolver<
     Array<ResolversTypes['User']>,

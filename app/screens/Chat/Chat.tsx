@@ -139,7 +139,14 @@ const Chat: React.FC<TChat> = ({
       playSound();
       setMessage('');
     });
-  }, [message]);
+
+    await updateTypingUsers({
+      variables: {
+        chatId: params.chatId,
+        newArray: [],
+      },
+    });
+  }, [message, currentUser, params, setMessage, updateTypingUsers]);
 
   const onDeleteMessage = useCallback(async () => {
     await deleteMessage({
