@@ -9,7 +9,7 @@ export const useUserId = () => {
       const getUserId = await AsyncStorage.getItem('userId');
       setUserId(getUserId);
     })();
-  }, []);
+  });
 
   return { userId: userId };
 };

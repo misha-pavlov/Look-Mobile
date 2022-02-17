@@ -16,7 +16,7 @@ const UserSettings = () => {
 
   const signOut = useCallback(() => {
     AsyncStorage.removeItem('userId').then(() => navigate(screens.Start));
-  }, []);
+  }, [navigate]);
 
   return (
     <DefaultContainer>

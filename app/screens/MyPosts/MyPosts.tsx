@@ -30,7 +30,7 @@ const MyPosts: React.FC<TMyPosts> = ({ getPostsForUser, currentUser, loading, re
       navigation.goBack();
     }
     isFirstRender.current = false;
-  }, []);
+  }, [userId, isFirstRender, navigation]);
 
   const keyExtractor = (item: Posts) => item._id;
 

@@ -16,7 +16,7 @@ export const screens = {
   SignUp: 'SignUp' as keyof NAuthStackParamList,
 
   /* Post */
-  Posts: 'Posts' as keyof NAppStackParamList,
+  Posts: 'Posts' as keyof NAuthStackParamList,
   CreatePost: 'CreatePost' as keyof NAppStackParamList,
 
   /* User */

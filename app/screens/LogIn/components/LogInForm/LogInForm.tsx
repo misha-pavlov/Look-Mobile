@@ -21,7 +21,7 @@ const LogInForm: React.FC<TLogInForm> = ({ users }) => {
     password: '',
     formErrors: { email: '', password: '' },
   });
-  const navigation = useNavigation<NAuthNavigatorNavigationProp<'AppNavigator'>>();
+  const navigation = useNavigation<NAuthNavigatorNavigationProp<'Posts'>>();
 
   const validateField = (text: string, field: string) => {
     let fieldValidationErrors = state.formErrors;
@@ -53,7 +53,7 @@ const LogInForm: React.FC<TLogInForm> = ({ users }) => {
       if (u.email === state.email) {
         if (u.password === state.password) {
           setState({ ...state, formErrors: { email: '', password: '' } });
-          AsyncStorage.setItem('userId', u._id).then(() => navigation.navigate(screens.AppNavigator));
+          AsyncStorage.setItem('userId', u._id).then(() => navigation.navigate(screens.Posts));
           return;
         }
         setState({ ...state, formErrors: { email: state.formErrors.email, password: 'Incorrect password' } });
