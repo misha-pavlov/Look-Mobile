@@ -26,7 +26,7 @@ const Search = () => {
   );
   const [userSearch, { data: userSearchData, loading: userSearchLoading }] = useLazyQuery(SEARCH_USER);
 
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(params.startTab ? params.startTab : 0);
   const [isSearchMode, setIsSearchMode] = useState(false);
   const [searchText, setSearchText] = useState('');
   const showCancel = searchText?.length > 0;
@@ -75,14 +75,12 @@ const Search = () => {
         });
       }
     },
-    [searchText, setSearchText],
+    [searchText, setSearchText, setIndex, inputRef],
   );
 
   useEffect(() => {
-    setIndex(params?.startTab ? params.startTab : 0);
-    setSearchText(params?.tag ? params.tag : '');
-    onChange(params?.tag.trim());
-  }, [params?.startTab, params?.tag, setIndex, setSearchText]);
+    inputRef.current.props.onChangeText(params.tag.trim());
+  }, [params, inputRef]);
 
   return (
     <DefaultContainer>
