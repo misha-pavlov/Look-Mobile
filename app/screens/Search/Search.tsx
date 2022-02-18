@@ -82,7 +82,7 @@ const Search = () => {
     setIndex(params?.startTab ? params.startTab : 0);
     setSearchText(params?.tag ? params.tag : '');
     onChange(params?.tag.trim());
-  }, [params?.startTab, params?.tag, setIndex, setSearchText, onChange]);
+  }, [params?.startTab, params?.tag, setIndex, setSearchText]);
 
   return (
     <DefaultContainer>
