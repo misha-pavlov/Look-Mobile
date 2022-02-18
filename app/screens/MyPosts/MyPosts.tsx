@@ -7,7 +7,7 @@ import { useUserId } from '../../hooks/useUserId';
 // components
 import HeaderWithUser from '../../components/HeaderWithUser/HeaderWithUser';
 import PostItem from '../../components/PostItem/PostItem';
-import Spinner from '../../components/Spinner/Spinner';
+import LoadingScreen from '../../components/LoadingScreen/LoadingScreen';
 // styles
 import { EmptyText, PlusButton, s } from './MyPosts.styles';
 // constants
@@ -22,7 +22,7 @@ import { Posts } from '../../types/graphql';
 
 const MyPosts: React.FC<TMyPosts> = ({ getPostsForUser, currentUser, loading, refetch, fetchMore }) => {
   const isFirstRender = useRef(true);
-  const { userId } = useUserId();
+  const { userId, loading: userLoading } = useUserId();
   const navigation = useNavigation<NAppNavigatorNavigationProp<'CreatePost'>>();
 
   useEffect(() => {
@@ -34,8 +34,8 @@ const MyPosts: React.FC<TMyPosts> = ({ getPostsForUser, currentUser, loading, re
 
   const keyExtractor = (item: Posts) => item._id;
 
-  if (loading) {
-    return <Spinner />;
+  if (loading || userLoading) {
+    return <LoadingScreen />;
   }
 
   return (

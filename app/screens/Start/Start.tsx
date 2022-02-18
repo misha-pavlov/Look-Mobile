@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -9,19 +9,9 @@ import PurpleButton from '../../components/PurpleButton/PurpleButton';
 import { CenterBlock } from '../../common/common.styles';
 import { screens } from '../../config/screens';
 import { NAuthNavigatorNavigationProp } from '../../navigation/types/AuthNavigator.types';
-import { useUserId } from '../../hooks/useUserId';
 
 const Start = () => {
-  const { navigate, replace } = useNavigation<NAuthNavigatorNavigationProp<'AppNavigator'>>();
-  const isFirstRender = useRef(true);
-  const { userId } = useUserId();
-
-  useEffect(() => {
-    if (userId && !isFirstRender.current) {
-      replace(screens.AppNavigator);
-    }
-    isFirstRender.current = false;
-  }, [userId]);
+  const { navigate } = useNavigation<NAuthNavigatorNavigationProp<'AppNavigator'>>();
 
   return (
     <StartBlock>
