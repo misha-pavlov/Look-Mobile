@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View, Linking } from 'react-native';
+import Hyperlink from 'react-native-hyperlink';
 import { UserProfileDesc, ShowMoreButtonText } from '../../UserProfile.styles';
 import { messages } from '../../../../config/messages';
+import { common } from '../../../../common/common.styles';
 
 const ShowMore = ({ value, onPress, disabled }: { value: string; onPress: VoidFunction; disabled?: boolean }) => {
   const [showMore, setShowMore] = useState(false);
@@ -9,7 +11,9 @@ const ShowMore = ({ value, onPress, disabled }: { value: string; onPress: VoidFu
   if (value?.length < 50 || !value) {
     return (
       <TouchableOpacity onPress={onPress} disabled={disabled}>
-        <UserProfileDesc>{value}</UserProfileDesc>
+        <Hyperlink linkDefault onPress={Linking.openURL} linkStyle={common.url}>
+          <UserProfileDesc>{value}</UserProfileDesc>
+        </Hyperlink>
       </TouchableOpacity>
     );
   }
@@ -17,7 +21,9 @@ const ShowMore = ({ value, onPress, disabled }: { value: string; onPress: VoidFu
   return (
     <View>
       <TouchableOpacity onPress={onPress} disabled={disabled}>
-        <UserProfileDesc>{showMore ? value.trim() : `${value.slice(0, 50)?.trim()}...`}</UserProfileDesc>
+        <Hyperlink linkDefault onPress={Linking.openURL} linkStyle={common.url}>
+          <UserProfileDesc>{showMore ? value.trim() : `${value.slice(0, 50)?.trim()}...`}</UserProfileDesc>
+        </Hyperlink>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => setShowMore(!showMore)} disabled={disabled}>

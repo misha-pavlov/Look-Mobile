@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Animated, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { Animated, KeyboardAvoidingView, TouchableOpacity, Linking } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 import { Flow } from 'react-native-animated-spinkit';
 import * as Clipboard from 'expo-clipboard';
+import Hyperlink from 'react-native-hyperlink';
 // styles
 import { common, DefaultContainer } from '../../common/common.styles';
 import {
@@ -166,16 +167,24 @@ const Chat: React.FC<TChat> = ({
     setIsEditMode(false);
   }, [selectedMessageBody]);
 
+  const showReplyItem = useCallback((replyMessage: string) => {
+    if (replyMessage) {
+      return (
+        <ReplyBlock>
+          <ReplyText>{replyMessage}</ReplyText>
+        </ReplyBlock>
+      );
+    }
+
+    return null;
+  }, []);
+
   const renderItem = useCallback(
     ({ item }: { item: Messages }) => {
       const isMyMessage = item.userSentId === currentUser._id;
       return (
         <ChatBlockContainer isMyMessage={isMyMessage}>
-          {item?.reply && (
-            <ReplyBlock>
-              <ReplyText>{item.reply}</ReplyText>
-            </ReplyBlock>
-          )}
+          {showReplyItem(item?.reply)}
           <ChatBlock
             onLongPress={() => {
               setIsEditMode(true);
@@ -186,7 +195,9 @@ const Chat: React.FC<TChat> = ({
             activeOpacity={1}
             isMyMessage={isMyMessage}
             isEditMode={item._id === selectedMessage ? isEditMode : false}>
-            <ChatText>{item.body}</ChatText>
+            <Hyperlink linkDefault onPress={Linking.openURL} linkStyle={common.url}>
+              <ChatText>{item.body}</ChatText>
+            </Hyperlink>
           </ChatBlock>
         </ChatBlockContainer>
       );

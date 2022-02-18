@@ -31,4 +31,7 @@ export const common = StyleSheet.create({
   keyboard: {
     flex: 1,
   },
+  url: {
+    color: colors.purple,
+  },
 });

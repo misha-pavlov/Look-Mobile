@@ -1,6 +1,8 @@
 import React, { useCallback } from 'react';
-import { ActivityIndicator, FlatList } from 'react-native';
+import { ActivityIndicator, FlatList, Linking } from 'react-native';
 import { Image } from 'react-native-elements';
+import Hyperlink from 'react-native-hyperlink';
+import * as Clipboard from 'expo-clipboard';
 import { Comment } from '../../../../types/graphql';
 import { CommentBlock, CommentText, s } from './CommentsList.styles';
 import { colors } from '../../../../config/colors';
@@ -8,6 +10,10 @@ import { common } from '../../../../common/common.styles';
 
 const CommentsList = ({ comments, isShortList }: { comments: Comment[]; isShortList?: boolean }) => {
   const reversedComments = [...comments].reverse();
+
+  const onCopy = useCallback((comment: string) => {
+    Clipboard.setString(comment);
+  }, []);
 
   const renderItem = useCallback(c => {
     return (
@@ -20,7 +26,13 @@ const CommentsList = ({ comments, isShortList }: { comments: Comment[]; isShortL
           PlaceholderContent={<ActivityIndicator color={colors.white} />}
           placeholderStyle={common.placeholder}
         />
-        <CommentText>{c.item?.title}</CommentText>
+        <Hyperlink
+          linkDefault
+          onPress={Linking.openURL}
+          linkStyle={common.url}
+          onLongPress={() => onCopy(c.item?.title)}>
+          <CommentText>{c.item?.title}</CommentText>
+        </Hyperlink>
       </CommentBlock>
     );
   }, []);

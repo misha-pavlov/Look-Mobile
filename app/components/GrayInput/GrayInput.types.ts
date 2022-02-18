@@ -8,6 +8,6 @@ export type TGrayInput = {
   isMessagesInput?: boolean;
   replyMessage?: string;
   setComment: Dispatch<React.SetStateAction<string>>;
-  setIsReplyMessage: Dispatch<React.SetStateAction<boolean>>;
+  setIsReplyMessage?: Dispatch<React.SetStateAction<boolean>>;
   setIsFocus?: Dispatch<React.SetStateAction<boolean>>;
 };
